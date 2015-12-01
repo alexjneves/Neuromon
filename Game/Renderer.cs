@@ -1,7 +1,8 @@
 using System;
 using System.Text;
+using Common;
 
-namespace Neuromon
+namespace Game
 {
     internal sealed class Renderer
     {
@@ -73,7 +74,7 @@ namespace Neuromon
             Console.WriteLine(sb.ToString());
         }
 
-        private static string FormatNeuromon(Neuromon neuromon)
+        private static string FormatNeuromon(Common.Neuromon neuromon)
         {
             var sb = new StringBuilder();
 

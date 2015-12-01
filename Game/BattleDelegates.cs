@@ -1,4 +1,6 @@
-﻿namespace Neuromon
+﻿using Common;
+
+namespace Game
 {
     internal sealed class BattleDelegates
     {

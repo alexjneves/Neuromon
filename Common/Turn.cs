@@ -1,6 +1,6 @@
-namespace Neuromon
+namespace Common
 {
-    internal sealed class Turn
+    public sealed class Turn
     {
         public Move Move { get; }
 

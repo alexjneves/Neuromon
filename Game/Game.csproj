@@ -7,8 +7,8 @@
     <ProjectGuid>{2790C0AC-18D7-4B13-8C84-3FA10B857976}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Neuromon</RootNamespace>
-    <AssemblyName>Neuromon</AssemblyName>
+    <RootNamespace>Game</RootNamespace>
+    <AssemblyName>Game</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -47,18 +47,31 @@
     <Compile Include="BattleDelegates.cs" />
     <Compile Include="BattleSimulator.cs" />
     <Compile Include="GameState.cs" />
-    <Compile Include="IPlayer.cs" />
-    <Compile Include="Move.cs" />
-    <Compile Include="MoveSet.cs" />
-    <Compile Include="Neuromon.cs" />
     <Compile Include="HumanPlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer.cs" />
-    <Compile Include="Turn.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AI.Intelligent\AI.Intelligent.csproj">
+      <Project>{2f4cacd3-7eca-426d-948d-ad12843bc479}</Project>
+      <Name>AI.Intelligent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AI.Random\AI.Random.csproj">
+      <Project>{24F3F6DA-672B-4A4F-ABC1-9DD2BA61D2FA}</Project>
+      <Name>AI.Random</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AI\AI.csproj">
+      <Project>{95fdac4e-d2d0-476f-af18-7f755086f237}</Project>
+      <Name>AI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{9eaf5299-5d05-49ea-b127-b7e312684810}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

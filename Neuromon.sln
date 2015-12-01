@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neuromon", "Neuromon\Neuromon.csproj", "{2790C0AC-18D7-4B13-8C84-3FA10B857976}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game.csproj", "{2790C0AC-18D7-4B13-8C84-3FA10B857976}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI.Random", "AI.Random\AI.Random.csproj", "{24F3F6DA-672B-4A4F-ABC1-9DD2BA61D2FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{9EAF5299-5D05-49EA-B127-B7E312684810}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI.Intelligent", "AI.Intelligent\AI.Intelligent.csproj", "{2F4CACD3-7ECA-426D-948D-AD12843BC479}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI", "AI\AI.csproj", "{95FDAC4E-D2D0-476F-AF18-7F755086F237}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{2790C0AC-18D7-4B13-8C84-3FA10B857976}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2790C0AC-18D7-4B13-8C84-3FA10B857976}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2790C0AC-18D7-4B13-8C84-3FA10B857976}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24F3F6DA-672B-4A4F-ABC1-9DD2BA61D2FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24F3F6DA-672B-4A4F-ABC1-9DD2BA61D2FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24F3F6DA-672B-4A4F-ABC1-9DD2BA61D2FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24F3F6DA-672B-4A4F-ABC1-9DD2BA61D2FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EAF5299-5D05-49EA-B127-B7E312684810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EAF5299-5D05-49EA-B127-B7E312684810}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EAF5299-5D05-49EA-B127-B7E312684810}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EAF5299-5D05-49EA-B127-B7E312684810}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F4CACD3-7ECA-426D-948D-AD12843BC479}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F4CACD3-7ECA-426D-948D-AD12843BC479}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F4CACD3-7ECA-426D-948D-AD12843BC479}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F4CACD3-7ECA-426D-948D-AD12843BC479}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95FDAC4E-D2D0-476F-AF18-7F755086F237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95FDAC4E-D2D0-476F-AF18-7F755086F237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95FDAC4E-D2D0-476F-AF18-7F755086F237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95FDAC4E-D2D0-476F-AF18-7F755086F237}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-﻿namespace Neuromon
+﻿namespace Game
 {
     internal enum GameState
     {

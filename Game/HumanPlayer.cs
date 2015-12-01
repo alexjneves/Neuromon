@@ -1,16 +1,17 @@
 ﻿using System;
+using Common;
 
-namespace Neuromon
+namespace Game
 {
     internal sealed class HumanPlayer : IPlayer
     {
         public string Name { get; }
-        public Neuromon Neuromon { get; }
+        public Common.Neuromon Neuromon { get; }
 
-        public HumanPlayer(string name)
+        public HumanPlayer(string name, Common.Neuromon neuromon)
         {
             Name = name;
-            Neuromon = new Neuromon(name + "'s Neuromon");
+            Neuromon = neuromon;
         }
 
         public Turn ChooseTurn()

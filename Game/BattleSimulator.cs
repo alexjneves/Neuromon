@@ -1,7 +1,7 @@
-﻿using System;
-using static Neuromon.BattleDelegates;
+﻿using Common;
+using static Game.BattleDelegates;
 
-namespace Neuromon
+namespace Game
 {
     internal sealed class BattleSimulator
     {
@@ -10,16 +10,16 @@ namespace Neuromon
         public IPlayer Player1 { get; }
         public IPlayer Player2 { get; }
 
-        public event TurnChosenDelegate OnTurnChosen;
-        public event GameOverDelegate OnGameOver;
-        public event GameStateChangedDelegate OnGameStateChanged;
+        public event BattleDelegates.TurnChosenDelegate OnTurnChosen;
+        public event BattleDelegates.GameOverDelegate OnGameOver;
+        public event BattleDelegates.GameStateChangedDelegate OnGameStateChanged;
 
-        public BattleSimulator()
+        public BattleSimulator(IPlayer player1, IPlayer player2)
         {
             GameState = GameState.NotStarted;
 
-            Player1 = new HumanPlayer("Player 1");
-            Player2 = new HumanPlayer("Player 2");
+            Player1 = player1;
+            Player2 = player2;
         }
 
         public void Run()

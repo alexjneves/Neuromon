@@ -1,6 +1,6 @@
-﻿namespace Neuromon
+﻿namespace Common
 {
-    internal sealed class Move
+    public sealed class Move
     {
         public string Name { get; }
         public int Damage { get; }

@@ -1,6 +1,6 @@
-namespace Neuromon
+namespace Common
 {
-    internal interface IPlayer
+    public interface IPlayer
     {
         string Name { get; }
         Neuromon Neuromon { get; }
