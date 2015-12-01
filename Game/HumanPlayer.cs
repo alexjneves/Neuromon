@@ -6,9 +6,9 @@ namespace Game
     internal sealed class HumanPlayer : IPlayer
     {
         public string Name { get; }
-        public Common.Neuromon Neuromon { get; }
+        public Neuromon Neuromon { get; }
 
-        public HumanPlayer(string name, Common.Neuromon neuromon)
+        public HumanPlayer(string name, Neuromon neuromon)
         {
             Name = name;
             Neuromon = neuromon;

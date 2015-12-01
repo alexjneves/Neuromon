@@ -10,9 +10,9 @@ namespace Game
         public IPlayer Player1 { get; }
         public IPlayer Player2 { get; }
 
-        public event BattleDelegates.TurnChosenDelegate OnTurnChosen;
-        public event BattleDelegates.GameOverDelegate OnGameOver;
-        public event BattleDelegates.GameStateChangedDelegate OnGameStateChanged;
+        public event TurnChosenDelegate OnTurnChosen;
+        public event GameOverDelegate OnGameOver;
+        public event GameStateChangedDelegate OnGameStateChanged;
 
         public BattleSimulator(IPlayer player1, IPlayer player2)
         {

@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using AI.Intelligent;
 using AI.Random;
 using Common;
 
 namespace Game
 {
-    internal sealed class Program
+    internal sealed class NeuromonGame
     {
         private static void Main(string[] args)
         {
             const string player1Name = "Human Player 1";
-            const string player2Name = "Intelligent AI Player 2";
+            const string player2Name = "AI Player 2";
 
-            var aiPlayerFactory = new IntelligentAiPlayerFactory();
+            var aiPlayerFactory = new RandomAiPlayerFactory();
 
             var player1 = new HumanPlayer(player1Name, CreateRandomNeuromon($"{player1Name}'s Neuromon"));
             var player2 = aiPlayerFactory.CreatePlayer(player2Name,

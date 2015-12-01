@@ -74,7 +74,7 @@ namespace Game
             Console.WriteLine(sb.ToString());
         }
 
-        private static string FormatNeuromon(Common.Neuromon neuromon)
+        private static string FormatNeuromon(Neuromon neuromon)
         {
             var sb = new StringBuilder();
 
