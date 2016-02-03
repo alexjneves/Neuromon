@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,14 +50,20 @@
   <ItemGroup>
     <Compile Include="BattleDelegates.cs" />
     <Compile Include="BattleSimulator.cs" />
+    <Compile Include="GameSettings.cs" />
     <Compile Include="GameState.cs" />
-    <Compile Include="HumanPlayer.cs" />
+    <Compile Include="NeuromonCollectionGenerator.cs" />
     <Compile Include="NeuromonGame.cs" />
+    <Compile Include="PlayerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="GameSettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AI.Intelligent\AI.Intelligent.csproj">
@@ -64,13 +74,21 @@
       <Project>{24F3F6DA-672B-4A4F-ABC1-9DD2BA61D2FA}</Project>
       <Name>AI.Random</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AI\AI.csproj">
-      <Project>{95fdac4e-d2d0-476f-af18-7f755086f237}</Project>
-      <Name>AI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{9eaf5299-5d05-49ea-b127-b7e312684810}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{37b72455-8a8a-427d-b476-ed97e1af0e76}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Player.Human\Player.Human.csproj">
+      <Project>{BA045B23-A98D-4B28-A506-C9B1FA668902}</Project>
+      <Name>Player.Human</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Player\Player.csproj">
+      <Project>{2f928210-92c9-4344-acd3-92b91af93ca8}</Project>
+      <Name>Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

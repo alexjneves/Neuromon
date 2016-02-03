@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,13 +50,13 @@
     <Compile Include="RouletteWheel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AI\AI.csproj">
-      <Project>{95FDAC4E-D2D0-476F-AF18-7F755086F237}</Project>
-      <Name>AI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{9EAF5299-5D05-49EA-B127-B7E312684810}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Player\Player.csproj">
+      <Project>{2f928210-92c9-4344-acd3-92b91af93ca8}</Project>
+      <Name>Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,5 @@
 ﻿using Common;
+using Player;
 using static Game.BattleDelegates;
 
 namespace Game
@@ -29,7 +30,7 @@ namespace Game
                 ChangeState(GameState.Player1Turn);
                 TakeTurn(Player1, Player2);
 
-                if (Player2.Neuromon.IsDead())
+                if (Player2.ActiveNeuromon.IsDead())
                 {
                     GameOver(Player1, Player2);
                     break;
@@ -38,7 +39,7 @@ namespace Game
                 ChangeState(GameState.Player2Turn);
                 TakeTurn(Player2, Player1);
 
-                if (Player1.Neuromon.IsDead())
+                if (Player1.ActiveNeuromon.IsDead())
                 {
                     GameOver(Player2, Player1);
                     break;
@@ -57,7 +58,7 @@ namespace Game
         private void TakeTurn(IPlayer source, IPlayer target)
         {
             var sourceTurn = source.ChooseTurn();
-            target.Neuromon.TakeDamage(sourceTurn.Move.Damage);
+            target.ActiveNeuromon.TakeDamage(sourceTurn.Move.Damage);
 
             OnTurnChosen?.Invoke(source, sourceTurn);
         }

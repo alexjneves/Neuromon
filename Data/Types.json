@@ -1,0 +1,34 @@
+[
+  {
+    "name": "water",
+    "effective": [
+      "fire"
+    ],
+    "weak": [
+      "grass"
+    ]
+  },
+  {
+    "name": "grass",
+    "effective": [
+      "water"
+    ],
+    "weak": [
+      "fire"
+    ]
+  },
+  {
+    "name": "fire",
+    "effective": [
+      "gass"
+    ],
+    "weak": [
+      "water"
+    ]
+  },
+  {
+    "name": "normal",
+    "effective": [],
+    "weak": []
+  }
+]

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{95FDAC4E-D2D0-476F-AF18-7F755086F237}</ProjectGuid>
+    <ProjectGuid>{2F928210-92C9-4344-ACD3-92B91AF93CA8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AI</RootNamespace>
-    <AssemblyName>AI</AssemblyName>
+    <RootNamespace>Player</RootNamespace>
+    <AssemblyName>Player</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,12 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAiPlayerFactory.cs" />
+    <Compile Include="IPlayer.cs" />
+    <Compile Include="IPlayerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{9EAF5299-5D05-49EA-B127-B7E312684810}</Project>
+      <Project>{9eaf5299-5d05-49ea-b127-b7e312684810}</Project>
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>

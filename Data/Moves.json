@@ -1,0 +1,62 @@
+﻿[
+  {
+    "name": "Tackle",
+    "type": "normal",
+    "pp": 20,
+    "damage": 10
+  },
+  {
+    "name": "Water Gun",
+    "type": "water",
+    "pp": 10,
+    "damage": 20
+  },
+  {
+    "name": "Tail Whip",
+    "type": "normal",
+    "pp": 30,
+    "damage": 0
+  },
+  {
+    "name": "Hydro Pump",
+    "type": "water",
+    "pp": 3,
+    "damage": 40
+  },
+  {
+    "name": "Scratch",
+    "type": "normal",
+    "pp": 20,
+    "damage": 10
+  },
+  {
+    "name": "Ember",
+    "type": "fire",
+    "pp": 10,
+    "damage": 20
+  },
+  {
+    "name": "Growl",
+    "type": "normal",
+    "pp": 30,
+    "damage": 0
+  },
+  {
+    "name": "Flamethrower",
+    "type": "fire",
+    "pp": 5,
+    "damage": 30
+  },
+  {
+    "name": "Vine Whip",
+    "type": "grass",
+    "pp": 10,
+    "damage": 20
+  },
+  {
+    "name": "Solar Beam",
+    "type": "grass",
+    "pp": 5,
+    "damage": 35
+  }
+]

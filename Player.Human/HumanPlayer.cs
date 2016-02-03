@@ -1,17 +1,20 @@
 ﻿using System;
+using System.Linq;
 using Common;
 
-namespace Game
+namespace Player.Human
 {
     internal sealed class HumanPlayer : IPlayer
     {
         public string Name { get; }
-        public Neuromon Neuromon { get; }
+        public NeuromonCollection Neuromon { get; }
+        public Neuromon ActiveNeuromon { get; }
 
-        public HumanPlayer(string name, Neuromon neuromon)
+        public HumanPlayer(string name, NeuromonCollection neuromon)
         {
             Name = name;
             Neuromon = neuromon;
+            ActiveNeuromon = neuromon.First();
         }
 
         public Turn ChooseTurn()
@@ -28,13 +31,13 @@ namespace Game
             switch (key)
             {
                 case ConsoleKey.D1:
-                    return Neuromon.MoveSet.MoveOne();
+                    return Neuromon[0].MoveSet.MoveOne();
                 case ConsoleKey.D2:
-                    return Neuromon.MoveSet.MoveTwo();
+                    return Neuromon[0].MoveSet.MoveTwo();
                 case ConsoleKey.D3:
-                    return Neuromon.MoveSet.MoveThree();
+                    return Neuromon[0].MoveSet.MoveThree();
                 case ConsoleKey.D4:
-                    return Neuromon.MoveSet.MoveFour();
+                    return Neuromon[0].MoveSet.MoveFour();
                 default:
                     throw new Exception("Invalid choice");
             }

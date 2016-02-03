@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Common
 {
@@ -12,7 +11,7 @@ namespace Common
 
         public MoveSet(IList<Move> moves)
         {
-            if (moves.Count() != NumberOfMovesInMoveSet)
+            if (moves.Count != NumberOfMovesInMoveSet)
             {
                 throw new Exception();
             }
@@ -20,7 +19,7 @@ namespace Common
             Moves = moves;
         }
 
-        public Move GetMove(int index) => Moves[index];
+        public Move this[int key] => Moves[key];
 
         public Move MoveOne() => Moves[0];
         public Move MoveTwo() => Moves[1];

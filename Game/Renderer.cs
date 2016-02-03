@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using Common;
+using Player;
 
 namespace Game
 {
@@ -63,12 +64,12 @@ namespace Game
 
             sb.AppendLine("======================");
             sb.AppendLine($"Player: {_battleSimulator.Player1.Name}");
-            sb.AppendLine(FormatNeuromon(_battleSimulator.Player1.Neuromon));
+            sb.AppendLine(FormatNeuromon(_battleSimulator.Player1.ActiveNeuromon));
             sb.AppendLine("======================");
 
             sb.AppendLine("======================");
             sb.AppendLine($"Player: {_battleSimulator.Player2.Name}");
-            sb.AppendLine(FormatNeuromon(_battleSimulator.Player2.Neuromon));
+            sb.AppendLine(FormatNeuromon(_battleSimulator.Player2.ActiveNeuromon));
             sb.AppendLine("======================");
 
             Console.WriteLine(sb.ToString());
@@ -90,7 +91,7 @@ namespace Game
 
             sb.AppendLine($"{player.Name} select your move:");
 
-            var moveSet = player.Neuromon.MoveSet;
+            var moveSet = player.ActiveNeuromon.MoveSet;
 
             sb.AppendLine(MoveBoxTop);
 

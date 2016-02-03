@@ -1,0 +1,35 @@
+﻿[
+  {
+    "name": "Squirtle",
+    "health": 60,
+    "type": "water",
+    "moves": [
+      "Tackle",
+      "Water Gun",
+      "Tail Whip",
+      "Hydro Pump"
+    ]
+  },
+  {
+    "name": "Charmander",
+    "health": 60,
+    "type": "fire",
+    "moves": [
+      "Scratch",
+      "Ember",
+      "Growl",
+      "Flamethrower"
+    ]
+  },
+  {
+    "name": "Bulbasaur",
+    "health": 60,
+    "type": "grass",
+    "moves": [
+      "Tackle",
+      "Vine Whip",
+      "Growl",
+      "Solar Beam"
+    ]
+  }
+]

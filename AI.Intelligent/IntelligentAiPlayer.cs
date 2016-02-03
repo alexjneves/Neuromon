@@ -1,34 +1,54 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Common;
+using Player;
 
 namespace AI.Intelligent
 {
     internal sealed class IntelligentAiPlayer : IPlayer
     {
         public string Name { get; }
-        public Neuromon Neuromon { get; }
+        public NeuromonCollection Neuromon { get; }
+        public Neuromon ActiveNeuromon { get; private set; }
 
-        private readonly Random _rand;
-        private readonly RouletteWheel<Move> _rouletteWheel;
+        private readonly Dictionary<Neuromon, RouletteWheel<Move>> _neuromonRouletteWheels;
 
-        public IntelligentAiPlayer(string name, Neuromon neuromon)
+        public IntelligentAiPlayer(string name, NeuromonCollection neuromonCollection)
         {
             Name = name;
-            Neuromon = neuromon;
-            _rand = new Random();
+            Neuromon = neuromonCollection;
+            ActiveNeuromon = neuromonCollection.First();
 
-            var fitnessProportionateProbabilityCalculator = new FitnessProportionateProbabilityCalculator<Move>(neuromon.MoveSet.Moves);
+            _neuromonRouletteWheels = new Dictionary<Neuromon, RouletteWheel<Move>>();
 
-            var selectionProbabilities = fitnessProportionateProbabilityCalculator.Calculate(m => m.Damage * 1.0);
-            
-            _rouletteWheel = new RouletteWheel<Move>(selectionProbabilities);
+            foreach (var neuromon in neuromonCollection)
+            {
+                var rouletteWheel = CreateRouletteWheel(neuromon);
+                _neuromonRouletteWheels.Add(neuromon, rouletteWheel);
+            }
         }
 
         public Turn ChooseTurn()
         {
-            var move = _rouletteWheel.Spin();
+            RouletteWheel<Move> rouletteWheel;
+            if (!_neuromonRouletteWheels.TryGetValue(ActiveNeuromon, out rouletteWheel))
+            {
+                throw new Exception($"Roulette Wheel does not exist for Neuromon {ActiveNeuromon.Name}");
+            }
+
+            var move = rouletteWheel.Spin();
 
             return new Turn(move);
+        }
+
+        private static RouletteWheel<Move> CreateRouletteWheel(Neuromon neuromon)
+        {
+            var fitnessProportionateProbabilityCalculator = new FitnessProportionateProbabilityCalculator<Move>(neuromon.MoveSet.Moves);
+
+            var selectionProbabilities = fitnessProportionateProbabilityCalculator.Calculate(m => m.Damage * 1.0);
+
+            return new RouletteWheel<Move>(selectionProbabilities);
         }
     }
 }
