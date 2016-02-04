@@ -51,7 +51,9 @@
     <Compile Include="Neuromon.cs" />
     <Compile Include="NeuromonCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Turn.cs" />
+    <Compile Include="Turn\Attack.cs" />
+    <Compile Include="Turn\ChangeNeuromon.cs" />
+    <Compile Include="Turn\ITurn.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

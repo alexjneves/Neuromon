@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Common;
+using Common.Turn;
 using Player;
 
 namespace AI.Intelligent
@@ -10,7 +11,7 @@ namespace AI.Intelligent
     {
         public string Name { get; }
         public NeuromonCollection Neuromon { get; }
-        public Neuromon ActiveNeuromon { get; private set; }
+        public Neuromon ActiveNeuromon { get; set; }
 
         private readonly Dictionary<Neuromon, RouletteWheel<Move>> _neuromonRouletteWheels;
 
@@ -29,7 +30,7 @@ namespace AI.Intelligent
             }
         }
 
-        public Turn ChooseTurn()
+        public ITurn ChooseTurn()
         {
             RouletteWheel<Move> rouletteWheel;
             if (!_neuromonRouletteWheels.TryGetValue(ActiveNeuromon, out rouletteWheel))
@@ -39,7 +40,7 @@ namespace AI.Intelligent
 
             var move = rouletteWheel.Spin();
 
-            return new Turn(move);
+            return new Attack(move);
         }
 
         private static RouletteWheel<Move> CreateRouletteWheel(Neuromon neuromon)

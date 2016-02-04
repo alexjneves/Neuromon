@@ -1,10 +1,10 @@
-namespace Common
+namespace Common.Turn
 {
-    public sealed class Turn
+    public sealed class Attack : ITurn
     {
         public Move Move { get; }
 
-        public Turn(Move move)
+        public Attack(Move move)
         {
             Move = move;
         }

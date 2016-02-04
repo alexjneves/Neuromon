@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Linq;
 using Common;
+using Common.Turn;
 
 namespace Player.Human
 {
     internal sealed class HumanPlayer : IPlayer
     {
+        private const ConsoleKey AttackKey = ConsoleKey.D1;
+        private const ConsoleKey ChangeNeuromonKey = ConsoleKey.D2;
+
         public string Name { get; }
         public NeuromonCollection Neuromon { get; }
-        public Neuromon ActiveNeuromon { get; }
+        public Neuromon ActiveNeuromon { get; set; }
 
         public HumanPlayer(string name, NeuromonCollection neuromon)
         {
@@ -17,13 +21,35 @@ namespace Player.Human
             ActiveNeuromon = neuromon.First();
         }
 
-        public Turn ChooseTurn()
+        public ITurn ChooseTurn()
         {
-            var choice = Console.ReadKey();
+            Console.WriteLine($"1: Attack\n2: Change Neuromon");
+
+            var turnType = Console.ReadKey().Key;
             Console.WriteLine("\n");
 
-            var move = DetermineMove(choice.Key);
-            return new Turn(move);
+            if (turnType == AttackKey)
+            {
+                return ChooseAttack();
+            }
+
+            if (turnType == ChangeNeuromonKey)
+            {
+                return ChooseActiveNeuromon();
+            }
+
+            throw new Exception("Invalid Move Selection");
+        }
+
+        private ITurn ChooseAttack()
+        {
+            Console.WriteLine("Choose Attack:");
+
+            var attack = Console.ReadKey().Key;
+            Console.WriteLine("\n");
+
+            var move = DetermineMove(attack);
+            return new Attack(move);
         }
 
         private Move DetermineMove(ConsoleKey key)
@@ -31,16 +57,30 @@ namespace Player.Human
             switch (key)
             {
                 case ConsoleKey.D1:
-                    return Neuromon[0].MoveSet.MoveOne();
+                    return ActiveNeuromon.MoveSet.MoveOne();
                 case ConsoleKey.D2:
-                    return Neuromon[0].MoveSet.MoveTwo();
+                    return ActiveNeuromon.MoveSet.MoveTwo();
                 case ConsoleKey.D3:
-                    return Neuromon[0].MoveSet.MoveThree();
+                    return ActiveNeuromon.MoveSet.MoveThree();
                 case ConsoleKey.D4:
-                    return Neuromon[0].MoveSet.MoveFour();
+                    return ActiveNeuromon.MoveSet.MoveFour();
                 default:
                     throw new Exception("Invalid choice");
             }
+        }
+
+        private ITurn ChooseActiveNeuromon()
+        {
+            Console.WriteLine("Choose Neuromon:");
+
+            var neuromonIndex = int.Parse(Console.ReadKey().KeyChar.ToString());
+
+            Console.WriteLine();
+
+            var otherNeuromon = Neuromon.Where(n => n != ActiveNeuromon).ToList();
+            var newActiveNeuromon = otherNeuromon[neuromonIndex - 1];
+
+            return new ChangeNeuromon(newActiveNeuromon);
         }
     }
 }

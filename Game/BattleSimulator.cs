@@ -1,4 +1,5 @@
 ﻿using Common;
+using Common.Turn;
 using Player;
 using static Game.BattleDelegates;
 
@@ -11,7 +12,8 @@ namespace Game
         public IPlayer Player1 { get; }
         public IPlayer Player2 { get; }
 
-        public event TurnChosenDelegate OnTurnChosen;
+        public event AttackMadeDelegate OnAttackMade;
+        public event NeuromonChangedDelegate OnNeuromonChanged;
         public event GameOverDelegate OnGameOver;
         public event GameStateChangedDelegate OnGameStateChanged;
 
@@ -58,9 +60,31 @@ namespace Game
         private void TakeTurn(IPlayer source, IPlayer target)
         {
             var sourceTurn = source.ChooseTurn();
-            target.ActiveNeuromon.TakeDamage(sourceTurn.Move.Damage);
 
-            OnTurnChosen?.Invoke(source, sourceTurn);
+            if (sourceTurn is Attack)
+            {
+                var attack = sourceTurn as Attack;
+                Attack(attack.Move, target.ActiveNeuromon);
+                OnAttackMade?.Invoke(source.ActiveNeuromon, attack.Move, target.ActiveNeuromon, attack.Move.Damage);
+            }
+            else if (sourceTurn is ChangeNeuromon)
+            {
+                var changeNeuromon = sourceTurn as ChangeNeuromon;
+                var previousNeuromon = source.ActiveNeuromon;
+
+                ChangeNeuromon(source, changeNeuromon.Neuromon);
+                OnNeuromonChanged?.Invoke(source, previousNeuromon, changeNeuromon.Neuromon);
+            }
+        }
+
+        private static void Attack(Move move, Neuromon target)
+        {
+            target.TakeDamage(move.Damage);
+        }
+
+        private static void ChangeNeuromon(IPlayer player, Neuromon neuromon)
+        {
+            player.ActiveNeuromon = neuromon;
         }
 
         private void GameOver(IPlayer winner, IPlayer loser)

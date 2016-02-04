@@ -1,4 +1,5 @@
 using Common;
+using Common.Turn;
 
 namespace Player
 {
@@ -6,8 +7,8 @@ namespace Player
     {
         string Name { get; }
         NeuromonCollection Neuromon { get; }
-        Neuromon ActiveNeuromon { get; }
+        Neuromon ActiveNeuromon { get; set; }
 
-        Turn ChooseTurn();
+        ITurn ChooseTurn();
     }
 }

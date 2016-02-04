@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Common;
+using Common.Turn;
 using Player;
 
 namespace AI.Random
@@ -8,7 +9,7 @@ namespace AI.Random
     {
         public string Name { get; }
         public NeuromonCollection Neuromon { get; }
-        public Neuromon ActiveNeuromon { get; }
+        public Neuromon ActiveNeuromon { get; set; }
 
         private readonly System.Random _rand;
 
@@ -21,12 +22,12 @@ namespace AI.Random
             _rand = new System.Random();
         }
 
-        public Turn ChooseTurn()
+        public ITurn ChooseTurn()
         {
             var move = _rand.Next(1, 5);
             var selectedMove = ActiveNeuromon.MoveSet[move];
 
-            return new Turn(selectedMove);
+            return new Attack(selectedMove);
         }
     }
 }

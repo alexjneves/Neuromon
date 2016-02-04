@@ -1,16 +1,24 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Common;
+using Common.Turn;
 using Player;
 
 namespace Game
 {
     internal sealed class Renderer
     {
-        private const string MoveBoxTop = " -----------------------------";
+        private const string MoveBoxTop = " -----------------------------------";
         private const string MoveBoxLeft = "| ";
         private const string MoveBoxRight = " |";
         private const string MoveBoxMiddle = " | ";
+
+        private const string RenderPlayerBorder = "==============================================";
+
+        private const string TurnMadeBorder = "***************************************************";
+        private const ConsoleColor TurnMadeColour = ConsoleColor.DarkRed;
 
         private readonly BattleSimulator _battleSimulator;
         private readonly int _moveRenderLength;
@@ -19,17 +27,33 @@ namespace Game
         {
             _battleSimulator = battleSimulator;
 
-            _battleSimulator.OnTurnChosen += RenderTurn;
+            _battleSimulator.OnAttackMade += RenderAttack;
+            _battleSimulator.OnNeuromonChanged += RenderNeuromonChanged;
             _battleSimulator.OnGameOver += RenderGameOver;
             _battleSimulator.OnGameStateChanged += OnGameStateChanged;
 
             _moveRenderLength = CalculateMoveRenderLength();
         }
 
-        private static void RenderTurn(IPlayer player, Turn turn)
+        private static void RenderAttack(Neuromon attacker, Move move, Neuromon target, int damage)
         {
-            var output = $"{player.Name} used {turn.Move.Name} and dealt {turn.Move.Damage} damage!";
-            Console.WriteLine(output);
+            var output = $"{attacker.Name} used {move.Name} and dealt {damage} damage!";
+            RenderTurnMade(output);
+        }
+
+        private static void RenderNeuromonChanged(IPlayer player, Neuromon previousNeuromon, Neuromon newNeuromon)
+        {
+            var output = $"{player.Name} switched from {previousNeuromon.Name} to {newNeuromon.Name}!";
+            RenderTurnMade(output);
+        }
+
+        private static void RenderTurnMade(string contents)
+        {
+            Console.ForegroundColor = TurnMadeColour;
+
+            Console.WriteLine(TurnMadeBorder);
+            Console.WriteLine(contents);
+            Console.WriteLine(TurnMadeBorder);
         }
 
         private static void RenderGameOver(IPlayer winner, IPlayer loser)
@@ -60,63 +84,85 @@ namespace Game
 
         private void RenderPlayerState()
         {
-            var sb = new StringBuilder("\n");
+            Console.WriteLine();
 
-            sb.AppendLine("======================");
-            sb.AppendLine($"Player: {_battleSimulator.Player1.Name}");
-            sb.AppendLine(FormatNeuromon(_battleSimulator.Player1.ActiveNeuromon));
-            sb.AppendLine("======================");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine(RenderPlayer(_battleSimulator.Player1));
 
-            sb.AppendLine("======================");
-            sb.AppendLine($"Player: {_battleSimulator.Player2.Name}");
-            sb.AppendLine(FormatNeuromon(_battleSimulator.Player2.ActiveNeuromon));
-            sb.AppendLine("======================");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine(RenderPlayer(_battleSimulator.Player2));
 
-            Console.WriteLine(sb.ToString());
+            Console.ResetColor();
+
+            Console.WriteLine();
         }
 
-        private static string FormatNeuromon(Neuromon neuromon)
+        private string RenderPlayer(IPlayer player)
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine($"Neuromon: {neuromon.Name}");
-            sb.Append($"Health: {neuromon.Health}");
+            sb.AppendLine(RenderPlayerBorder);
+            sb.AppendLine($"Player: {player.Name}\n");
+
+            sb.AppendLine($"Active Neuromon:");
+            sb.AppendLine(FormatNeuromon(player.ActiveNeuromon));
+
+            sb.AppendLine(RenderMoveSet(player.ActiveNeuromon.MoveSet));
+
+            sb.AppendLine("Other Neuromon:");
+
+            var formattedOtherNeuromon = player.Neuromon.Where(n => n != player.ActiveNeuromon).Select(FormatNeuromon).ToList();
+
+            for (var i = 0; i < formattedOtherNeuromon.Count; ++i)
+            {
+                sb.AppendLine($"{i + 1}: {formattedOtherNeuromon[i]}");
+            }
+
+            sb.AppendLine(RenderPlayerBorder);
 
             return sb.ToString();
         }
 
-        private void RenderChooseTurn(IPlayer player)
+        private static string FormatNeuromon(Neuromon neuromon)
+        {
+            return $"Name: {neuromon.Name} | Type: {neuromon.Type.Name} | Health: {neuromon.Health}";
+        }
+
+        private static void RenderChooseTurn(IPlayer player)
+        {
+            Console.WriteLine($"{player.Name} select your move:\n");
+        }
+
+        private string RenderMoveSet(MoveSet moveSet)
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{player.Name} select your move:");
+            sb.AppendLine(MoveBoxTop);
 
-            var moveSet = player.ActiveNeuromon.MoveSet;
+            FormatMoves(sb, moveSet.MoveOne(), moveSet.MoveTwo(), 1);
+            FormatMoves(sb, moveSet.MoveThree(), moveSet.MoveFour(), 3);
 
             sb.AppendLine(MoveBoxTop);
 
-            FormatMoves(sb, moveSet.MoveOne(), moveSet.MoveTwo());
-            FormatMoves(sb, moveSet.MoveThree(), moveSet.MoveFour());
-
-            sb.AppendLine(MoveBoxTop);
-
-            Console.WriteLine(sb);
+            return sb.ToString();
         }
 
-        private void FormatMoves(StringBuilder sb, Move first, Move second)
+        private void FormatMoves(StringBuilder sb, Move first, Move second, int moveNumber)
         {
             sb.Append(MoveBoxLeft);
-            FormatMove(sb, first);
+            FormatMove(sb, first, moveNumber);
             sb.Append(MoveBoxMiddle);
-            FormatMove(sb, second);
+            FormatMove(sb, second, moveNumber + 1);
             sb.AppendLine(MoveBoxRight);
         }
 
-        private void FormatMove(StringBuilder sb, Move move)
+        private void FormatMove(StringBuilder sb, Move move, int moveNumber)
         {
-            sb.Append(move.Name);
+            var moveRender = $"{moveNumber}. {move.Name}";
 
-            var padding = _moveRenderLength - move.Name.Length;
+            sb.Append(moveRender);
+
+            var padding = _moveRenderLength - moveRender.Length;
 
             if (padding > 0)
             {

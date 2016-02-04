@@ -5,7 +5,9 @@ namespace Game
 {
     internal sealed class BattleDelegates
     {
-        public delegate void TurnChosenDelegate(IPlayer player, Turn turn);
+        public delegate void AttackMadeDelegate(Neuromon attacker, Move move, Neuromon target, int damage);
+
+        public delegate void NeuromonChangedDelegate(IPlayer player, Neuromon previousNeuromon, Neuromon newNeuromon);
 
         public delegate void GameOverDelegate(IPlayer winner, IPlayer loser);
 
