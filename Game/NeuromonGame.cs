@@ -37,7 +37,13 @@ namespace Game
                 randomNeuromonGenerator.GenerateNeuromonCollection());
 
             var battleSimulator = new BattleSimulator(playerOne, playerTwo, gameSettings.SimulateThinking);
-            var renderer = new Renderer(battleSimulator);
+
+            Renderer renderer = null;
+
+            if (gameSettings.ShouldRender)
+            {
+                renderer = new Renderer(battleSimulator);
+            }
 
             battleSimulator.Run();
         }

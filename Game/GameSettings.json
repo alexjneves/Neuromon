@@ -1,11 +1,12 @@
 ﻿{
-  "numberOfNeuromon": 2,
+  "numberOfNeuromon": 3,
   "typesFileName": "Types.json",
   "movesFileName": "Moves.json",
   "neuromonFileName": "Neuromon.json",
   "playerOneName": "Player 1",
   "playerTwoName": "Player 2",
-  "playerOneType": "human",
+  "playerOneType": "intelligent",
   "playerTwoType": "intelligent",
-  "simulateThinking": "true"
+  "simulateThinking": "true",
+  "shouldRender": "true"
 }

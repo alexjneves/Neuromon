@@ -13,12 +13,14 @@ namespace Game
         public string PlayerOneType { get; }
         public string PlayerTwoType { get; }
         public bool SimulateThinking { get; }
+        public bool ShouldRender { get; }
 
 
         [JsonConstructor]
         public GameSettings(int numberOfNeuromon, string typesFileName, string movesFileName, 
             string neuromonFileName, string playerOneName, string playerTwoName, 
-            string playerOneType, string playerTwoType, bool simulateThinking)
+            string playerOneType, string playerTwoType, bool simulateThinking, 
+            bool shouldRender)
         {
             NumberOfNeuromon = numberOfNeuromon;
             TypesFileName = typesFileName;
@@ -29,6 +31,7 @@ namespace Game
             PlayerOneType = playerOneType;
             PlayerTwoType = playerTwoType;
             SimulateThinking = simulateThinking;
+            ShouldRender = shouldRender;
         }
     }
 }
