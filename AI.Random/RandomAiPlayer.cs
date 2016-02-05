@@ -29,5 +29,13 @@ namespace AI.Random
 
             return new Attack(selectedMove);
         }
+
+        public Neuromon SelectActiveNeuromon()
+        {
+            var aliveNeuromon = Neuromon.Where(n => !n.IsDead).ToList();
+
+            var neuromonIndex = _rand.Next(0, aliveNeuromon.Count);
+            return aliveNeuromon[neuromonIndex];
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace AI.Intelligent
         public NeuromonCollection Neuromon { get; }
         public Neuromon ActiveNeuromon { get; set; }
 
+        private readonly Random _rand;
         private readonly Dictionary<Neuromon, RouletteWheel<Move>> _neuromonRouletteWheels;
 
         public IntelligentAiPlayer(string name, NeuromonCollection neuromonCollection)
@@ -21,6 +22,7 @@ namespace AI.Intelligent
             Neuromon = neuromonCollection;
             ActiveNeuromon = neuromonCollection.First();
 
+            _rand = new Random();
             _neuromonRouletteWheels = new Dictionary<Neuromon, RouletteWheel<Move>>();
 
             foreach (var neuromon in neuromonCollection)
@@ -41,6 +43,14 @@ namespace AI.Intelligent
             var move = rouletteWheel.Spin();
 
             return new Attack(move);
+        }
+
+        public Neuromon SelectActiveNeuromon()
+        {
+            var aliveNeuromon = Neuromon.Where(n => !n.IsDead).ToList();
+
+            var neuromonIndex = _rand.Next(0, aliveNeuromon.Count);
+            return aliveNeuromon[neuromonIndex];
         }
 
         private static RouletteWheel<Move> CreateRouletteWheel(Neuromon neuromon)

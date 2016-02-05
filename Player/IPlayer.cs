@@ -10,5 +10,6 @@ namespace Player
         Neuromon ActiveNeuromon { get; set; }
 
         ITurn ChooseTurn();
+        Neuromon SelectActiveNeuromon();
     }
 }

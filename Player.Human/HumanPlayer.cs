@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Common;
 using Common.Turn;
 
 namespace Player.Human
 {
-    internal sealed class HumanPlayer : IPlayer
+    public sealed class HumanPlayer : IPlayer
     {
-        private const ConsoleKey AttackKey = ConsoleKey.D1;
-        private const ConsoleKey ChangeNeuromonKey = ConsoleKey.D2;
+        private const int AttackTurnType = 1;
+        private const int ChangeNeuromonTurnType = 2;
 
         public string Name { get; }
         public NeuromonCollection Neuromon { get; }
@@ -23,64 +25,112 @@ namespace Player.Human
 
         public ITurn ChooseTurn()
         {
-            Console.WriteLine($"1: Attack\n2: Change Neuromon");
+            var canSwitchNeuromon = Neuromon.Count(n => !n.IsDead) > 1;
 
-            var turnType = Console.ReadKey().Key;
-            Console.WriteLine("\n");
-
-            if (turnType == AttackKey)
+            var validTurnTypes = new List<int>()
             {
-                return ChooseAttack();
+                AttackTurnType
+            };
+
+            var sb = new StringBuilder();
+            sb.AppendLine("1: Attack");
+
+            if (canSwitchNeuromon)
+            {
+                sb.AppendLine("2: Change Neuromon");
+                validTurnTypes.Add(ChangeNeuromonTurnType);
             }
 
-            if (turnType == ChangeNeuromonKey)
+            Console.WriteLine(sb.ToString());
+
+            ITurn selectedTurn = null;
+            var turnType = ReadInputUntilValid(input => validTurnTypes.Contains(input));
+
+            if (turnType == AttackTurnType)
             {
-                return ChooseActiveNeuromon();
+                selectedTurn = ChooseAttack();
+            }
+            else if (turnType == ChangeNeuromonTurnType && canSwitchNeuromon)
+            {
+                selectedTurn = new ChangeNeuromon(SelectActiveNeuromon());
             }
 
-            throw new Exception("Invalid Move Selection");
+            return selectedTurn;
+        }
+
+        public Neuromon SelectActiveNeuromon()
+        {
+            Neuromon newActiveNeuromon;
+            bool validSelection;
+
+            var otherNeuromon = Neuromon.Where(n => n != ActiveNeuromon).ToList();
+
+            do
+            {
+                Console.WriteLine("Choose Neuromon:");
+
+                var neuromonIndex = ReadInputUntilValid(input => input <= otherNeuromon.Count && input > 0, "Invalid Neuromon Selection!");
+
+                newActiveNeuromon = otherNeuromon[neuromonIndex - 1];
+
+                validSelection = !newActiveNeuromon.IsDead;
+
+                if (!validSelection)
+                {
+                    Console.WriteLine($"Cannot choose {newActiveNeuromon.Name} as they are dead!");
+                }
+            } while (!validSelection);
+
+            return newActiveNeuromon;
         }
 
         private ITurn ChooseAttack()
         {
             Console.WriteLine("Choose Attack:");
 
-            var attack = Console.ReadKey().Key;
-            Console.WriteLine("\n");
+            var moveIndex = ReadInputUntilValid(input => input <= 4 && input > 0, "Invalid Attack!");
 
-            var move = DetermineMove(attack);
+            var move = ActiveNeuromon.MoveSet[moveIndex - 1];
             return new Attack(move);
         }
 
-        private Move DetermineMove(ConsoleKey key)
+        private static int ReadInputUntilValid(Predicate<int> condition, string errorMessage = "Invalid Selection!")
         {
-            switch (key)
+            var conditionMet = false;
+            var input = -1;
+
+            while (!conditionMet)
             {
-                case ConsoleKey.D1:
-                    return ActiveNeuromon.MoveSet.MoveOne();
-                case ConsoleKey.D2:
-                    return ActiveNeuromon.MoveSet.MoveTwo();
-                case ConsoleKey.D3:
-                    return ActiveNeuromon.MoveSet.MoveThree();
-                case ConsoleKey.D4:
-                    return ActiveNeuromon.MoveSet.MoveFour();
-                default:
-                    throw new Exception("Invalid choice");
+                input = ReadInputUntilValid();
+                conditionMet = condition(input);
+
+                if (!conditionMet)
+                {
+                    Console.WriteLine(errorMessage);
+                }
             }
+
+            return input;
         }
 
-        private ITurn ChooseActiveNeuromon()
+        private static int ReadInputUntilValid()
         {
-            Console.WriteLine("Choose Neuromon:");
+            int neuromonIndex;
 
-            var neuromonIndex = int.Parse(Console.ReadKey().KeyChar.ToString());
+            while (!int.TryParse(ReadInput(), out neuromonIndex))
+            {
+                Console.WriteLine("Invalid Selection!");
+            }
 
-            Console.WriteLine();
-
-            var otherNeuromon = Neuromon.Where(n => n != ActiveNeuromon).ToList();
-            var newActiveNeuromon = otherNeuromon[neuromonIndex - 1];
-
-            return new ChangeNeuromon(newActiveNeuromon);
+            return neuromonIndex;
         }
+
+        private static string ReadInput()
+        {
+            var input = Console.ReadKey().KeyChar.ToString();
+            Console.WriteLine("\n");
+
+            return input;
+        } 
     }
 }

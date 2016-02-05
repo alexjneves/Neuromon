@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Common;
-using Common.Turn;
 using Player;
 
 namespace Game
@@ -16,9 +14,11 @@ namespace Game
         private const string MoveBoxMiddle = " | ";
 
         private const string RenderPlayerBorder = "==============================================";
-
         private const string TurnMadeBorder = "***************************************************";
-        private const ConsoleColor TurnMadeColour = ConsoleColor.DarkRed;
+
+        private const ConsoleColor TurnMadeColour = ConsoleColor.DarkGreen;
+        private const ConsoleColor Player1Colour = ConsoleColor.DarkCyan;
+        private const ConsoleColor Player2Colour = ConsoleColor.DarkYellow;
 
         private readonly BattleSimulator _battleSimulator;
         private readonly int _moveRenderLength;
@@ -31,6 +31,7 @@ namespace Game
             _battleSimulator.OnNeuromonChanged += RenderNeuromonChanged;
             _battleSimulator.OnGameOver += RenderGameOver;
             _battleSimulator.OnGameStateChanged += OnGameStateChanged;
+            _battleSimulator.OnNeuromonDefeated += OnNeuromonDefeated;
 
             _moveRenderLength = CalculateMoveRenderLength();
         }
@@ -49,24 +50,36 @@ namespace Game
 
         private static void RenderTurnMade(string contents)
         {
-            Console.ForegroundColor = TurnMadeColour;
+            var sb = new StringBuilder();
 
-            Console.WriteLine(TurnMadeBorder);
-            Console.WriteLine(contents);
-            Console.WriteLine(TurnMadeBorder);
+            sb.AppendLine(TurnMadeBorder);
+            sb.AppendLine(contents);
+            sb.AppendLine(TurnMadeBorder);
+
+            RenderTextWithColour(sb.ToString(), TurnMadeColour);
         }
 
-        private static void RenderGameOver(IPlayer winner, IPlayer loser)
+        private void RenderGameOver(IPlayer winner, IPlayer loser)
         {
-            var output = $"{winner.Name} beat {loser.Name}!";
-            Console.WriteLine(output);
+            RenderPlayer(_battleSimulator.Player1);
+            RenderPlayer(_battleSimulator.Player2);
+
+            var sb = new StringBuilder();
+
+            sb.AppendLine(TurnMadeBorder);
+            sb.AppendLine($"{loser.Name} has no remaining Neuromon...");
+            sb.AppendLine($"{winner.Name} beat {loser.Name}!");
+            sb.AppendLine(TurnMadeBorder);
+
+            RenderTextWithColour(sb.ToString(), ConsoleColor.DarkGreen);
         }
 
         private void OnGameStateChanged(GameState previousState, GameState newState)
         {
-            if (previousState == GameState.Player1Turn || previousState == GameState.Player2Turn)
+            if (newState != GameState.GameOver)
             {
-                RenderPlayerState();
+                RenderPlayer(_battleSimulator.Player1);
+                RenderPlayer(_battleSimulator.Player2);
             }
 
             switch (newState)
@@ -82,22 +95,22 @@ namespace Game
             }
         }
 
-        private void RenderPlayerState()
+        private void OnNeuromonDefeated(IPlayer attackingPlayer, Neuromon attacker, IPlayer defendingPlayer, Neuromon defeated)
         {
-            Console.WriteLine();
-
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine(RenderPlayer(_battleSimulator.Player1));
-
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine(RenderPlayer(_battleSimulator.Player2));
-
-            Console.ResetColor();
-
-            Console.WriteLine();
+            Console.WriteLine($"{attackingPlayer.Name}'s {attacker.Name} defeated {defendingPlayer.Name}'s {defeated.Name}!\n");
+            Console.WriteLine($"{defendingPlayer.Name} must select a new active Neuromon:\n");
+            RenderPlayer(defendingPlayer);
         }
 
-        private string RenderPlayer(IPlayer player)
+        private void RenderPlayer(IPlayer player)
+        {
+            var output = FormatPlayerState(player);
+            var colour = player == _battleSimulator.Player1 ? Player1Colour : Player2Colour;
+
+            RenderTextWithColour(output, colour);
+        }
+
+        private string FormatPlayerState(IPlayer player)
         {
             var sb = new StringBuilder();
 
@@ -179,6 +192,13 @@ namespace Game
             var singleLength = totalLength / 2;
 
             return singleLength - MoveBoxMiddle.Length;
+        }
+
+        private static void RenderTextWithColour(string output, ConsoleColor colour)
+        {
+            Console.ForegroundColor = colour;
+            Console.WriteLine(output);
+            Console.ResetColor();
         }
     }
 }

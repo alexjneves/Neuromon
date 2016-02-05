@@ -1,14 +1,21 @@
-﻿using Common;
+﻿using System;
+using System.Linq;
+using System.Threading;
+using Common;
 using Common.Turn;
 using Player;
+using Player.Human;
 using static Game.BattleDelegates;
 
 namespace Game
 {
     internal sealed class BattleSimulator
     {
-        public GameState GameState { get; private set; }
+        private const int ThinkingSeconds = 3;
 
+        private readonly bool _simulateThinking;
+
+        public GameState GameState { get; private set; }
         public IPlayer Player1 { get; }
         public IPlayer Player2 { get; }
 
@@ -16,38 +23,63 @@ namespace Game
         public event NeuromonChangedDelegate OnNeuromonChanged;
         public event GameOverDelegate OnGameOver;
         public event GameStateChangedDelegate OnGameStateChanged;
+        public event NeuromonDefeatedDelegate OnNeuromonDefeated;
 
-        public BattleSimulator(IPlayer player1, IPlayer player2)
+        public BattleSimulator(IPlayer player1, IPlayer player2, bool simulateThinking)
         {
             GameState = GameState.NotStarted;
 
             Player1 = player1;
             Player2 = player2;
+            _simulateThinking = simulateThinking;
         }
 
         public void Run()
         {
-            while (true)
+            while (GameState != GameState.GameOver)
             {
                 ChangeState(GameState.Player1Turn);
-                TakeTurn(Player1, Player2);
+                SimulateTurn(Player1, Player2);
 
-                if (Player2.ActiveNeuromon.IsDead())
+                if (GameState == GameState.GameOver)
                 {
-                    GameOver(Player1, Player2);
                     break;
                 }
 
                 ChangeState(GameState.Player2Turn);
-                TakeTurn(Player2, Player1);
-
-                if (Player1.ActiveNeuromon.IsDead())
-                {
-                    GameOver(Player2, Player1);
-                    break;
-                }
+                SimulateTurn(Player2, Player1);
             }
         }
+
+        private void SimulateTurn(IPlayer sourcePlayer, IPlayer targetPlayer)
+        {
+            if (_simulateThinking && !(sourcePlayer is HumanPlayer))
+            {
+                Thread.Sleep(TimeSpan.FromSeconds(ThinkingSeconds));
+            }
+
+            ChooseTurn(sourcePlayer, targetPlayer);
+
+            if (targetPlayer.Neuromon.All(n => n.IsDead))
+            {
+                GameOver(sourcePlayer, targetPlayer);
+            }
+            else if (targetPlayer.ActiveNeuromon.IsDead)
+            {
+                OnNeuromonDefeated?.Invoke(sourcePlayer, sourcePlayer.ActiveNeuromon, targetPlayer, targetPlayer.ActiveNeuromon);
+
+                var deadNeuromon = targetPlayer.ActiveNeuromon;
+                targetPlayer.ActiveNeuromon = targetPlayer.SelectActiveNeuromon();
+
+                if (targetPlayer.ActiveNeuromon.IsDead)
+                {
+                    throw new Exception("Cannot choose a dead Neuromon to be the active Neuromon");
+                }
+
+                OnNeuromonChanged?.Invoke(targetPlayer, deadNeuromon, targetPlayer.ActiveNeuromon);
+            }
+        }
+
 
         private void ChangeState(GameState newState)
         {
@@ -57,7 +89,7 @@ namespace Game
             OnGameStateChanged?.Invoke(previousState, GameState);
         }
 
-        private void TakeTurn(IPlayer source, IPlayer target)
+        private void ChooseTurn(IPlayer source, IPlayer target)
         {
             var sourceTurn = source.ChooseTurn();
 

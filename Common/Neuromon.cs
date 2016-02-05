@@ -23,7 +23,7 @@
             MoveSet = other.MoveSet;
         }
 
-        public bool IsDead() => Health <= 0;
+        public bool IsDead => Health <= 0;
 
         public void TakeDamage(int damage)
         {
