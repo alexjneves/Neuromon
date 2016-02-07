@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Common;
 using Data;
+using Game.Damage;
 using Newtonsoft.Json;
 
 namespace Game
@@ -29,14 +29,22 @@ namespace Game
             var playerOne = playerFactory.Create(
                 gameSettings.PlayerOneType,
                 gameSettings.PlayerOneName,
-                randomNeuromonGenerator.GenerateNeuromonCollection());
+                randomNeuromonGenerator.GenerateNeuromonCollection()
+            );
 
             var playerTwo = playerFactory.Create(
                 gameSettings.PlayerTwoType,
                 gameSettings.PlayerTwoName,
-                randomNeuromonGenerator.GenerateNeuromonCollection());
+                randomNeuromonGenerator.GenerateNeuromonCollection()
+            );
 
-            var battleSimulator = new BattleSimulator(playerOne, playerTwo, gameSettings.SimulateThinking);
+            var damageCalculatorFactory = new DamageCalculatorFactory(
+                gameSettings.EffectiveMultiplier, gameSettings.WeakMultiplier,
+                gameSettings.MinimumRandomMultiplier, gameSettings.MaximumRandomMultiplier,
+                gameSettings.NonDeterministic
+            );
+
+            var battleSimulator = new BattleSimulator(playerOne, playerTwo, damageCalculatorFactory.Create(), gameSettings.SimulateThinking);
 
             Renderer renderer = null;
 

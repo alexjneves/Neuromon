@@ -19,12 +19,12 @@ namespace Common
             _weak = weak;
         }
 
-        bool IsEffectiveAgainst(GameType otherGameType)
+        public bool IsEffectiveAgainst(GameType otherGameType)
         {
             return _effective.Any(type => type == otherGameType.Name);
         }
 
-        bool IsWeakAgainst(GameType otherGameType)
+        public bool IsWeakAgainst(GameType otherGameType)
         {
             return _weak.Any(type => type == otherGameType.Name);
         }

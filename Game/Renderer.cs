@@ -38,8 +38,20 @@ namespace Game
 
         private static void RenderAttack(Neuromon attacker, Move move, Neuromon target, int damage)
         {
-            var output = $"{attacker.Name} used {move.Name} and dealt {damage} damage!";
-            RenderTurnMade(output);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{attacker.Name} used {move.Name} and dealt {damage} damage!");
+
+            if (move.Type.IsEffectiveAgainst(target.Type))
+            {
+                sb.AppendLine("It's super effective!");
+            }
+            else if (move.Type.IsWeakAgainst(target.Type))
+            {
+                sb.AppendLine("It wasn't very effective..");
+            }
+
+            RenderTurnMade(sb.ToString().Trim());
         }
 
         private static void RenderNeuromonChanged(IPlayer player, Neuromon previousNeuromon, Neuromon newNeuromon)

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
-using Common;
 using Common.Turn;
+using Game.Damage;
 using Player;
 using Player.Human;
 using static Game.BattleDelegates;
@@ -13,6 +13,7 @@ namespace Game
     {
         private const int ThinkingSeconds = 3;
 
+        private readonly IDamageCalculator _damageCalculator;
         private readonly bool _simulateThinking;
 
         public GameState GameState { get; private set; }
@@ -25,12 +26,13 @@ namespace Game
         public event GameStateChangedDelegate OnGameStateChanged;
         public event NeuromonDefeatedDelegate OnNeuromonDefeated;
 
-        public BattleSimulator(IPlayer player1, IPlayer player2, bool simulateThinking)
+        public BattleSimulator(IPlayer player1, IPlayer player2, IDamageCalculator damageCalculator, bool simulateThinking)
         {
             GameState = GameState.NotStarted;
 
             Player1 = player1;
             Player2 = player2;
+            _damageCalculator = damageCalculator;
             _simulateThinking = simulateThinking;
         }
 
@@ -80,7 +82,6 @@ namespace Game
             }
         }
 
-
         private void ChangeState(GameState newState)
         {
             var previousState = GameState;
@@ -96,27 +97,29 @@ namespace Game
             if (sourceTurn is Attack)
             {
                 var attack = sourceTurn as Attack;
-                Attack(attack.Move, target.ActiveNeuromon);
-                OnAttackMade?.Invoke(source.ActiveNeuromon, attack.Move, target.ActiveNeuromon, attack.Move.Damage);
+                Attack(source, target, attack);
             }
             else if (sourceTurn is ChangeNeuromon)
             {
                 var changeNeuromon = sourceTurn as ChangeNeuromon;
-                var previousNeuromon = source.ActiveNeuromon;
-
-                ChangeNeuromon(source, changeNeuromon.Neuromon);
-                OnNeuromonChanged?.Invoke(source, previousNeuromon, changeNeuromon.Neuromon);
+                ChangeNeuromon(source, changeNeuromon);
             }
         }
 
-        private static void Attack(Move move, Neuromon target)
+        private void Attack(IPlayer attackingPlayer, IPlayer targetPlayer, Attack attack)
         {
-            target.TakeDamage(move.Damage);
+            var damage = _damageCalculator.CalculateDamage(attack.Move, targetPlayer.ActiveNeuromon);
+            targetPlayer.ActiveNeuromon.TakeDamage(damage);
+
+            OnAttackMade?.Invoke(attackingPlayer.ActiveNeuromon, attack.Move, targetPlayer.ActiveNeuromon, damage);
         }
 
-        private static void ChangeNeuromon(IPlayer player, Neuromon neuromon)
+        private void ChangeNeuromon(IPlayer player, ChangeNeuromon changeNeuromon)
         {
-            player.ActiveNeuromon = neuromon;
+            var previousNeuromon = player.ActiveNeuromon;
+            player.ActiveNeuromon = changeNeuromon.Neuromon;
+
+            OnNeuromonChanged?.Invoke(player, previousNeuromon, changeNeuromon.Neuromon);
         }
 
         private void GameOver(IPlayer winner, IPlayer loser)
