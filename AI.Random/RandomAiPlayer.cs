@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using Common;
 using Common.Turn;
-using Player;
 
-namespace AI.Random
+namespace Player.AI.Random
 {
     internal sealed class RandomAiPlayer : IPlayer
     {

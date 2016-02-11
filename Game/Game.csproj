@@ -70,13 +70,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AI.Intelligent\AI.Intelligent.csproj">
+    <ProjectReference Include="..\AI.Intelligent\Player.AI.Intelligent.csproj">
       <Project>{2f4cacd3-7eca-426d-948d-ad12843bc479}</Project>
-      <Name>AI.Intelligent</Name>
+      <Name>Player.AI.Intelligent</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AI.Random\AI.Random.csproj">
+    <ProjectReference Include="..\AI.Random\Player.AI.Random.csproj">
       <Project>{24F3F6DA-672B-4A4F-ABC1-9DD2BA61D2FA}</Project>
-      <Name>AI.Random</Name>
+      <Name>Player.AI.Random</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{9eaf5299-5d05-49ea-b127-b7e312684810}</Project>
