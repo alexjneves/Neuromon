@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AI.Intelligent
+namespace Player.AI.Intelligent
 {
     internal sealed class RouletteWheel<T>
     {

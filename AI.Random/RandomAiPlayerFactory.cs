@@ -1,7 +1,6 @@
 ﻿using Common;
-using Player;
 
-namespace AI.Random
+namespace Player.AI.Random
 {
     public sealed class RandomAiPlayerFactory : IPlayerFactory
     {

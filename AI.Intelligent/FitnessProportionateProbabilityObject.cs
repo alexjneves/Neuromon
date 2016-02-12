@@ -1,4 +1,4 @@
-namespace AI.Intelligent
+namespace Player.AI.Intelligent
 {
     internal sealed class FitnessProportionateProbabilityObject<T>
     {

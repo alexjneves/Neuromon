@@ -5,17 +5,19 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game.csproj", "{2790C0AC-18D7-4B13-8C84-3FA10B857976}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI.Random", "AI.Random\AI.Random.csproj", "{24F3F6DA-672B-4A4F-ABC1-9DD2BA61D2FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player.AI.Random", "AI.Random\Player.AI.Random.csproj", "{24F3F6DA-672B-4A4F-ABC1-9DD2BA61D2FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{9EAF5299-5D05-49EA-B127-B7E312684810}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI.Intelligent", "AI.Intelligent\AI.Intelligent.csproj", "{2F4CACD3-7ECA-426D-948D-AD12843BC479}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player.AI.Intelligent", "AI.Intelligent\Player.AI.Intelligent.csproj", "{2F4CACD3-7ECA-426D-948D-AD12843BC479}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{37B72455-8A8A-427D-B476-ED97E1AF0E76}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player", "Player\Player.csproj", "{2F928210-92C9-4344-ACD3-92B91AF93CA8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player.Human", "Player.Human\Player.Human.csproj", "{BA045B23-A98D-4B28-A506-C9B1FA668902}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player.AI.Neat", "Player.AI.Neat\Player.AI.Neat.csproj", "{1D21D65A-0213-4D63-8CE4-5354B46176D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{BA045B23-A98D-4B28-A506-C9B1FA668902}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA045B23-A98D-4B28-A506-C9B1FA668902}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA045B23-A98D-4B28-A506-C9B1FA668902}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D21D65A-0213-4D63-8CE4-5354B46176D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D21D65A-0213-4D63-8CE4-5354B46176D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D21D65A-0213-4D63-8CE4-5354B46176D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D21D65A-0213-4D63-8CE4-5354B46176D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

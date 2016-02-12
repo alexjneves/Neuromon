@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Common.Turn;
-using Player;
 
-namespace AI.Intelligent
+namespace Player.AI.Intelligent
 {
     internal sealed class IntelligentAiPlayer : IPlayer
     {

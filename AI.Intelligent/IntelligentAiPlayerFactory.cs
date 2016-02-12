@@ -1,7 +1,6 @@
 ﻿using Common;
-using Player;
 
-namespace AI.Intelligent
+namespace Player.AI.Intelligent
 {
     public sealed class IntelligentAiPlayerFactory : IPlayerFactory
     {

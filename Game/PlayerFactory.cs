@@ -1,8 +1,8 @@
 ﻿using System;
-using AI.Intelligent;
-using AI.Random;
 using Common;
 using Player;
+using Player.AI.Intelligent;
+using Player.AI.Random;
 using Player.Human;
 
 namespace Game
