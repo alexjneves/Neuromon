@@ -4,6 +4,8 @@ using System.IO;
 using Data;
 using Game.Damage;
 using Newtonsoft.Json;
+using Player;
+using Player.Human;
 
 namespace Game
 {
@@ -22,21 +24,17 @@ namespace Game
                 gameSettings.NeuromonFileName
             );
 
-            var playerFactory = new PlayerFactory();
+            var playerControllerFactory = new PlayerControllerFactory(gameSettings.ChampionBrainFileName);
 
             var randomNeuromonGenerator = new NeuromonCollectionGenerator(gameDatabase.Neuromon, gameSettings.NumberOfNeuromon);
 
-            var playerOne = playerFactory.Create(
-                gameSettings.PlayerOneType,
-                gameSettings.PlayerOneName,
-                randomNeuromonGenerator.GenerateNeuromonCollection()
-            );
+            var playerOneState = new PlayerState(gameSettings.PlayerOneName, randomNeuromonGenerator.GenerateNeuromonCollection());
+            var playerOneController = playerControllerFactory.Create(gameSettings.PlayerOneType, playerOneState);
+            var playerOne = new Player.Player(playerOneState, playerOneController);
 
-            var playerTwo = playerFactory.Create(
-                gameSettings.PlayerTwoType,
-                gameSettings.PlayerTwoName,
-                randomNeuromonGenerator.GenerateNeuromonCollection()
-            );
+            var playerTwoState = new PlayerState(gameSettings.PlayerTwoName, randomNeuromonGenerator.GenerateNeuromonCollection());
+            var playerTwoController = playerControllerFactory.Create(gameSettings.PlayerTwoType, playerTwoState);
+            var playerTwo = new Player.Player(playerTwoState, playerTwoController);
 
             var damageCalculatorFactory = new DamageCalculatorFactory(
                 gameSettings.EffectiveMultiplier, gameSettings.WeakMultiplier,

@@ -1,11 +1,6 @@
-using SharpNeat.Core;
-using SharpNeat.EvolutionAlgorithms;
-using SharpNeat.Genomes.Neat;
-using SharpNeat.Phenomes;
-
 namespace Player.AI.Neat.Trainer
 {
-    internal sealed class NeuromonExperimentSettings
+    internal sealed class ExperimentSettings
     {
         public string ExperimentName { get; set; }
         public string Description { get; set; }
@@ -16,8 +11,8 @@ namespace Player.AI.Neat.Trainer
         public string ExistingPopulationFilePath { get; set; }
         public string OutputPopulationFilePath { get; set; }
         public string OutputChampionFilePath { get; set; }
-        public IPhenomeEvaluator<IBlackBox> PhenomeEvaluator { get; set; } 
-        public NeatEvolutionAlgorithmParameters NeatEvolutionAlgorithmParameters { get; set; }
-        public NeatGenomeParameters NeatGenomeParameters { get; set; }
+        public string ComplexityRegulationStrategy { get; set; }
+        public int ComplexityThreshold { get; set; }
+        public double DesiredFitness { get; set; }
     }
 }

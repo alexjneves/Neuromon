@@ -42,8 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FitnessProportionateProbabilityCalculator.cs" />
-    <Compile Include="IntelligentAiPlayer.cs" />
-    <Compile Include="IntelligentAiPlayerFactory.cs" />
+    <Compile Include="IntelligentAiPlayerController.cs" />
+    <Compile Include="IntelligentAiPlayerControllerFactory.cs" />
     <Compile Include="FitnessProportionateProbabilityObject.cs" />
     <Compile Include="FitnessProportionateProbabilityObjectCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

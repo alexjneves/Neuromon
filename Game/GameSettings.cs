@@ -12,6 +12,7 @@ namespace Game
         public string TypesFileName { get; }
         public string MovesFileName { get; }
         public string NeuromonFileName { get; }
+        public string ChampionBrainFileName { get; }
         public string PlayerOneName { get; }
         public string PlayerTwoName { get; }
         public string PlayerOneType { get; }
@@ -23,9 +24,9 @@ namespace Game
         [JsonConstructor]
         public GameSettings(int numberOfNeuromon, double effectiveMultiplier, double weakMultiplier, 
             double minimumRandomMultiplier, double maximumRandomMultiplier, string typesFileName, 
-            string movesFileName, string neuromonFileName, string playerOneName, 
-            string playerTwoName, string playerOneType, string playerTwoType, 
-            bool simulateThinking, bool shouldRender, bool nonDeterministic)
+            string movesFileName, string neuromonFileName, string championBrainFileName, 
+            string playerOneName, string playerTwoName, string playerOneType, 
+            string playerTwoType, bool simulateThinking, bool shouldRender, bool nonDeterministic)
         {
             NumberOfNeuromon = numberOfNeuromon;
             EffectiveMultiplier = effectiveMultiplier;
@@ -42,6 +43,7 @@ namespace Game
             SimulateThinking = simulateThinking;
             ShouldRender = shouldRender;
             NonDeterministic = nonDeterministic;
+            ChampionBrainFileName = championBrainFileName;
         }
     }
 }

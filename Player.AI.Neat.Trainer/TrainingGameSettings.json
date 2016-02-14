@@ -7,12 +7,8 @@
   "typesFileName": "Types.json",
   "movesFileName": "Moves.json",
   "neuromonFileName": "Neuromon.json",
-  "championBrainFileName": "ChampionNeatAi.xml",
-  "playerOneName": "Player 1",
-  "playerTwoName": "Player 2",
-  "playerOneType": "human",
-  "playerTwoType": "intelligent",
-  "simulateThinking": "true",
-  "shouldRender": "true",
+  "opponentType": "intelligent",
+  "opponentBrainFileName": "",
+  "shouldRender": "false",
   "nonDeterministic": "true"
 }

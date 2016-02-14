@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml;
+using Newtonsoft.Json;
 using SharpNeat.EvolutionAlgorithms;
 using SharpNeat.Genomes.Neat;
 
@@ -8,32 +9,23 @@ namespace Player.AI.Neat.Trainer
 {
     internal sealed class Train
     {
-        // TODO: Read following settings from config
-        private const string ExperimentName = "Neuromon";
+        // TODO: Remove XML configuration
         private const string NeuromonTrainingConfigFile = "NeuromonTrainingConfig.xml";
 
-        private static NeatEvolutionAlgorithm<NeatGenome> _evolutionAlgorithm;
+        private const string NeuromonExperimentSettingsFileName = "ExperimentSettings.json";
+        private const string EvolutionAlgorithmParametersFileName = "EvolutionAlgorithmParameters.json";
+        private const string TrainingGameSettingsFileName = "TrainingGameSettings.json";
 
         private static void Main()
         {
-            // TODO: Read from JSON file
-            var neuromonExperimentSettings = new NeuromonExperimentSettings
-            {
-                ExperimentName = "Neuromon Neat AI Experiment",
-                Description = "",
-                InputCount = 0,
-                OutputCount = 0,
-                PopulationSize = 0,
-                LoadExistingPopulation = false,
-                ExistingPopulationFilePath = "",
-                OutputPopulationFilePath = "NeuromonGenomePopulation.xml",
-                OutputChampionFilePath = "NeuromonChampion.xml",
-                PhenomeEvaluator = new NeuromonEvaluator(),
-                NeatEvolutionAlgorithmParameters = new NeatEvolutionAlgorithmParameters { SpecieCount = 10 },
-                NeatGenomeParameters = new NeatGenomeParameters()
-            };
+            var neuromonExperimentSettings = JsonConvert.DeserializeObject<ExperimentSettings>(NeuromonExperimentSettingsFileName);
+            var evolutionAlgorithmParameters = JsonConvert.DeserializeObject<NeatEvolutionAlgorithmParameters>(EvolutionAlgorithmParametersFileName);
+            var trainingGameSettings = JsonConvert.DeserializeObject<TrainingGameSettings>(TrainingGameSettingsFileName);
 
-            var neuromonExperiment = new NeuromonExperiment(neuromonExperimentSettings);
+            var neuromonPhenomeEvaluator = new NeuromonEvaluator(trainingGameSettings, neuromonExperimentSettings.DesiredFitness);
+            var neatGenomeParameters = new NeatGenomeParameters();
+
+            var neuromonExperiment = new NeuromonExperiment(neuromonExperimentSettings, evolutionAlgorithmParameters, neuromonPhenomeEvaluator, neatGenomeParameters);
 
             var genomeFactory = neuromonExperiment.CreateGenomeFactory();
             List<NeatGenome> genomePopulation;
@@ -54,24 +46,23 @@ namespace Player.AI.Neat.Trainer
             // TODO: Remove initialisation
             var xmlConfig = new XmlDocument();
             xmlConfig.Load(NeuromonTrainingConfigFile);
-            neuromonExperiment.Initialize(ExperimentName, xmlConfig.DocumentElement);
+            neuromonExperiment.Initialize(neuromonExperimentSettings.ExperimentName, xmlConfig.DocumentElement);
 
-            _evolutionAlgorithm = neuromonExperiment.CreateEvolutionAlgorithm(genomeFactory, genomePopulation);
+            var evolutionAlgorithm = neuromonExperiment.CreateEvolutionAlgorithm(genomeFactory, genomePopulation);
 
-            _evolutionAlgorithm = neuromonExperiment.CreateEvolutionAlgorithm();
-            _evolutionAlgorithm.UpdateEvent += (sender, args) =>
+            evolutionAlgorithm.UpdateEvent += (sender, args) =>
             {
-                Console.WriteLine($"Generation: {_evolutionAlgorithm.CurrentGeneration}, Best Fitness: {_evolutionAlgorithm.Statistics._maxFitness}");
+                Console.WriteLine($"Generation: {evolutionAlgorithm.CurrentGeneration}, Best Fitness: {evolutionAlgorithm.Statistics._maxFitness}");
             };
 
             Console.WriteLine("Press Enter to Quit Training");
 
-            _evolutionAlgorithm.StartContinue();
+            evolutionAlgorithm.StartContinue();
 
             Console.ReadLine();
             Console.WriteLine("Stopping and Saving...");
 
-            _evolutionAlgorithm.RequestPauseAndWait();
+            evolutionAlgorithm.RequestPauseAndWait();
 
             // Save population and champion genome
             var writerSettings = new XmlWriterSettings { Indent = true };
@@ -82,7 +73,7 @@ namespace Player.AI.Neat.Trainer
 
             using (var xmlWriter = XmlWriter.Create(neuromonExperimentSettings.OutputChampionFilePath, writerSettings))
             {
-                var champion = new List<NeatGenome> { _evolutionAlgorithm.CurrentChampGenome };
+                var champion = new List<NeatGenome> { evolutionAlgorithm.CurrentChampGenome };
                 neuromonExperiment.SavePopulation(xmlWriter, champion);
             }
         }

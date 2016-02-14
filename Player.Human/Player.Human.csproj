@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HumanPlayer.cs" />
-    <Compile Include="HumanPlayerFactory.cs" />
+    <Compile Include="HumanPlayerController.cs" />
+    <Compile Include="HumanPlayerControllerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

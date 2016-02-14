@@ -38,6 +38,10 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SharpNeatLib, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\SharpNeat\SharpNeatLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -58,7 +62,7 @@
     <Compile Include="NeuromonCollectionGenerator.cs" />
     <Compile Include="NeuromonGame.cs" />
     <Compile Include="Damage\NonDeterministicDamageCalculator.cs" />
-    <Compile Include="PlayerFactory.cs" />
+    <Compile Include="PlayerControllerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer.cs" />
   </ItemGroup>
@@ -85,6 +89,10 @@
     <ProjectReference Include="..\Data\Data.csproj">
       <Project>{37b72455-8a8a-427d-b476-ed97e1af0e76}</Project>
       <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Player.AI.Neat\Player.AI.Neat.csproj">
+      <Project>{1D21D65A-0213-4D63-8CE4-5354B46176D1}</Project>
+      <Name>Player.AI.Neat</Name>
     </ProjectReference>
     <ProjectReference Include="..\Player.Human\Player.Human.csproj">
       <Project>{BA045B23-A98D-4B28-A506-C9B1FA668902}</Project>

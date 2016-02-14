@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NeatAiPlayer.cs" />
-    <Compile Include="NeatAiPlayerFactory.cs" />
+    <Compile Include="NeatAiPlayerControllerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,11 @@
+﻿{
+  "bestFitnessMovingAverageHistoryLength": 100,
+  "complexityMovingAverageHistoryLength": 100,
+  "elitismProportion": 0.2,
+  "interspeciesMatingProportion": 0.01,
+  "meanSpecieChampFitnessMovingAverageHistoryLength": 100,
+  "offspringAsexualProportion": 0.5,
+  "offspringSexualProportion": 0.5,
+  "selectionProportion": 0.2,
+  "specieCount": 10
+}

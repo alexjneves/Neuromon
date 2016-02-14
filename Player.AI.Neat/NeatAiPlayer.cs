@@ -5,27 +5,21 @@ using SharpNeat.Phenomes;
 
 namespace Player.AI.Neat
 {
-    internal sealed class NeatAiPlayer : IPlayer
+    internal sealed class NeatAiPlayerController : IPlayerController
     {
         private readonly IBlackBox _brain;
 
-        public string Name { get; }
-        public NeuromonCollection Neuromon { get; }
-        public Neuromon ActiveNeuromon { get; set; }
-
-        public NeatAiPlayer(string name, NeuromonCollection neuromon, IBlackBox brain)
+        public NeatAiPlayerController(IBlackBox brain)
         {
-            Name = name;
-            Neuromon = neuromon;
             _brain = brain;
         }
 
-        public ITurn ChooseTurn()
+        public ITurn ChooseTurn(IPlayerState playerState, IPlayerState opponentState)
         {
             throw new NotImplementedException();
         }
 
-        public Neuromon SelectActiveNeuromon()
+        public Neuromon SelectActiveNeuromon(IPlayerState playerState, IPlayerState opponentState)
         {
             throw new NotImplementedException();
         }

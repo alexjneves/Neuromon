@@ -18,6 +18,11 @@ namespace Common
             _neuromon = neuromonList;
         }
 
+        public NeuromonCollection(NeuromonCollection toCopy)
+        {
+            _neuromon = toCopy._neuromon.Select(n => new Neuromon(n)).ToList();
+        }
+
         public Neuromon this[int key] => _neuromon[key];
 
         public IEnumerator<Neuromon> GetEnumerator()

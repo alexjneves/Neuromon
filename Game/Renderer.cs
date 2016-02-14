@@ -54,9 +54,9 @@ namespace Game
             RenderTurnMade(sb.ToString().Trim());
         }
 
-        private static void RenderNeuromonChanged(IPlayer player, Neuromon previousNeuromon, Neuromon newNeuromon)
+        private static void RenderNeuromonChanged(IPlayerState playerState, Neuromon previousNeuromon, Neuromon newNeuromon)
         {
-            var output = $"{player.Name} switched from {previousNeuromon.Name} to {newNeuromon.Name}!";
+            var output = $"{playerState.Name} switched from {previousNeuromon.Name} to {newNeuromon.Name}!";
             RenderTurnMade(output);
         }
 
@@ -71,10 +71,10 @@ namespace Game
             RenderTextWithColour(sb.ToString(), TurnMadeColour);
         }
 
-        private void RenderGameOver(IPlayer winner, IPlayer loser)
+        private void RenderGameOver(IPlayerState winner, IPlayerState loser)
         {
-            RenderPlayer(_battleSimulator.Player1);
-            RenderPlayer(_battleSimulator.Player2);
+            RenderPlayerState(_battleSimulator.Player1.State);
+            RenderPlayerState(_battleSimulator.Player2.State);
 
             var sb = new StringBuilder();
 
@@ -90,53 +90,53 @@ namespace Game
         {
             if (newState != GameState.GameOver)
             {
-                RenderPlayer(_battleSimulator.Player1);
-                RenderPlayer(_battleSimulator.Player2);
+                RenderPlayerState(_battleSimulator.Player1.State);
+                RenderPlayerState(_battleSimulator.Player2.State);
             }
 
             switch (newState)
             {
                 case GameState.Player1Turn:
-                    RenderChooseTurn(_battleSimulator.Player1);
+                    RenderChooseTurn(_battleSimulator.Player1.State);
                     break;
                 case GameState.Player2Turn:
-                    RenderChooseTurn(_battleSimulator.Player2);
+                    RenderChooseTurn(_battleSimulator.Player2.State);
                     break;
                 default:
                     break;
             }
         }
 
-        private void OnNeuromonDefeated(IPlayer attackingPlayer, Neuromon attacker, IPlayer defendingPlayer, Neuromon defeated)
+        private void OnNeuromonDefeated(IPlayerState attackingPlayerState, Neuromon attacker, IPlayerState defendingPlayerState, Neuromon defeated)
         {
-            Console.WriteLine($"{attackingPlayer.Name}'s {attacker.Name} defeated {defendingPlayer.Name}'s {defeated.Name}!\n");
-            Console.WriteLine($"{defendingPlayer.Name} must select a new active Neuromon:\n");
-            RenderPlayer(defendingPlayer);
+            Console.WriteLine($"{attackingPlayerState.Name}'s {attacker.Name} defeated {defendingPlayerState.Name}'s {defeated.Name}!\n");
+            Console.WriteLine($"{defendingPlayerState.Name} must select a new active Neuromon:\n");
+            RenderPlayerState(defendingPlayerState);
         }
 
-        private void RenderPlayer(IPlayer player)
+        private void RenderPlayerState(IPlayerState playerState)
         {
-            var output = FormatPlayerState(player);
-            var colour = player == _battleSimulator.Player1 ? Player1Colour : Player2Colour;
+            var output = FormatPlayerState(playerState);
+            var colour = playerState == _battleSimulator.Player1.State ? Player1Colour : Player2Colour;
 
             RenderTextWithColour(output, colour);
         }
 
-        private string FormatPlayerState(IPlayer player)
+        private string FormatPlayerState(IPlayerState playerState)
         {
             var sb = new StringBuilder();
 
             sb.AppendLine(RenderPlayerBorder);
-            sb.AppendLine($"Player: {player.Name}\n");
+            sb.AppendLine($"Player: {playerState.Name}\n");
 
             sb.AppendLine($"Active Neuromon:");
-            sb.AppendLine(FormatNeuromon(player.ActiveNeuromon));
+            sb.AppendLine(FormatNeuromon(playerState.ActiveNeuromon));
 
-            sb.AppendLine(RenderMoveSet(player.ActiveNeuromon.MoveSet));
+            sb.AppendLine(RenderMoveSet(playerState.ActiveNeuromon.MoveSet));
 
             sb.AppendLine("Other Neuromon:");
 
-            var formattedOtherNeuromon = player.Neuromon.Where(n => n != player.ActiveNeuromon).Select(FormatNeuromon).ToList();
+            var formattedOtherNeuromon = playerState.NeuromonCollection.Where(n => n != playerState.ActiveNeuromon).Select(FormatNeuromon).ToList();
 
             for (var i = 0; i < formattedOtherNeuromon.Count; ++i)
             {
@@ -153,9 +153,9 @@ namespace Game
             return $"Name: {neuromon.Name} | Type: {neuromon.Type.Name} | Health: {neuromon.Health}";
         }
 
-        private static void RenderChooseTurn(IPlayer player)
+        private static void RenderChooseTurn(IPlayerState playerState)
         {
-            Console.WriteLine($"{player.Name} select your move:\n");
+            Console.WriteLine($"{playerState.Name} select your move:\n");
         }
 
         private string RenderMoveSet(MoveSet moveSet)

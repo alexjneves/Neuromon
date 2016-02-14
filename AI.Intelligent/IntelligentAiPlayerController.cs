@@ -6,37 +6,29 @@ using Common.Turn;
 
 namespace Player.AI.Intelligent
 {
-    internal sealed class IntelligentAiPlayer : IPlayer
+    internal sealed class IntelligentAiPlayerController : IPlayerController
     {
-        public string Name { get; }
-        public NeuromonCollection Neuromon { get; }
-        public Neuromon ActiveNeuromon { get; set; }
-
         private readonly Random _rand;
         private readonly Dictionary<Neuromon, RouletteWheel<Move>> _neuromonRouletteWheels;
 
-        public IntelligentAiPlayer(string name, NeuromonCollection neuromonCollection)
+        public IntelligentAiPlayerController(IPlayerState initialState)
         {
-            Name = name;
-            Neuromon = neuromonCollection;
-            ActiveNeuromon = neuromonCollection.First();
-
             _rand = new Random();
             _neuromonRouletteWheels = new Dictionary<Neuromon, RouletteWheel<Move>>();
 
-            foreach (var neuromon in neuromonCollection)
+            foreach (var neuromon in initialState.NeuromonCollection)
             {
                 var rouletteWheel = CreateRouletteWheel(neuromon);
                 _neuromonRouletteWheels.Add(neuromon, rouletteWheel);
             }
         }
 
-        public ITurn ChooseTurn()
+        public ITurn ChooseTurn(IPlayerState playerState, IPlayerState opponentState)
         {
             RouletteWheel<Move> rouletteWheel;
-            if (!_neuromonRouletteWheels.TryGetValue(ActiveNeuromon, out rouletteWheel))
+            if (!_neuromonRouletteWheels.TryGetValue(playerState.ActiveNeuromon, out rouletteWheel))
             {
-                throw new Exception($"Roulette Wheel does not exist for Neuromon {ActiveNeuromon.Name}");
+                throw new Exception($"Roulette Wheel does not exist for Neuromon {playerState.ActiveNeuromon.Name}");
             }
 
             var move = rouletteWheel.Spin();
@@ -44,9 +36,9 @@ namespace Player.AI.Intelligent
             return new Attack(move);
         }
 
-        public Neuromon SelectActiveNeuromon()
+        public Neuromon SelectActiveNeuromon(IPlayerState playerState, IPlayerState opponentState)
         {
-            var aliveNeuromon = Neuromon.Where(n => !n.IsDead).ToList();
+            var aliveNeuromon = playerState.NeuromonCollection.Where(n => !n.IsDead).ToList();
 
             var neuromonIndex = _rand.Next(0, aliveNeuromon.Count);
             return aliveNeuromon[neuromonIndex];

@@ -1,15 +1,8 @@
-using Common;
-using Common.Turn;
-
-namespace Player
+﻿namespace Player
 {
     public interface IPlayer
     {
-        string Name { get; }
-        NeuromonCollection Neuromon { get; }
-        Neuromon ActiveNeuromon { get; set; }
-
-        ITurn ChooseTurn();
-        Neuromon SelectActiveNeuromon();
+        IPlayerState State { get; }
+        IPlayerController Controller { get; }
     }
 }

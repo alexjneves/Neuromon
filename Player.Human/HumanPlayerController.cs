@@ -7,25 +7,14 @@ using Common.Turn;
 
 namespace Player.Human
 {
-    public sealed class HumanPlayer : IPlayer
+    public sealed class HumanPlayerController : IPlayerController
     {
         private const int AttackTurnType = 1;
         private const int ChangeNeuromonTurnType = 2;
 
-        public string Name { get; }
-        public NeuromonCollection Neuromon { get; }
-        public Neuromon ActiveNeuromon { get; set; }
-
-        public HumanPlayer(string name, NeuromonCollection neuromon)
+        public ITurn ChooseTurn(IPlayerState playerState, IPlayerState opponentState)
         {
-            Name = name;
-            Neuromon = neuromon;
-            ActiveNeuromon = neuromon.First();
-        }
-
-        public ITurn ChooseTurn()
-        {
-            var canSwitchNeuromon = Neuromon.Count(n => !n.IsDead) > 1;
+            var canSwitchNeuromon = playerState.NeuromonCollection.Count(n => !n.IsDead) > 1;
 
             var validTurnTypes = new List<int>()
             {
@@ -48,22 +37,22 @@ namespace Player.Human
 
             if (turnType == AttackTurnType)
             {
-                selectedTurn = ChooseAttack();
+                selectedTurn = ChooseAttack(playerState.ActiveNeuromon);
             }
             else if (turnType == ChangeNeuromonTurnType && canSwitchNeuromon)
             {
-                selectedTurn = new ChangeNeuromon(SelectActiveNeuromon());
+                selectedTurn = new ChangeNeuromon(SelectActiveNeuromon(playerState, opponentState));
             }
 
             return selectedTurn;
         }
 
-        public Neuromon SelectActiveNeuromon()
+        public Neuromon SelectActiveNeuromon(IPlayerState playerState, IPlayerState opponentState)
         {
             Neuromon newActiveNeuromon;
             bool validSelection;
 
-            var otherNeuromon = Neuromon.Where(n => n != ActiveNeuromon).ToList();
+            var otherNeuromon = playerState.NeuromonCollection.Where(n => n != playerState.ActiveNeuromon).ToList();
 
             do
             {
@@ -84,13 +73,13 @@ namespace Player.Human
             return newActiveNeuromon;
         }
 
-        private ITurn ChooseAttack()
+        private static ITurn ChooseAttack(Neuromon activeNeuromon)
         {
             Console.WriteLine("Choose Attack:");
 
             var moveIndex = ReadInputUntilValid(input => input <= 4 && input > 0, "Invalid Attack!");
 
-            var move = ActiveNeuromon.MoveSet[moveIndex - 1];
+            var move = activeNeuromon.MoveSet[moveIndex - 1];
             return new Attack(move);
         }
 
@@ -131,6 +120,6 @@ namespace Player.Human
             Console.WriteLine("\n");
 
             return input;
-        } 
+        }
     }
 }
