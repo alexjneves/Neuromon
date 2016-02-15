@@ -1,5 +1,7 @@
 ﻿{
   "numberOfNeuromon": 3,
+  "inputNeuronCount": 60,
+  "outputNeuronCount": 6,
   "effectiveMultiplier": 2.0,
   "weakMultiplier": 0.5,
   "minimumRandomMultiplier": 0.85,
@@ -10,8 +12,8 @@
   "championBrainFileName": "ChampionNeatAi.xml",
   "playerOneName": "Player 1",
   "playerTwoName": "Player 2",
-  "playerOneType": "human",
-  "playerTwoType": "intelligent",
+  "playerOneType": "intelligent",
+  "playerTwoType": "neat",
   "simulateThinking": "true",
   "shouldRender": "true",
   "nonDeterministic": "true"

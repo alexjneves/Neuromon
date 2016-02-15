@@ -24,7 +24,12 @@ namespace Game
                 gameSettings.NeuromonFileName
             );
 
-            var playerControllerFactory = new PlayerControllerFactory(gameSettings.ChampionBrainFileName);
+            var playerControllerFactory = new PlayerControllerFactory(
+                gameSettings.ChampionBrainFileName, 
+                gameSettings.NumberOfNeuromon,
+                gameSettings.InputNeuronCount,
+                gameSettings.OutputNeuronCount
+            );
 
             var randomNeuromonGenerator = new NeuromonCollectionGenerator(gameDatabase.Neuromon, gameSettings.NumberOfNeuromon);
 

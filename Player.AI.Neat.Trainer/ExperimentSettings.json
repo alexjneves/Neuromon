@@ -1,14 +1,14 @@
 ﻿{
   "experimentName": "Neuromon NEAT AI Experiment",
   "description": "",
-  "inputCount": 0,
-  "outputCount": 0,
-  "populationSize": 0,
+  "inputCount": 60,
+  "outputCount": 6,
+  "populationSize": 150,
   "loadExistingPopulation": false,
   "existingPopulationFilePath": "",
   "outputPopulationFilePath": "NeuromonGenomePopulation.xml",
-  "outputChampionFilePath": "NeuromonChampion.xml",
+  "outputChampionFilePath": "ChampionNeatAi.xml",
   "complexityRegulationStrategy": "Absolute",
   "complexityThreshold": 50,
-  "desiredFitness": 100.0
+  "desiredFitness": 90.0
 }

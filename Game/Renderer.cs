@@ -136,7 +136,7 @@ namespace Game
 
             sb.AppendLine("Other Neuromon:");
 
-            var formattedOtherNeuromon = playerState.NeuromonCollection.Where(n => n != playerState.ActiveNeuromon).Select(FormatNeuromon).ToList();
+            var formattedOtherNeuromon = playerState.InactiveNeuromon.Select(FormatNeuromon).ToList();
 
             for (var i = 0; i < formattedOtherNeuromon.Count; ++i)
             {

@@ -66,7 +66,7 @@ namespace Game
 
             ChooseTurn(sourcePlayer, opponentPlayer.State);
 
-            if (opponentPlayer.State.NeuromonCollection.All(n => n.IsDead))
+            if (opponentPlayer.State.AllNeuromon.All(n => n.IsDead))
             {
                 GameOver(new BattleResult(sourcePlayer.State, opponentPlayer.State));
             }

@@ -16,7 +16,7 @@ namespace Player.AI.Intelligent
             _rand = new Random();
             _neuromonRouletteWheels = new Dictionary<Neuromon, RouletteWheel<Move>>();
 
-            foreach (var neuromon in initialState.NeuromonCollection)
+            foreach (var neuromon in initialState.AllNeuromon)
             {
                 var rouletteWheel = CreateRouletteWheel(neuromon);
                 _neuromonRouletteWheels.Add(neuromon, rouletteWheel);
@@ -38,7 +38,7 @@ namespace Player.AI.Intelligent
 
         public Neuromon SelectActiveNeuromon(IPlayerState playerState, IPlayerState opponentState)
         {
-            var aliveNeuromon = playerState.NeuromonCollection.Where(n => !n.IsDead).ToList();
+            var aliveNeuromon = playerState.AllNeuromon.Where(n => !n.IsDead).ToList();
 
             var neuromonIndex = _rand.Next(0, aliveNeuromon.Count);
             return aliveNeuromon[neuromonIndex];

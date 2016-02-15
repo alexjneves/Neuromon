@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using Newtonsoft.Json;
 using SharpNeat.EvolutionAlgorithms;
@@ -18,11 +19,15 @@ namespace Player.AI.Neat.Trainer
 
         private static void Main()
         {
-            var neuromonExperimentSettings = JsonConvert.DeserializeObject<ExperimentSettings>(NeuromonExperimentSettingsFileName);
-            var evolutionAlgorithmParameters = JsonConvert.DeserializeObject<NeatEvolutionAlgorithmParameters>(EvolutionAlgorithmParametersFileName);
-            var trainingGameSettings = JsonConvert.DeserializeObject<TrainingGameSettings>(TrainingGameSettingsFileName);
+            var neuromonExperimentSettingsJson = File.ReadAllText(NeuromonExperimentSettingsFileName);
+            var evolutionAlgorithmParametersJson = File.ReadAllText(EvolutionAlgorithmParametersFileName);
+            var trainingGameSettingsJson = File.ReadAllText(TrainingGameSettingsFileName);
 
-            var neuromonPhenomeEvaluator = new NeuromonEvaluator(trainingGameSettings, neuromonExperimentSettings.DesiredFitness);
+            var neuromonExperimentSettings = JsonConvert.DeserializeObject<ExperimentSettings>(neuromonExperimentSettingsJson);
+            var evolutionAlgorithmParameters = JsonConvert.DeserializeObject<NeatEvolutionAlgorithmParameters>(evolutionAlgorithmParametersJson);
+            var trainingGameSettings = JsonConvert.DeserializeObject<TrainingGameSettings>(trainingGameSettingsJson);
+
+            var neuromonPhenomeEvaluator = new NeuromonEvaluator(trainingGameSettings, neuromonExperimentSettings);
             var neatGenomeParameters = new NeatGenomeParameters();
 
             var neuromonExperiment = new NeuromonExperiment(neuromonExperimentSettings, evolutionAlgorithmParameters, neuromonPhenomeEvaluator, neatGenomeParameters);

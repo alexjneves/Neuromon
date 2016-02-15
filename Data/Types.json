@@ -1,5 +1,6 @@
 [
   {
+    "id":  1,
     "name": "water",
     "effective": [
       "fire"
@@ -9,6 +10,7 @@
     ]
   },
   {
+    "id": 2,
     "name": "grass",
     "effective": [
       "water"
@@ -18,6 +20,7 @@
     ]
   },
   {
+    "id":  3,
     "name": "fire",
     "effective": [
       "grass"
@@ -27,8 +30,9 @@
     ]
   },
   {
+    "id": 4,
     "name": "normal",
-    "effective": [],
-    "weak": []
+    "effective": [ ],
+    "weak": [ ]
   }
 ]

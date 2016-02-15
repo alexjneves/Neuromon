@@ -29,10 +29,10 @@ namespace Game
             while (neuromonHashSet.Count < _numberOfNeuromon)
             {
                 var nextIndex = _rand.Next(_allNeuromon.Count);
-                neuromonHashSet.Add(new Neuromon(_allNeuromon[nextIndex]));
+                neuromonHashSet.Add(_allNeuromon[nextIndex]);
             }
 
-            return new NeuromonCollection(neuromonHashSet);
+            return new NeuromonCollection(new NeuromonCollection(neuromonHashSet));
         }
     }
 }

@@ -5,6 +5,8 @@ namespace Game
     internal sealed class GameSettings
     {
         public int NumberOfNeuromon { get; }
+        public int InputNeuronCount { get; }
+        public int OutputNeuronCount { get; }
         public double EffectiveMultiplier { get; }
         public double WeakMultiplier { get; }
         public double MinimumRandomMultiplier { get; }
@@ -22,13 +24,16 @@ namespace Game
         public bool NonDeterministic { get; }
 
         [JsonConstructor]
-        public GameSettings(int numberOfNeuromon, double effectiveMultiplier, double weakMultiplier, 
-            double minimumRandomMultiplier, double maximumRandomMultiplier, string typesFileName, 
-            string movesFileName, string neuromonFileName, string championBrainFileName, 
-            string playerOneName, string playerTwoName, string playerOneType, 
-            string playerTwoType, bool simulateThinking, bool shouldRender, bool nonDeterministic)
+        public GameSettings(int numberOfNeuromon, int inputNeuronCount, int outputNeuronCount, 
+            double effectiveMultiplier, double weakMultiplier, double minimumRandomMultiplier, 
+            double maximumRandomMultiplier, string typesFileName, string movesFileName, 
+            string neuromonFileName, string championBrainFileName, string playerOneName, 
+            string playerTwoName, string playerOneType, string playerTwoType, 
+            bool simulateThinking, bool shouldRender, bool nonDeterministic)
         {
             NumberOfNeuromon = numberOfNeuromon;
+            InputNeuronCount = inputNeuronCount;
+            OutputNeuronCount = outputNeuronCount;
             EffectiveMultiplier = effectiveMultiplier;
             WeakMultiplier = weakMultiplier;
             MinimumRandomMultiplier = minimumRandomMultiplier;
@@ -43,6 +48,8 @@ namespace Game
             SimulateThinking = simulateThinking;
             ShouldRender = shouldRender;
             NonDeterministic = nonDeterministic;
+            InputNeuronCount = inputNeuronCount;
+            OutputNeuronCount = outputNeuronCount;
             ChampionBrainFileName = championBrainFileName;
         }
     }

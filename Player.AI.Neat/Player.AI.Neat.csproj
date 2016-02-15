@@ -43,9 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameStateSerializer.cs" />
     <Compile Include="NeatAiPlayer.cs" />
     <Compile Include="NeatAiPlayerControllerFactory.cs" />
+    <Compile Include="NeatAiTurnChoice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TurnType.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

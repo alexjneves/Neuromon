@@ -15,7 +15,7 @@ namespace Player.AI.Random
 
         public ITurn ChooseTurn(IPlayerState playerState, IPlayerState opponentState)
         {
-            var move = _rand.Next(1, 5);
+            var move = _rand.Next(0, 4);
             var selectedMove = playerState.ActiveNeuromon.MoveSet[move];
 
             return new Attack(selectedMove);
@@ -23,7 +23,7 @@ namespace Player.AI.Random
 
         public Neuromon SelectActiveNeuromon(IPlayerState playerState, IPlayerState opponentState)
         {
-            var aliveNeuromon = playerState.NeuromonCollection.Where(n => !n.IsDead).ToList();
+            var aliveNeuromon = playerState.AllNeuromon.Where(n => !n.IsDead).ToList();
 
             var neuromonIndex = _rand.Next(0, aliveNeuromon.Count);
             return aliveNeuromon[neuromonIndex];

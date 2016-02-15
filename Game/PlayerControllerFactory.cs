@@ -20,12 +20,12 @@ namespace Game
         private readonly IPlayerControllerFactory _randomAiPlayerControllerFactory;
         private readonly IPlayerControllerFactory _neatAiPlayerControllerFactory;
 
-        public PlayerControllerFactory(string brainFileName)
+        public PlayerControllerFactory(string brainFileName, int numberOfNeuromon, int inputCount, int outputCount)
         {
             _humanPlayerControllerFactory = new HumanPlayerControllerFactory();
             _intelligentAiPlayerControllerFactory = new IntelligentAiPlayerControllerFactory();
             _randomAiPlayerControllerFactory = new RandomAiPlayerControllerFactory();
-            _neatAiPlayerControllerFactory = new NeatAiPlayerControllerFactory(brainFileName);
+            _neatAiPlayerControllerFactory = new NeatAiPlayerControllerFactory(brainFileName, numberOfNeuromon, inputCount, outputCount);
         }
 
         public IPlayerController Create(string playerType, IPlayerState initialState)

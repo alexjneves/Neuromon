@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Common;
 using Data;
 using Game;
@@ -18,25 +19,25 @@ namespace Player.AI.Neat.Trainer
         private readonly double _desiredFitness;
 
         private readonly PlayerControllerFactory _opponentPlayerControllerFactory;
-        private readonly GameDatabase _gameDatabase;
         private readonly IDamageCalculator _damageCalculator;
 
-        private Renderer renderer;
+        private readonly IList<Tuple<NeuromonCollection, NeuromonCollection>> _gameNeuromonCollectionCombinations;
+
+        private Renderer _renderer;
 
         public ulong EvaluationCount { get; private set; }
         public bool StopConditionSatisfied { get; private set; }
 
-        public NeuromonEvaluator(TrainingGameSettings trainingGameSettings, double desiredFitness)
+        public NeuromonEvaluator(TrainingGameSettings trainingGameSettings, ExperimentSettings experimentSettings)
         {
             _trainingGameSettings = trainingGameSettings;
-            _desiredFitness = desiredFitness;
+            _desiredFitness = experimentSettings.DesiredFitness;
 
-            _opponentPlayerControllerFactory = new PlayerControllerFactory(_trainingGameSettings.OpponentBrainFileName);
-
-            _gameDatabase = GameDatabase.CreateFromFiles(
-                _trainingGameSettings.TypesFileName,
-                _trainingGameSettings.MovesFileName,
-                _trainingGameSettings.NeuromonFileName
+            _opponentPlayerControllerFactory = new PlayerControllerFactory(
+                _trainingGameSettings.OpponentBrainFileName, 
+                _trainingGameSettings.NumberOfNeuromon,
+                experimentSettings.InputCount,
+                experimentSettings.OutputCount
             );
 
             _damageCalculator = new DamageCalculatorFactory(
@@ -45,10 +46,52 @@ namespace Player.AI.Neat.Trainer
                 _trainingGameSettings.NonDeterministic
             ).Create();
 
-            renderer = null;
+            var gameDatabase = GameDatabase.CreateFromFiles(
+                _trainingGameSettings.TypesFileName,
+                _trainingGameSettings.MovesFileName,
+                _trainingGameSettings.NeuromonFileName
+                );
+
+            _gameNeuromonCollectionCombinations = new GameNeuromonCombinationsGenerator(
+                gameDatabase.Neuromon,
+                _trainingGameSettings.NumberOfNeuromon
+            ).CreateGameNeuromonCollectionCombinations();
+
+            _renderer = null;
 
             EvaluationCount = 0;
             StopConditionSatisfied = false;
+        }
+
+        public FitnessInfo Evaluate(IBlackBox phenome)
+        {
+            var accumulatedFitness = 0.0;
+
+            foreach (var neuromonCollectionCombination in _gameNeuromonCollectionCombinations)
+            {
+                // TODO: Should each possible game be played multiple times to counteract non-deterministic luck?
+
+                var game = CreateGame(
+                    phenome,
+                    new NeuromonCollection(neuromonCollectionCombination.Item1),
+                    new NeuromonCollection(neuromonCollectionCombination.Item2)
+                );
+
+                var result = game.Run();
+                accumulatedFitness += CalculateFitness(result);
+            }
+
+            var averageFitness = accumulatedFitness / _gameNeuromonCollectionCombinations.Count;
+
+            EvaluationCount++;
+            StopConditionSatisfied = averageFitness >= _desiredFitness;
+
+            if (StopConditionSatisfied)
+            {
+                Console.WriteLine("Desired Fitness Achieved! Stopping training...");
+            }
+
+            return new FitnessInfo(averageFitness, averageFitness);
         }
 
         private BattleSimulator CreateGame(IBlackBox brain, NeuromonCollection traineeNeuromon, NeuromonCollection opponentNeuromon)
@@ -57,7 +100,7 @@ namespace Player.AI.Neat.Trainer
             var opponentController = _opponentPlayerControllerFactory.Create(_trainingGameSettings.OpponentType, opponentState);
             var opponent = new Player(opponentState, opponentController);
 
-            var neatPlayerControllerFactory = new NeatAiPlayerControllerFactory(brain);
+            var neatPlayerControllerFactory = new NeatAiPlayerControllerFactory(brain, _trainingGameSettings.NumberOfNeuromon);
 
             var traineeState = new PlayerState(TraineeName, traineeNeuromon);
             var traineeController = neatPlayerControllerFactory.CreatePlayer(traineeState);
@@ -68,52 +111,10 @@ namespace Player.AI.Neat.Trainer
 
             if (_trainingGameSettings.ShouldRender)
             {
-                renderer = new Renderer(battleSimulator);
+                _renderer = new Renderer(battleSimulator);
             }
 
             return battleSimulator;
-        }
-
-        /**
-        * TODO: Create combinations of possible games
-        * TODO: Is the search space going to be too large?
-        * Combinations of all possible neuromon collections for two players, e.g.
-        * 5 possible Neuromon in the Database: A, B, C, D, E
-        * Each player has 3 Neuromon
-        * Player 1 may have 5 Choose 3 Neuromon = 10
-        * For each of those, Player 2 may have each of the possible Neuromon collections, therefore 10 * 10 = 100 combinations
-        * 
-        */
-        private static IList<Tuple<NeuromonCollection, NeuromonCollection>> CreateAllPossibleNeuromonCollectionCombinations()
-        {
-            throw new NotImplementedException();
-        }
-
-        public FitnessInfo Evaluate(IBlackBox phenome)
-        {
-            var allPossibleNeuromonCollectionCombinations = CreateAllPossibleNeuromonCollectionCombinations();
-
-            var accumulatedFitness = 0.0;
-
-            foreach (var possibleNeuromonCollectionCombination in allPossibleNeuromonCollectionCombinations)
-            {
-                // TODO: Should each possible game be played multiple times to counteract non-deterministic luck?
-
-                var game = CreateGame(phenome, possibleNeuromonCollectionCombination.Item1,
-                    possibleNeuromonCollectionCombination.Item2);
-
-                var result = game.Run();
-                accumulatedFitness += CalculateFitness(result);
-            }
-
-            // TODO: Should an average be taken, or should we just return the accumulated fitness?
-
-            var averageFitness = accumulatedFitness / allPossibleNeuromonCollectionCombinations.Count;
-
-            EvaluationCount++;
-            StopConditionSatisfied = averageFitness >= _desiredFitness;
-
-            return new FitnessInfo(averageFitness, averageFitness);
         }
 
         private static double CalculateFitness(BattleResult result)
