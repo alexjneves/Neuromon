@@ -9,12 +9,14 @@ using static Game.BattleDelegates;
 
 namespace Game
 {
-    internal sealed class BattleSimulator
+    public sealed class BattleSimulator
     {
         private const int ThinkingSeconds = 3;
 
         private readonly IDamageCalculator _damageCalculator;
         private readonly bool _simulateThinking;
+
+        private BattleResult _battleResult;
 
         public GameState GameState { get; private set; }
         public IPlayer Player1 { get; }
@@ -36,7 +38,7 @@ namespace Game
             _simulateThinking = simulateThinking;
         }
 
-        public void Run()
+        public BattleResult Run()
         {
             while (GameState != GameState.GameOver)
             {
@@ -51,6 +53,8 @@ namespace Game
                 ChangeState(GameState.Player2Turn);
                 SimulateTurn(Player2, Player1);
             }
+
+            return _battleResult;
         }
 
         private void SimulateTurn(IPlayer sourcePlayer, IPlayer opponentPlayer)
@@ -64,7 +68,7 @@ namespace Game
 
             if (opponentPlayer.State.NeuromonCollection.All(n => n.IsDead))
             {
-                GameOver(sourcePlayer.State, opponentPlayer.State);
+                GameOver(new BattleResult(sourcePlayer.State, opponentPlayer.State));
             }
             else if (opponentPlayer.State.ActiveNeuromon.IsDead)
             {
@@ -119,11 +123,12 @@ namespace Game
             OnNeuromonChanged?.Invoke(playerState, previousNeuromon, changeNeuromon.Neuromon);
         }
 
-        private void GameOver(IPlayerState winningPlayerState, IPlayerState losingPlayerState)
+        private void GameOver(BattleResult battleResult)
         {
+            _battleResult = battleResult;
             ChangeState(GameState.GameOver);
 
-            OnGameOver?.Invoke(winningPlayerState, losingPlayerState);
+            OnGameOver?.Invoke(_battleResult);
         }
     }
 }

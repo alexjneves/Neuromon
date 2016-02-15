@@ -2,7 +2,7 @@
 
 namespace Game.Damage
 {
-    internal interface IDamageCalculator
+    public interface IDamageCalculator
     {
         int CalculateDamage(Move attack, Neuromon target);
     }

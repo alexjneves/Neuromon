@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BattleDelegates.cs" />
+    <Compile Include="BattleResult.cs" />
     <Compile Include="BattleSimulator.cs" />
     <Compile Include="Damage\DamageCalculatorFactory.cs" />
     <Compile Include="Damage\DamageCalculator.cs" />

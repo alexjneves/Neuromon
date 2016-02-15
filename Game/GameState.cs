@@ -1,6 +1,6 @@
 ﻿namespace Game
 {
-    internal enum GameState
+    public enum GameState
     {
         NotStarted,
         Player1Turn,

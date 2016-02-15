@@ -6,7 +6,7 @@ using Player;
 
 namespace Game
 {
-    internal sealed class Renderer
+    public sealed class Renderer
     {
         private const string MoveBoxTop = " -----------------------------------";
         private const string MoveBoxLeft = "| ";
@@ -71,7 +71,7 @@ namespace Game
             RenderTextWithColour(sb.ToString(), TurnMadeColour);
         }
 
-        private void RenderGameOver(IPlayerState winner, IPlayerState loser)
+        private void RenderGameOver(BattleResult battleResult)
         {
             RenderPlayerState(_battleSimulator.Player1.State);
             RenderPlayerState(_battleSimulator.Player2.State);
@@ -79,8 +79,8 @@ namespace Game
             var sb = new StringBuilder();
 
             sb.AppendLine(TurnMadeBorder);
-            sb.AppendLine($"{loser.Name} has no remaining Neuromon...");
-            sb.AppendLine($"{winner.Name} beat {loser.Name}!");
+            sb.AppendLine($"{battleResult.Loser.Name} has no remaining Neuromon...");
+            sb.AppendLine($"{battleResult.Winner.Name} beat {battleResult.Loser.Name}!");
             sb.AppendLine(TurnMadeBorder);
 
             RenderTextWithColour(sb.ToString(), ConsoleColor.DarkGreen);
