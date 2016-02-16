@@ -39,7 +39,7 @@ namespace Player.AI.Neat
             }
 
             // TODO: Refactor
-            var genomeDecoder = new NeatGenomeDecoder(NetworkActivationScheme.CreateAcyclicScheme());
+            var genomeDecoder = new NeatGenomeDecoder(NetworkActivationScheme.CreateCyclicFixedTimestepsScheme(1));
             var fact = new NeatGenomeFactory(_inputCount, _outputCount, new NeatGenomeParameters());
 
             NeatGenome genome;
