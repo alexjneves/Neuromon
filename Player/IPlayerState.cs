@@ -7,8 +7,9 @@ namespace Player
     {
         string Name { get; }
         NeuromonCollection AllNeuromon { get; }
+        NeuromonCollection InactiveNeuromon { get; }
         Neuromon ActiveNeuromon { get; }
-        IEnumerable<Neuromon> InactiveNeuromon { get; } 
+
         void SwitchActiveNeuromon(Neuromon newActiveNeuromon);
     }
 }

@@ -17,6 +17,7 @@ namespace Player.AI.Neat.Trainer
 
         private readonly TrainingGameSettings _trainingGameSettings;
         private readonly double _desiredFitness;
+        private readonly int _gameCombinationIterations;
 
         private readonly PlayerControllerFactory _opponentPlayerControllerFactory;
         private readonly IDamageCalculator _damageCalculator;
@@ -32,6 +33,7 @@ namespace Player.AI.Neat.Trainer
         {
             _trainingGameSettings = trainingGameSettings;
             _desiredFitness = experimentSettings.DesiredFitness;
+            _gameCombinationIterations = experimentSettings.GameCombinationIterations;
 
             _opponentPlayerControllerFactory = new PlayerControllerFactory(
                 _trainingGameSettings.OpponentBrainFileName, 
@@ -67,21 +69,26 @@ namespace Player.AI.Neat.Trainer
         {
             var accumulatedFitness = 0.0;
 
+            var numberOfGames = _gameNeuromonCollectionCombinations.Count * _gameCombinationIterations;
+
             foreach (var neuromonCollectionCombination in _gameNeuromonCollectionCombinations)
             {
                 // TODO: Should each possible game be played multiple times to counteract non-deterministic luck?
 
-                var game = CreateGame(
-                    phenome,
-                    new NeuromonCollection(neuromonCollectionCombination.Item1),
-                    new NeuromonCollection(neuromonCollectionCombination.Item2)
-                );
+                for (var i = 0; i < _gameCombinationIterations; ++i)
+                {
+                    var game = CreateGame(
+                        phenome,
+                        new NeuromonCollection(neuromonCollectionCombination.Item1),
+                        new NeuromonCollection(neuromonCollectionCombination.Item2)
+                    );
 
-                var result = game.Run();
-                accumulatedFitness += CalculateFitness(result);
+                    var result = game.Run();
+                    accumulatedFitness += CalculateFitness(result);
+                }
             }
 
-            var averageFitness = accumulatedFitness / _gameNeuromonCollectionCombinations.Count;
+            var averageFitness = accumulatedFitness / numberOfGames;
 
             EvaluationCount++;
             StopConditionSatisfied = averageFitness >= _desiredFitness;
@@ -107,11 +114,11 @@ namespace Player.AI.Neat.Trainer
             var trainee = new Player(traineeState, traineeController);
 
             // TODO: Should the trainee player first or second?
-            var battleSimulator = new BattleSimulator(opponent, trainee, _damageCalculator, false);
+            var battleSimulator = new BattleSimulator(opponent, trainee, _damageCalculator);
 
             if (_trainingGameSettings.ShouldRender)
             {
-                _renderer = new Renderer(battleSimulator);
+                _renderer = new Renderer(battleSimulator, false);
             }
 
             return battleSimulator;

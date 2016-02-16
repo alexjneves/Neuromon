@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Common;
 
@@ -11,9 +10,9 @@ namespace Player
         public NeuromonCollection AllNeuromon { get; }
         public Neuromon ActiveNeuromon { get; private set; }
 
-        public IEnumerable<Neuromon> InactiveNeuromon
+        public NeuromonCollection InactiveNeuromon
         {
-            get { return AllNeuromon.Where(n => n != ActiveNeuromon); }
+            get { return new NeuromonCollection(AllNeuromon.Where(n => n != ActiveNeuromon)); }
         }
 
         public PlayerState(string name, NeuromonCollection allNeuromon)
@@ -27,12 +26,12 @@ namespace Player
         {
             Name = toCopy.Name;
             AllNeuromon = new NeuromonCollection(toCopy.AllNeuromon);
-            ActiveNeuromon = new Neuromon(toCopy.ActiveNeuromon);
+            ActiveNeuromon = AllNeuromon.First();
         }
 
         public void SwitchActiveNeuromon(Neuromon newActiveNeuromon)
         {
-            if (!AllNeuromon.Contains(newActiveNeuromon))
+            if (!InactiveNeuromon.Contains(newActiveNeuromon))
             {
                 throw new Exception("Must switch to a Neuromon in the Neuromon Collection");
             }

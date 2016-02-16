@@ -1,20 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
+﻿using System.Linq;
 using Common.Turn;
 using Game.Damage;
 using Player;
-using Player.Human;
 using static Game.BattleDelegates;
 
 namespace Game
 {
     public sealed class BattleSimulator
     {
-        private const int ThinkingSeconds = 3;
-
         private readonly IDamageCalculator _damageCalculator;
-        private readonly bool _simulateThinking;
 
         private BattleResult _battleResult;
 
@@ -28,14 +22,13 @@ namespace Game
         public event GameStateChangedDelegate OnGameStateChanged;
         public event NeuromonDefeatedDelegate OnNeuromonDefeated;
 
-        public BattleSimulator(IPlayer player1, IPlayer player2, IDamageCalculator damageCalculator, bool simulateThinking)
+        public BattleSimulator(IPlayer player1, IPlayer player2, IDamageCalculator damageCalculator)
         {
             GameState = GameState.NotStarted;
 
             Player1 = player1;
             Player2 = player2;
             _damageCalculator = damageCalculator;
-            _simulateThinking = simulateThinking;
         }
 
         public BattleResult Run()
@@ -59,11 +52,6 @@ namespace Game
 
         private void SimulateTurn(IPlayer sourcePlayer, IPlayer opponentPlayer)
         {
-            if (_simulateThinking && !(sourcePlayer.Controller is HumanPlayerController))
-            {
-                Thread.Sleep(TimeSpan.FromSeconds(ThinkingSeconds));
-            }
-
             ChooseTurn(sourcePlayer, opponentPlayer.State);
 
             if (opponentPlayer.State.AllNeuromon.All(n => n.IsDead))

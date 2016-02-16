@@ -14,9 +14,9 @@ namespace Player.Human
 
         public ITurn ChooseTurn(IPlayerState playerState, IPlayerState opponentState)
         {
-            var canSwitchNeuromon = playerState.AllNeuromon.Count(n => !n.IsDead) > 1;
+            var canSwitchNeuromon = playerState.InactiveNeuromon.Any(n => !n.IsDead);
 
-            var validTurnTypes = new List<int>()
+            var validTurnTypes = new List<int>
             {
                 AttackTurnType
             };
@@ -52,13 +52,13 @@ namespace Player.Human
             Neuromon newActiveNeuromon;
             bool validSelection;
 
-            var otherNeuromon = playerState.AllNeuromon.Where(n => n != playerState.ActiveNeuromon).ToList();
+            var otherNeuromon = playerState.InactiveNeuromon;
 
             do
             {
                 Console.WriteLine("Choose Neuromon:");
 
-                var neuromonIndex = ReadInputUntilValid(input => input <= otherNeuromon.Count && input > 0, "Invalid Neuromon Selection!");
+                var neuromonIndex = ReadInputUntilValid(input => input <= otherNeuromon.Count() && input > 0, "Invalid Neuromon Selection!");
 
                 newActiveNeuromon = otherNeuromon[neuromonIndex - 1];
 

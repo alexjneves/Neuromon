@@ -47,13 +47,13 @@ namespace Game
                 gameSettings.NonDeterministic
             );
 
-            var battleSimulator = new BattleSimulator(playerOne, playerTwo, damageCalculatorFactory.Create(), gameSettings.SimulateThinking);
+            var battleSimulator = new BattleSimulator(playerOne, playerTwo, damageCalculatorFactory.Create());
 
             Renderer renderer = null;
 
             if (gameSettings.ShouldRender)
             {
-                renderer = new Renderer(battleSimulator);
+                renderer = new Renderer(battleSimulator, gameSettings.SimulateThinking);
             }
 
             battleSimulator.Run();

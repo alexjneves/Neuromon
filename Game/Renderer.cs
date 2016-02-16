@@ -1,13 +1,20 @@
 using System;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Common;
 using Player;
+using Player.Human;
 
 namespace Game
 {
     public sealed class Renderer
     {
+        private static readonly TimeSpan ThinkingTime = TimeSpan.FromSeconds(ThinkingSeconds);
+
+        private const int ThinkingSeconds = 5;
+        private const int ScrollDelayMillisecond = 15;
+
         private const string MoveBoxTop = " -----------------------------------";
         private const string MoveBoxLeft = "| ";
         private const string MoveBoxRight = " |";
@@ -21,19 +28,21 @@ namespace Game
         private const ConsoleColor Player2Colour = ConsoleColor.DarkYellow;
 
         private readonly BattleSimulator _battleSimulator;
+        private readonly bool _simulateThinking;
         private readonly int _moveRenderLength;
 
-        public Renderer(BattleSimulator battleSimulator)
+        public Renderer(BattleSimulator battleSimulator, bool simulateThinking)
         {
             _battleSimulator = battleSimulator;
+            _simulateThinking = simulateThinking;
+
+            _moveRenderLength = CalculateMoveRenderLength();
 
             _battleSimulator.OnAttackMade += RenderAttack;
             _battleSimulator.OnNeuromonChanged += RenderNeuromonChanged;
             _battleSimulator.OnGameOver += RenderGameOver;
             _battleSimulator.OnGameStateChanged += OnGameStateChanged;
             _battleSimulator.OnNeuromonDefeated += OnNeuromonDefeated;
-
-            _moveRenderLength = CalculateMoveRenderLength();
         }
 
         private static void RenderAttack(Neuromon attacker, Move move, Neuromon target, int damage)
@@ -97,10 +106,10 @@ namespace Game
             switch (newState)
             {
                 case GameState.Player1Turn:
-                    RenderChooseTurn(_battleSimulator.Player1.State);
+                    RenderChooseTurn(_battleSimulator.Player1);
                     break;
                 case GameState.Player2Turn:
-                    RenderChooseTurn(_battleSimulator.Player2.State);
+                    RenderChooseTurn(_battleSimulator.Player2);
                     break;
                 default:
                     break;
@@ -109,10 +118,13 @@ namespace Game
 
         private void OnNeuromonDefeated(IPlayerState attackingPlayerState, Neuromon attacker, IPlayerState defendingPlayerState, Neuromon defeated)
         {
-            Console.WriteLine($"{attackingPlayerState.Name}'s {attacker.Name} defeated {defendingPlayerState.Name}'s {defeated.Name}!\n");
-            Console.WriteLine($"{defendingPlayerState.Name} must select a new active Neuromon:\n");
+            PrintWithDelay($"{attackingPlayerState.Name}'s {attacker.Name} defeated {defendingPlayerState.Name}'s {defeated.Name}!\n");
+            PrintWithDelay($"{defendingPlayerState.Name} must select a new active Neuromon:\n");
             RenderPlayerState(defendingPlayerState);
+            SimulateThinking(defendingPlayerState == _battleSimulator.Player1.State ? _battleSimulator.Player1.Controller : _battleSimulator.Player2.Controller);
         }
+
+
 
         private void RenderPlayerState(IPlayerState playerState)
         {
@@ -153,9 +165,10 @@ namespace Game
             return $"Name: {neuromon.Name} | Type: {neuromon.Type.Name} | Health: {neuromon.Health}";
         }
 
-        private static void RenderChooseTurn(IPlayerState playerState)
+        private void RenderChooseTurn(IPlayer player)
         {
-            Console.WriteLine($"{playerState.Name} select your move:\n");
+            PrintWithDelay($"{player.State.Name} select your move:\n");
+            SimulateThinking(player.Controller);
         }
 
         private string RenderMoveSet(MoveSet moveSet)
@@ -198,19 +211,38 @@ namespace Game
             }
         }
 
+        private void SimulateThinking(IPlayerController playerController)
+        {
+            if (_simulateThinking && !(playerController is HumanPlayerController))
+            {
+                Thread.Sleep(ThinkingTime);
+            }
+        }
+
+        private static void RenderTextWithColour(string output, ConsoleColor colour)
+        {
+            Console.ForegroundColor = colour;
+            PrintWithDelay(output);
+            Console.ResetColor();
+        }
+
+        private static void PrintWithDelay(string output)
+        {
+            var lines = output.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+            foreach (var line in lines)
+            {
+                Thread.Sleep(ScrollDelayMillisecond);
+                Console.WriteLine(line);
+            }
+        }
+
         private static int CalculateMoveRenderLength()
         {
             var totalLength = MoveBoxTop.Length;
             var singleLength = totalLength / 2;
 
             return singleLength - MoveBoxMiddle.Length;
-        }
-
-        private static void RenderTextWithColour(string output, ConsoleColor colour)
-        {
-            Console.ForegroundColor = colour;
-            Console.WriteLine(output);
-            Console.ResetColor();
         }
     }
 }

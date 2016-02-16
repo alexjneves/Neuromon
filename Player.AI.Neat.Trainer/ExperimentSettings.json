@@ -10,5 +10,6 @@
   "outputChampionFilePath": "ChampionNeatAi.xml",
   "complexityRegulationStrategy": "Absolute",
   "complexityThreshold": 50,
-  "desiredFitness": 90.0
+  "desiredFitness": 95.0,
+  "gameCombinationIterations": 1
 }
