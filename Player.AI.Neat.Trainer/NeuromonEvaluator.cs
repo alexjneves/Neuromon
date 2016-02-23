@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.SymbolStore;
+using System.Linq;
 using Common;
 using Data;
 using Game;
@@ -34,8 +36,7 @@ namespace Player.AI.Neat.Trainer
             _desiredFitness = experimentSettings.DesiredFitness;
             _gameCombinationIterations = experimentSettings.GameCombinationIterations;
 
-            _opponentPlayerControllerFactory = new PlayerControllerFactory(
-                _trainingGameSettings.OpponentBrainFileName, 
+            _opponentPlayerControllerFactory = new PlayerControllerFactory( 
                 _trainingGameSettings.NumberOfNeuromon,
                 experimentSettings.InputCount,
                 experimentSettings.OutputCount
@@ -51,7 +52,7 @@ namespace Player.AI.Neat.Trainer
                 _trainingGameSettings.TypesFileName,
                 _trainingGameSettings.MovesFileName,
                 _trainingGameSettings.NeuromonFileName
-                );
+            );
 
             _gameNeuromonCollectionCombinations = new GameNeuromonCombinationsGenerator(
                 gameDatabase.Neuromon,
@@ -90,11 +91,15 @@ namespace Player.AI.Neat.Trainer
             var averageFitness = accumulatedFitness / numberOfGames;
 
             EvaluationCount++;
-            StopConditionSatisfied = averageFitness >= _desiredFitness;
 
-            if (StopConditionSatisfied)
+            if (!StopConditionSatisfied)
             {
-                Console.WriteLine("Desired Fitness Achieved! Stopping training...");
+                StopConditionSatisfied = averageFitness >= _desiredFitness;
+
+                if (StopConditionSatisfied)
+                {
+                    Console.WriteLine("Desired Fitness Achieved! Stopping training...");
+                }
             }
 
             return new FitnessInfo(averageFitness, averageFitness);
@@ -103,7 +108,7 @@ namespace Player.AI.Neat.Trainer
         private BattleSimulator CreateGame(IBlackBox brain, NeuromonCollection traineeNeuromon, NeuromonCollection opponentNeuromon)
         {
             var opponentState = new PlayerState(OpponentName, opponentNeuromon);
-            var opponentController = _opponentPlayerControllerFactory.Create(_trainingGameSettings.OpponentType, opponentState);
+            var opponentController = _opponentPlayerControllerFactory.Create(_trainingGameSettings.OpponentType, opponentState, _trainingGameSettings.OpponentBrainFileName);
             var opponent = new Player(opponentState, opponentController);
 
             var neatPlayerControllerFactory = new NeatAiPlayerControllerFactory(brain, _trainingGameSettings.NumberOfNeuromon);
@@ -123,18 +128,30 @@ namespace Player.AI.Neat.Trainer
             return battleSimulator;
         }
 
+        // Maximum Fitness = Win + N * (50 + H) + N * 50
         private static double CalculateFitness(BattleResult result)
         {
             var fitness = 0.0;
 
+            var players = new[] { result.Winner, result.Loser };
+            var trainee = players.First(p => p.Name == TraineeName);
+            var opponent = players.First(p => p.Name == OpponentName);
+
             if (result.Winner.Name == TraineeName)
             {
-                fitness += 100;
+                fitness += 200.0;
             }
 
-            // TODO: Design fitness function
+            // Gain 50 fitness for each Neuromon that is still alive
+            // Gain fitness equal to the health of the alive Neuromon
+            fitness += trainee.AllNeuromon.Where(n => !n.IsDead).Sum(neuromon => 50.0 + neuromon.Health);
 
-            return fitness;
+            // Gain 50 fitness for each opponent Neuromon which is dead
+            // Lose fitness equal to the health of the alive Neuromon
+            fitness += opponent.AllNeuromon.Where(n => n.IsDead).Sum(neuromon => 50.0);
+            fitness -= opponent.AllNeuromon.Where(n => !n.IsDead).Sum(neuromon => neuromon.Health);
+
+            return fitness >= 0 ? fitness : 0.0;
         }
 
         public void Reset()

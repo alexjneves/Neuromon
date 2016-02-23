@@ -1,5 +1,4 @@
 ﻿using System;
-using Common;
 using Player;
 using Player.AI.Intelligent;
 using Player.AI.Neat;
@@ -10,6 +9,9 @@ namespace Game
 {
     public sealed class PlayerControllerFactory
     {
+        private readonly int _numberOfNeuromon;
+        private readonly int _inputCount;
+        private readonly int _outputCount;
         private const string HumanPlayer = "human";
         private const string IntelligentAiPlayer = "intelligent";
         private const string RandomAiPlayer = "random";
@@ -18,17 +20,18 @@ namespace Game
         private readonly IPlayerControllerFactory _humanPlayerControllerFactory;
         private readonly IPlayerControllerFactory _intelligentAiPlayerControllerFactory;
         private readonly IPlayerControllerFactory _randomAiPlayerControllerFactory;
-        private readonly IPlayerControllerFactory _neatAiPlayerControllerFactory;
 
-        public PlayerControllerFactory(string brainFileName, int numberOfNeuromon, int inputCount, int outputCount)
+        public PlayerControllerFactory(int numberOfNeuromon, int inputCount, int outputCount)
         {
+            _numberOfNeuromon = numberOfNeuromon;
+            _inputCount = inputCount;
+            _outputCount = outputCount;
             _humanPlayerControllerFactory = new HumanPlayerControllerFactory();
             _intelligentAiPlayerControllerFactory = new IntelligentAiPlayerControllerFactory();
             _randomAiPlayerControllerFactory = new RandomAiPlayerControllerFactory();
-            _neatAiPlayerControllerFactory = new NeatAiPlayerControllerFactory(brainFileName, numberOfNeuromon, inputCount, outputCount);
         }
 
-        public IPlayerController Create(string playerType, IPlayerState initialState)
+        public IPlayerController Create(string playerType, IPlayerState initialState, string brainFileName)
         {
             switch (playerType)
             {
@@ -39,7 +42,7 @@ namespace Game
                 case RandomAiPlayer:
                     return _randomAiPlayerControllerFactory.CreatePlayer(initialState);
                 case NeatAiPlayer:
-                    return _neatAiPlayerControllerFactory.CreatePlayer(initialState);
+                    return new NeatAiPlayerControllerFactory(brainFileName, _numberOfNeuromon, _inputCount, _outputCount).CreatePlayer(initialState);
                 default:
                     throw new Exception($"{playerType} is an unsupported player type");
             }

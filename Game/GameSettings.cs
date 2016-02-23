@@ -14,11 +14,13 @@ namespace Game
         public string TypesFileName { get; }
         public string MovesFileName { get; }
         public string NeuromonFileName { get; }
-        public string ChampionBrainFileName { get; }
         public string PlayerOneName { get; }
         public string PlayerTwoName { get; }
         public string PlayerOneType { get; }
         public string PlayerTwoType { get; }
+        public string PlayerOneBrain { get; }
+        public string PlayerTwoBrain { get; }
+
         public bool SimulateThinking { get; }
         public bool ShouldRender { get; }
         public bool NonDeterministic { get; }
@@ -27,9 +29,10 @@ namespace Game
         public GameSettings(int numberOfNeuromon, int inputNeuronCount, int outputNeuronCount, 
             double effectiveMultiplier, double weakMultiplier, double minimumRandomMultiplier, 
             double maximumRandomMultiplier, string typesFileName, string movesFileName, 
-            string neuromonFileName, string championBrainFileName, string playerOneName, 
-            string playerTwoName, string playerOneType, string playerTwoType, 
-            bool simulateThinking, bool shouldRender, bool nonDeterministic)
+            string neuromonFileName, string playerOneName, string playerTwoName, 
+            string playerOneType, string playerTwoType, string playerOneBrain,
+            string playerTwoBrain, bool simulateThinking, bool shouldRender, 
+            bool nonDeterministic)
         {
             NumberOfNeuromon = numberOfNeuromon;
             InputNeuronCount = inputNeuronCount;
@@ -45,12 +48,13 @@ namespace Game
             PlayerTwoName = playerTwoName;
             PlayerOneType = playerOneType;
             PlayerTwoType = playerTwoType;
+            PlayerOneBrain = playerOneBrain;
+            PlayerTwoBrain = playerTwoBrain;
             SimulateThinking = simulateThinking;
             ShouldRender = shouldRender;
             NonDeterministic = nonDeterministic;
             InputNeuronCount = inputNeuronCount;
             OutputNeuronCount = outputNeuronCount;
-            ChampionBrainFileName = championBrainFileName;
         }
     }
 }
