@@ -59,7 +59,7 @@
     <Compile Include="NeuromonEvaluator.cs" />
     <Compile Include="NeuromonExperiment.cs" />
     <Compile Include="ExperimentSettings.cs" />
-    <Compile Include="Train.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrainingGameSettings.cs" />
   </ItemGroup>
