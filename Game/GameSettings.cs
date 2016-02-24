@@ -20,7 +20,6 @@ namespace Game
         public string PlayerTwoType { get; }
         public string PlayerOneBrain { get; }
         public string PlayerTwoBrain { get; }
-
         public bool SimulateThinking { get; }
         public bool ShouldRender { get; }
         public bool NonDeterministic { get; }

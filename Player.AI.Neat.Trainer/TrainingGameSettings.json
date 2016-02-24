@@ -7,8 +7,8 @@
   "typesFileName": "Types.json",
   "movesFileName": "Moves.json",
   "neuromonFileName": "Neuromon.json",
-  "opponentType": "intelligent",
-  "opponentBrainFileName": "",
+  "opponentType": "neat",
+  "opponentBrainFileName": "CurrentOpponentToBeat.xml",
   "shouldRender": "false",
   "nonDeterministic": "true"
 }

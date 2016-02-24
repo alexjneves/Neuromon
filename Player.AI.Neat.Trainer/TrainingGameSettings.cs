@@ -2,7 +2,7 @@
 
 namespace Player.AI.Neat.Trainer
 {
-    internal sealed class TrainingGameSettings
+    public sealed class TrainingGameSettings
     {
         public int NumberOfNeuromon { get; }
         public double EffectiveMultiplier { get; }

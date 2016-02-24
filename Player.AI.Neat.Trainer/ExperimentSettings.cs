@@ -1,6 +1,6 @@
 namespace Player.AI.Neat.Trainer
 {
-    internal sealed class ExperimentSettings
+    public sealed class ExperimentSettings
     {
         public string ExperimentName { get; set; }
         public string Description { get; set; }

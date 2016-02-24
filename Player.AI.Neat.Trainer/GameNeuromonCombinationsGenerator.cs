@@ -33,13 +33,14 @@ namespace Player.AI.Neat.Trainer
 
             var gameNeuromonCollectionCombinations = new List<Tuple<NeuromonCollection, NeuromonCollection>>(neuromonCombinations.Count * neuromonCombinations.Count); 
 
-            foreach (var neuromonCombination in neuromonCombinations.Select(nc => new NeuromonCollection(nc)))
+            foreach (var neuromonCombination in neuromonCombinations)
             {
                 foreach (var otherNeuromonCombination in neuromonCombinations)
                 {
-                    gameNeuromonCollectionCombinations.Add(
-                        new Tuple<NeuromonCollection, NeuromonCollection>(neuromonCombination, new NeuromonCollection(otherNeuromonCombination))
-                        );
+                    gameNeuromonCollectionCombinations.Add(new Tuple<NeuromonCollection, NeuromonCollection>(
+                            new NeuromonCollection(neuromonCombination),
+                            new NeuromonCollection(otherNeuromonCombination))
+                    );
                 }
             }
 

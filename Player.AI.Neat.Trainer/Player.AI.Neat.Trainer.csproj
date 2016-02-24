@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameNeuromonCombinationsGenerator.cs" />
+    <Compile Include="NeatTrainer.cs" />
+    <Compile Include="NeatTrainerDelegates.cs" />
     <Compile Include="NeuromonEvaluator.cs" />
     <Compile Include="NeuromonExperiment.cs" />
     <Compile Include="ExperimentSettings.cs" />

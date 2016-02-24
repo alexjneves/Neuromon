@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using Data;
 using Game.Damage;
 using Newtonsoft.Json;
 using Player;
-using Player.Human;
 
 namespace Game
 {
