@@ -1,0 +1,85 @@
+﻿<Window x:Class="Player.AI.Neat.Trainer.Gui.TrainerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Player.AI.Neat.Trainer.Gui"
+        mc:Ignorable="d"
+        Title="Neuromon Trainer" Height="600" Width="1200">
+    <Window.DataContext>
+        <local:TrainerViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid HorizontalAlignment="Left" Height="453" Margin="10,10,0,0" VerticalAlignment="Top" Width="395">
+            <Label x:Name="GameSettingsLabel" Content="Game Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+
+            <Grid HorizontalAlignment="Left" Height="408" Margin="10,41,0,0" VerticalAlignment="Top" Width="376" DataContext="{Binding TrainingGameSettings}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250*"/>
+                    <ColumnDefinition Width="250*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+
+                <Label x:Name="NumberOfNeuromonLabel" Content="Number Of Neuromon:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"  Height="23" Width="133" Grid.Column="0" Grid.Row="0"/>
+                <Label x:Name="EffectiveMultiplierLabel" Content="Effective Multiplier:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="111" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2"/>
+                <Label x:Name="WeakMultiplierLabel" Content="Weak Multiplier:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="96" Grid.Column="0" Grid.Row="2"/>
+                <Label x:Name="MinimumRandomMultiplierLabel" Content="Minimum Random Multiplier:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="165" Grid.Column="0" Grid.Row="3" Margin="10,10,0,0" />
+                <Label x:Name="MaximumRandomMultiplierLable" Content="Maximum Random Multiplier:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="24" Width="168" Grid.Column="0" Grid.Row="4"/>
+                <Label x:Name="TypesFileNameLabel" Content="Types File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="5" Grid.RowSpan="2"/>
+                <Label x:Name="MovesFileNameLabel" Content="Moves File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="6"/>
+                <Label x:Name="NeuromonFileNameLabel" Content="Neuromon File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="7"/>
+                <Label x:Name="OpponentTypeLabel" Content="Opponent Type:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="8"/>
+                <Label x:Name="OpponentBrainFileName" Content="Opponent Brain File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="9"/>
+                <Label x:Name="ShouldRenderLabel" Content="Render Games:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="10"/>
+                <Label x:Name="NonDeterministicLabel" Content="Non-Deterministic:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="11"/>
+
+                <Slider x:Name="NumberOfNeuromonSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="128" Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="6" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding NumberOfNeuromon}"/>
+                <TextBox x:Name="NumberOfNeuromonSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="143,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="0" IsReadOnly="True"
+                         Text="{Binding ElementName=NumberOfNeuromonSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Slider x:Name="EffectiveMultiplierSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="128" Grid.Column="1" Grid.Row="1" Minimum="0.0" Maximum="2.0" TickFrequency="0.05" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding EffectiveMultiplier}"/>
+                <TextBox x:Name="EffectiveMultiplierSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="143,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="1" IsReadOnly="True"
+                         Text="{Binding ElementName=EffectiveMultiplierSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Slider x:Name="WeakMultiplierSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="128" Grid.Column="1" Grid.Row="2" Minimum="0.0" Maximum="2.0" TickFrequency="0.05" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding WeakMultiplier}"/>
+                <TextBox x:Name="WeakMultiplierSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="143,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="2" IsReadOnly="True"
+                         Text="{Binding ElementName=WeakMultiplierSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Slider x:Name="MinimumRandomMultiplierSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="128" Grid.Column="1" Grid.Row="3" Minimum="0.0" Maximum="1.0" TickFrequency="0.05" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding MinimumRandomMultiplier}"/>
+                <TextBox x:Name="MinimumRandomMultiplerSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="143,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="3" IsReadOnly="True"
+                         Text="{Binding ElementName=MinimumRandomMultiplierSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Slider x:Name="MaximumRandomMultiplierSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="128" Grid.Column="1" Grid.Row="4" Minimum="0.0" Maximum="1.0" TickFrequency="0.05" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding MaximumRandomMultiplier}"/>
+                <TextBox x:Name="MaximumRandomMultiplierSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="143,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="4" IsReadOnly="True"
+                         Text="{Binding ElementName=MaximumRandomMultiplierSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBox x:Name="TypesFileNameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" Grid.Column="1" Grid.Row="5" Text="{Binding TypesFileName}" />
+                <TextBox x:Name="MovesFileNameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" Grid.Column="1" Grid.Row="6" Text="{Binding MovesFileName}"/>
+                <TextBox x:Name="NeuromonFileNameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" Grid.Column="1" Grid.Row="7" Text="{Binding NeuromonFileName}"/>
+                <ComboBox x:Name="OpponentTypeComboBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="168" Grid.Column="1" Grid.Row="8" SelectedValuePath="Content" SelectedValue="{Binding OpponentType}">
+                    <ComboBoxItem>neat</ComboBoxItem>
+                    <ComboBoxItem>intelligent</ComboBoxItem>
+                    <ComboBoxItem>random</ComboBoxItem>
+                    <ComboBoxItem>human</ComboBoxItem>
+                </ComboBox>
+                <TextBox x:Name="OpponentBrainFileNameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" Grid.Column="1" Grid.Row="9" Text="{Binding OpponentBrainFileName}"/>
+                <CheckBox x:Name="RendererCheckBox" Content="" HorizontalAlignment="Left" Margin="10,16,0,0" VerticalAlignment="Top" Width="18" Height="20" Grid.Column="1" Grid.Row="10" IsChecked="{Binding ShouldRender}"/>
+                <CheckBox x:Name="NonDeterministicCheckBox" Content="" HorizontalAlignment="Left" Margin="10,16,0,0" VerticalAlignment="Top" Width="18" Height="20" Grid.Column="1" Grid.Row="11" IsChecked="{Binding NonDeterministic}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,40 +1,18 @@
-﻿using Newtonsoft.Json;
-
-namespace Player.AI.Neat.Trainer
+﻿namespace Player.AI.Neat.Trainer
 {
     public sealed class TrainingGameSettings
     {
-        public int NumberOfNeuromon { get; }
-        public double EffectiveMultiplier { get; }
-        public double WeakMultiplier { get; }
-        public double MinimumRandomMultiplier { get; }
-        public double MaximumRandomMultiplier { get; }
-        public string TypesFileName { get; }
-        public string MovesFileName { get; }
-        public string NeuromonFileName { get; }
-        public string OpponentType { get; }
-        public string OpponentBrainFileName { get; }
-        public bool ShouldRender { get; }
-        public bool NonDeterministic { get; }
-
-        [JsonConstructor]
-        public TrainingGameSettings(int numberOfNeuromon, double effectiveMultiplier, double weakMultiplier,
-            double minimumRandomMultiplier, double maximumRandomMultiplier, string typesFileName,
-            string movesFileName, string neuromonFileName, string opponentType,
-            string opponentBrainFileName, bool shouldRender, bool nonDeterministic)
-        {
-            NumberOfNeuromon = numberOfNeuromon;
-            EffectiveMultiplier = effectiveMultiplier;
-            WeakMultiplier = weakMultiplier;
-            MinimumRandomMultiplier = minimumRandomMultiplier;
-            MaximumRandomMultiplier = maximumRandomMultiplier;
-            TypesFileName = typesFileName;
-            MovesFileName = movesFileName;
-            NeuromonFileName = neuromonFileName;
-            OpponentType = opponentType;
-            OpponentBrainFileName = opponentBrainFileName;
-            ShouldRender = shouldRender;
-            NonDeterministic = nonDeterministic;
-        }
+        public int NumberOfNeuromon { get; set; }
+        public double EffectiveMultiplier { get; set; }
+        public double WeakMultiplier { get; set; }
+        public double MinimumRandomMultiplier { get; set; }
+        public double MaximumRandomMultiplier { get; set; }
+        public string TypesFileName { get; set; }
+        public string MovesFileName { get; set; }
+        public string NeuromonFileName { get; set; }
+        public string OpponentType { get; set; }
+        public string OpponentBrainFileName { get; set; }
+        public bool ShouldRender { get; set; }
+        public bool NonDeterministic { get; set; }
     }
 }
