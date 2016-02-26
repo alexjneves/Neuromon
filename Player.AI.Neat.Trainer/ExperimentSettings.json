@@ -1,6 +1,6 @@
 ﻿{
-  "experimentName": "Neuromon NEAT AI Experiment",
-  "description": "",
+  "experimentName": "Neuromon NEAT AI",
+  "description": "Developing a NEAT AI for Neuromon",
   "inputCount": 60,
   "outputCount": 6,
   "populationSize": 150,
@@ -10,6 +10,6 @@
   "outputChampionFilePath": "ChampionNeatAi.xml",
   "complexityRegulationStrategy": "Absolute",
   "complexityThreshold": 50,
-  "desiredFitness": 95.0,
-  "gameCombinationIterations": 1
+  "desiredFitness": 530.0,
+  "gameCombinationIterations": 5
 }

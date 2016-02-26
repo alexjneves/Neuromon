@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using Newtonsoft.Json;
 
@@ -17,7 +16,8 @@ namespace Player.AI.Neat.Trainer.Gui
 
             TrainerViewModel = new TrainerViewModel
             {
-                TrainingGameSettings = jsonSettingsReader.ReadTrainingGameSettings()
+                TrainingGameSettings = jsonSettingsReader.ReadTrainingGameSettings(),
+                ExperimentSettings = jsonSettingsReader.ReadExperimentSettings()
             };
 
             DataContext = TrainerViewModel;
@@ -29,6 +29,12 @@ namespace Player.AI.Neat.Trainer.Gui
         private const string NeuromonExperimentSettingsFileName = "ExperimentSettings.json";
         private const string EvolutionAlgorithmParametersFileName = "EvolutionAlgorithmParameters.json";
         private const string TrainingGameSettingsFileName = "TrainingGameSettings.json";
+
+        public ExperimentSettings ReadExperimentSettings()
+        {
+            var experimentSettingsJson = File.ReadAllText(NeuromonExperimentSettingsFileName);
+            return JsonConvert.DeserializeObject<ExperimentSettings>(experimentSettingsJson);
+        }
 
         public TrainingGameSettings ReadTrainingGameSettings()
         {
