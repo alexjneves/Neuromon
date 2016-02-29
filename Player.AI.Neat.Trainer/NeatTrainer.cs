@@ -21,6 +21,7 @@ namespace Player.AI.Neat.Trainer
         private NeatEvolutionAlgorithm<NeatGenome> _evolutionAlgorithm;
 
         public event StatusUpdateDelegate OnStatusUpdate;
+        public event TrainingPausedDelegate OnTrainingPaused;
 
         public NeatTrainer(ExperimentSettings experimentSettings, NeatEvolutionAlgorithmParameters evolutionAlgorithmParameters, TrainingGameSettings gameSettings)
         {
@@ -56,6 +57,7 @@ namespace Player.AI.Neat.Trainer
             {
                 _evolutionAlgorithm = _neuromonExperiment.CreateEvolutionAlgorithm(_genomeFactory, _genomePopulation);
                 _evolutionAlgorithm.UpdateEvent += (sender, e) => OnStatusUpdate?.Invoke(_evolutionAlgorithm.CurrentGeneration, _evolutionAlgorithm.Statistics._maxFitness);
+                _evolutionAlgorithm.PausedEvent += (sender, args) => OnTrainingPaused?.Invoke();
             }
 
             _evolutionAlgorithm.StartContinue();   
