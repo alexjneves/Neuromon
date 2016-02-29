@@ -9,6 +9,6 @@
   "neuromonFileName": "Neuromon.json",
   "opponentType": "neat",
   "opponentBrainFileName": "CurrentOpponentToBeat.xml",
-  "shouldRender": "false",
-  "nonDeterministic": "true"
+  "shouldRender": false,
+  "nonDeterministic": true
 }
