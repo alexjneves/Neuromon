@@ -38,6 +38,8 @@ namespace Player.AI.Neat.Trainer.Gui
         private void SaveSettingsButton_Click(object sender, RoutedEventArgs e)
         {
             _jsonSettingsIo.SaveSettings(TrainerViewModel);
+
+            _trainingProgressBox.WriteLine("Current configuration settings have been saved.");
         }
 
         private void RestoreDefaultButton_Click(object sender, RoutedEventArgs e)
@@ -115,6 +117,35 @@ namespace Player.AI.Neat.Trainer.Gui
             };
 
             return neatTrainer;
+        }
+
+        private void SavePopulationButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CanSave()) return;
+
+            _neatTrainer.SavePopulation(TrainerViewModel.ExperimentSettings.OutputPopulationFilePath);
+
+            _trainingProgressBox.WriteLine($"Current population has been saved to {TrainerViewModel.ExperimentSettings.OutputPopulationFilePath}");
+        }
+
+        private void SaveChampionGenomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CanSave()) return;
+
+            _neatTrainer.SaveChampionGenome(TrainerViewModel.ExperimentSettings.OutputChampionFilePath);
+
+            _trainingProgressBox.WriteLine($"Current champion genome has been saved to {TrainerViewModel.ExperimentSettings.OutputChampionFilePath}");
+        }
+
+        private bool CanSave()
+        {
+            if (_trainingState != TrainingState.Paused)
+            {
+                _trainingProgressBox.WriteLine("Please stop training before saving.");
+                return false;
+            }
+
+            return true;
         }
 
         // http://stackoverflow.com/questions/25761795/doing-autoscroll-with-scrollviewer-scrolltoend-only-worked-while-debugging-ev

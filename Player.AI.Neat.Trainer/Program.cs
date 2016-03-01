@@ -7,9 +7,9 @@ namespace Player.AI.Neat.Trainer
 {
     internal sealed class Program
     {
-        private const string NeuromonExperimentSettingsFileName = "ExperimentSettings.json";
-        private const string EvolutionAlgorithmParametersFileName = "EvolutionAlgorithmParameters.json";
-        private const string TrainingGameSettingsFileName = "TrainingGameSettings.json";
+        private const string NeuromonExperimentSettingsFileName = "Config/ExperimentSettings.json";
+        private const string EvolutionAlgorithmParametersFileName = "Config/EvolutionAlgorithmParameters.json";
+        private const string TrainingGameSettingsFileName = "Config/TrainingGameSettings.json";
 
         private static void Main()
         {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Game
+namespace Game.Console
 {
     internal sealed class GameSettings
     {

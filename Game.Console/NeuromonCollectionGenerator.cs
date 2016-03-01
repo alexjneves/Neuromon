@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Common;
 
-namespace Game
+namespace Game.Console
 {
     internal sealed class NeuromonCollectionGenerator
     {

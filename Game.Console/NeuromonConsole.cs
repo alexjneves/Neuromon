@@ -4,11 +4,11 @@ using Game.Damage;
 using Newtonsoft.Json;
 using Player;
 
-namespace Game
+namespace Game.Console
 {
-    internal sealed class NeuromonGame
+    internal sealed class NeuromonConsole
     {
-        private const string GameSettingsFileName = "GameSettings.json";
+        private const string GameSettingsFileName = "Config/GameSettings.json";
 
         private static void Main(string[] args)
         {
@@ -16,8 +16,8 @@ namespace Game
             var gameSettings = JsonConvert.DeserializeObject<GameSettings>(gameSettingsJson);
 
             var gameDatabase = GameDatabase.CreateFromFiles(
-                gameSettings.TypesFileName, 
-                gameSettings.MovesFileName, 
+                gameSettings.TypesFileName,
+                gameSettings.MovesFileName,
                 gameSettings.NeuromonFileName
             );
 

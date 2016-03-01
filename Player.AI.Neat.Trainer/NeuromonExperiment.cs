@@ -20,7 +20,7 @@ namespace Player.AI.Neat.Trainer
         private readonly string _complexityRegulationStrategy;
         private readonly int _complexityThreshold;
 
-        private NetworkActivationScheme _networkActivationScheme;
+        private readonly NetworkActivationScheme _networkActivationScheme;
 
         public string Name { get; }
         public string Description { get; }
@@ -43,13 +43,15 @@ namespace Player.AI.Neat.Trainer
             _complexityRegulationStrategy = experimentSettings.ComplexityRegulationStrategy;
             _complexityThreshold = experimentSettings.ComplexityThreshold;
 
+            // Removed from .xml configuration. TODO: Possibly make configurable via json config
+            _networkActivationScheme = NetworkActivationScheme.CreateCyclicFixedTimestepsScheme(1);
+
             NeatEvolutionAlgorithmParameters = evolutionAlgorithmParameters;
             NeatGenomeParameters = genomeParameters;
         }
 
         public void Initialize(string name, XmlElement xmlConfig)
         {
-            _networkActivationScheme = ExperimentUtils.CreateActivationScheme(xmlConfig, "Activation");
         }
 
         public List<NeatGenome> LoadPopulation(XmlReader xmlReader)

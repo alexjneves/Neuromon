@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml;
 using SharpNeat.Core;
@@ -11,9 +12,6 @@ namespace Player.AI.Neat.Trainer
 {
     public sealed class NeatTrainer
     {
-        // TODO: Remove XML configuration
-        private const string NeuromonTrainingConfigFile = "NeuromonTrainingConfig.xml";
-
         private readonly NeuromonExperiment _neuromonExperiment;
         private readonly IGenomeFactory<NeatGenome> _genomeFactory;
         private readonly List<NeatGenome> _genomePopulation;
@@ -44,11 +42,6 @@ namespace Player.AI.Neat.Trainer
                 // Randomly generate a new population
                 _genomePopulation = _genomeFactory.CreateGenomeList(experimentSettings.PopulationSize, 0);
             }
-
-            // TODO: Remove initialisation
-            var xmlConfig = new XmlDocument();
-            xmlConfig.Load(NeuromonTrainingConfigFile);
-            _neuromonExperiment.Initialize(experimentSettings.ExperimentName, xmlConfig.DocumentElement);
         }
 
         public void StartTraining()
@@ -84,6 +77,8 @@ namespace Player.AI.Neat.Trainer
 
         private static void SaveToXml(string filePath, Action<XmlWriter> func)
         {
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
             var writerSettings = new XmlWriterSettings { Indent = true };
             using (var xmlWriter = XmlWriter.Create(filePath, writerSettings))
             {

@@ -258,11 +258,11 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                
+
                 <Button Grid.Column="0" x:Name="SaveSettingsButton" Content="Save Settings" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center" Width="100" Click="SaveSettingsButton_Click" Height="25"/>
                 <Button Grid.Column="1" x:Name="RestoreDefaultButton" Content="Restore Defaults" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="100" Click="RestoreDefaultButton_Click" Height="25"/>
             </Grid>
-            
+
             <!-- Training Buttons -->
             <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
                 <Grid.ColumnDefinitions>
@@ -276,8 +276,21 @@
                 <Button Grid.Column="2" x:Name="PauseTrainingButton" Content="Pause Training" HorizontalAlignment="Left" VerticalAlignment="Center" Width="110" Height="25" Click="PauseTrainingButton_Click"/>
             </Grid>
 
+            <!-- Saving Buttons -->
+            <Grid Grid.Column="2" Grid.Row="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" x:Name="SavePopulationButton" Content="Save Population" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center" Width="150" Height="25" Click="SavePopulationButton_Click"/>
+                <Button Grid.Column="1" x:Name="SaveChampionGenomeButton" Content="Save Champion Genome" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="150" Height="25" Click="SaveChampionGenomeButton_Click"/>
+
+            </Grid>
+
+
             <!-- ====================================== Training Progress Log =========================================== -->
-            
+
             <Border Grid.Row="2" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.ColumnSpan="3" Grid.Column="0" BorderThickness="1" BorderBrush="Black" Opacity="1">
                 <ScrollViewer ScrollChanged="ScrollViewer_OnScrollChanged">
                     <TextBlock x:Name="TrainingProgressTextBlock" TextWrapping="Wrap" Margin="10,5,10,5" />
