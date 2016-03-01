@@ -11,5 +11,7 @@
   "complexityRegulationStrategy": "Absolute",
   "complexityThreshold": 50,
   "desiredFitness": 530.0,
-  "gameCombinationIterations": 5
+  "gameCombinationIterations": 5,
+  "stagnationDetectionTriggerValue": 20,
+  "stopTrainingOnStagnationDetection": true
 }

@@ -53,7 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CircularBuffer.cs" />
     <Compile Include="GameNeuromonCombinationsGenerator.cs" />
+    <Compile Include="GenerationFitnessStagnationDetector.cs" />
     <Compile Include="NeatTrainer.cs" />
     <Compile Include="NeatTrainerDelegates.cs" />
     <Compile Include="NeuromonEvaluator.cs" />

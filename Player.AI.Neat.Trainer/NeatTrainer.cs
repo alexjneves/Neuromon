@@ -15,11 +15,13 @@ namespace Player.AI.Neat.Trainer
         private readonly NeuromonExperiment _neuromonExperiment;
         private readonly IGenomeFactory<NeatGenome> _genomeFactory;
         private readonly List<NeatGenome> _genomePopulation;
+        private readonly FitnessStagnationDetector _fitnessStagnationDetector;
 
         private NeatEvolutionAlgorithm<NeatGenome> _evolutionAlgorithm;
 
         public event StatusUpdateDelegate OnStatusUpdate;
         public event TrainingPausedDelegate OnTrainingPaused;
+        public event StagnationDetectedDelegate OnStagnationDetected;
 
         public NeatTrainer(ExperimentSettings experimentSettings, NeatEvolutionAlgorithmParameters evolutionAlgorithmParameters, TrainingGameSettings gameSettings)
         {
@@ -42,6 +44,8 @@ namespace Player.AI.Neat.Trainer
                 // Randomly generate a new population
                 _genomePopulation = _genomeFactory.CreateGenomeList(experimentSettings.PopulationSize, 0);
             }
+
+            _fitnessStagnationDetector = new FitnessStagnationDetector(experimentSettings.StagnationDetectionTriggerValue);
         }
 
         public void StartTraining()
@@ -51,6 +55,7 @@ namespace Player.AI.Neat.Trainer
                 _evolutionAlgorithm = _neuromonExperiment.CreateEvolutionAlgorithm(_genomeFactory, _genomePopulation);
                 _evolutionAlgorithm.UpdateEvent += (sender, e) => OnStatusUpdate?.Invoke(_evolutionAlgorithm.CurrentGeneration, _evolutionAlgorithm.Statistics._maxFitness);
                 _evolutionAlgorithm.PausedEvent += (sender, args) => OnTrainingPaused?.Invoke();
+                _evolutionAlgorithm.UpdateEvent += (sender, args) => HandleStagnationDetection(_evolutionAlgorithm.Statistics._maxFitness);
             }
 
             _evolutionAlgorithm.StartContinue();   
@@ -83,6 +88,16 @@ namespace Player.AI.Neat.Trainer
             using (var xmlWriter = XmlWriter.Create(filePath, writerSettings))
             {
                 func(xmlWriter);
+            }
+        }
+
+        private void HandleStagnationDetection(double currentBestFitness)
+        {
+            _fitnessStagnationDetector.Add(currentBestFitness);
+
+            if (_fitnessStagnationDetector.HasFitnessStagnated())
+            {
+                OnStagnationDetected?.Invoke();
             }
         }
     }

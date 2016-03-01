@@ -28,14 +28,35 @@ namespace Player.AI.Neat.Trainer
                 Console.WriteLine($"Generation: {generation}, Best Fitness: {fitness}");
             };
 
+            var trainingStopped = false;
+
+            neatTrainer.OnStagnationDetected += () => Console.WriteLine("Stagnation Detected.");
+
+            if (neuromonExperimentSettings.StopTrainingOnStagnationDetection)
+            {
+                neatTrainer.OnStagnationDetected += () =>
+                {
+                    Console.WriteLine("Stopping training due to stagnation detection.");
+                    Console.WriteLine("Press Enter to save results.");
+
+                    neatTrainer.StopTraining();
+                    trainingStopped = true;
+                };
+            }
+
             Console.WriteLine("Press Enter to Quit Training");
 
             neatTrainer.StartTraining();
 
             Console.ReadLine();
-            Console.WriteLine("Stopping and Saving...");
 
-            neatTrainer.StopTraining();
+            if (!trainingStopped)
+            {
+                neatTrainer.StopTraining();
+                trainingStopped = true;
+            }
+
+            Console.WriteLine("Saving...");
 
             neatTrainer.SavePopulation(neuromonExperimentSettings.OutputPopulationFilePath);
             neatTrainer.SaveChampionGenome(neuromonExperimentSettings.OutputChampionFilePath);
