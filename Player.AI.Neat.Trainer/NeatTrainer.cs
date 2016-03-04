@@ -18,11 +18,11 @@ namespace Player.AI.Neat.Trainer
         private readonly FitnessStagnationDetector _fitnessStagnationDetector;
 
         private NeatEvolutionAlgorithm<NeatGenome> _evolutionAlgorithm;
+        private uint _previousGeneration;
 
         public event StatusUpdateDelegate OnStatusUpdate;
         public event TrainingPausedDelegate OnTrainingPaused;
         public event StagnationDetectedDelegate OnStagnationDetected;
-
         public NeatTrainer(ExperimentSettings experimentSettings, NeatEvolutionAlgorithmParameters evolutionAlgorithmParameters, TrainingGameSettings gameSettings)
         {
             var neuromonPhenomeEvaluator = new NeuromonEvaluator(gameSettings, experimentSettings);
@@ -46,6 +46,7 @@ namespace Player.AI.Neat.Trainer
             }
 
             _fitnessStagnationDetector = new FitnessStagnationDetector(experimentSettings.StagnationDetectionTriggerValue);
+            _previousGeneration = 0;
         }
 
         public void StartTraining()
@@ -55,7 +56,7 @@ namespace Player.AI.Neat.Trainer
                 _evolutionAlgorithm = _neuromonExperiment.CreateEvolutionAlgorithm(_genomeFactory, _genomePopulation);
                 _evolutionAlgorithm.UpdateEvent += (sender, e) => OnStatusUpdate?.Invoke(_evolutionAlgorithm.CurrentGeneration, _evolutionAlgorithm.Statistics._maxFitness);
                 _evolutionAlgorithm.PausedEvent += (sender, args) => OnTrainingPaused?.Invoke();
-                _evolutionAlgorithm.UpdateEvent += (sender, args) => HandleStagnationDetection(_evolutionAlgorithm.Statistics._maxFitness);
+                _evolutionAlgorithm.UpdateEvent += (sender, args) => HandleUpdateEvent(_evolutionAlgorithm.CurrentGeneration, _evolutionAlgorithm.Statistics._maxFitness);
             }
 
             _evolutionAlgorithm.StartContinue();   
@@ -91,8 +92,16 @@ namespace Player.AI.Neat.Trainer
             }
         }
 
-        private void HandleStagnationDetection(double currentBestFitness)
+        private void HandleUpdateEvent(uint generation, double currentBestFitness)
         {
+            // SharpNEAT will sometimes trigger an update event multiple times for the same generation.
+            // We want to ignore these instances.
+            if (_previousGeneration == generation)
+            {
+                return;
+            }
+
+            _previousGeneration = _evolutionAlgorithm.CurrentGeneration;
             _fitnessStagnationDetector.Add(currentBestFitness);
 
             if (_fitnessStagnationDetector.HasFitnessStagnated())

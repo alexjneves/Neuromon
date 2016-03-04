@@ -85,6 +85,11 @@ namespace Player.AI.Neat.Trainer.Gui
 
         private void PauseTrainingButton_Click(object sender, RoutedEventArgs e)
         {
+            PauseTraining();
+        }
+
+        private void PauseTraining()
+        {
             if (_trainingState != TrainingState.Training)
             {
                 _trainingProgressBox.WriteLine("Not yet training.");
@@ -100,6 +105,7 @@ namespace Player.AI.Neat.Trainer.Gui
         private NeatTrainer CreateTrainingSession()
         {
             var neatTrainer = new NeatTrainer(TrainerViewModel.ExperimentSettings, TrainerViewModel.NeatEvolutionAlgorithmParameters, TrainerViewModel.TrainingGameSettings);
+
             neatTrainer.OnStatusUpdate += (generation, fitness) =>
             {
                 if (_trainingState == TrainingState.AwaitingTraining)
@@ -107,7 +113,10 @@ namespace Player.AI.Neat.Trainer.Gui
                     _trainingState = TrainingState.Training;
                 }
 
-                _trainingProgressBox.WriteLine($"Generation: {generation}, Best Fitness: {fitness}");
+                if (_trainingState == TrainingState.Training)
+                {
+                    _trainingProgressBox.WriteLine($"Generation: {generation}, Best Fitness: {fitness}");
+                }
             };
 
             neatTrainer.OnTrainingPaused += () =>
@@ -115,6 +124,27 @@ namespace Player.AI.Neat.Trainer.Gui
                 _trainingProgressBox.WriteLine("Training paused.");
                 _trainingState = TrainingState.Paused;
             };
+
+            var stagnationDetectedMessage =
+                $"Stagnation detected: Previous {TrainerViewModel.ExperimentSettings.StagnationDetectionTriggerValue} generations had the same fitness value.";
+
+            if (TrainerViewModel.ExperimentSettings.StopTrainingOnStagnationDetection)
+            {
+                neatTrainer.OnStagnationDetected += () =>
+                {
+                    _trainingProgressBox.WriteLine(stagnationDetectedMessage);
+
+                    if (_trainingState == TrainingState.Training)
+                    {
+                        _trainingProgressBox.WriteLine("Auto stop enabled, training will now be paused.");
+                        PauseTraining();
+                    }
+                };
+            }
+            else
+            {
+                _neatTrainer.OnStagnationDetected += () => _trainingProgressBox.WriteLine(stagnationDetectedMessage);
+            }
 
             return neatTrainer;
         }
