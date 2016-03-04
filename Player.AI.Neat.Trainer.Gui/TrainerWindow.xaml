@@ -54,18 +54,18 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
-                    <Label x:Name="NumberOfNeuromonLabel" Content="Number Of Neuromon:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"  Height="26" Width="133" Grid.Column="0" Grid.Row="0"/>
-                    <Label x:Name="EffectiveMultiplierLabel" Content="Effective Multiplier:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="111" Grid.Column="0" Grid.Row="1"/>
-                    <Label x:Name="WeakMultiplierLabel" Content="Weak Multiplier:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="96" Grid.Column="0" Grid.Row="2"/>
-                    <Label x:Name="MinimumRandomMultiplierLabel" Content="Minimum Random Multiplier:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="165" Grid.Column="0" Grid.Row="3" Margin="10,10,0,0" />
-                    <Label x:Name="MaximumRandomMultiplierLable" Content="Maximum Random Multiplier:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="168" Grid.Column="0" Grid.Row="4"/>
-                    <Label x:Name="TypesFileNameLabel" Content="Types File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="5"/>
-                    <Label x:Name="MovesFileNameLabel" Content="Moves File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="6"/>
-                    <Label x:Name="NeuromonFileNameLabel" Content="Neuromon File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="7"/>
-                    <Label x:Name="OpponentTypeLabel" Content="Opponent Type:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="8"/>
-                    <Label x:Name="OpponentBrainFileName" Content="Opponent Brain File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="9"/>
-                    <Label x:Name="ShouldRenderLabel" Content="Render Games:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="10"/>
-                    <Label x:Name="NonDeterministicLabel" Content="Non-Deterministic:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="11"/>
+                    <Label x:Name="NumberOfNeuromonLabel" Content="Number Of Neuromon:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
+                    <Label x:Name="EffectiveMultiplierLabel" Content="Effective Multiplier:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1"/>
+                    <Label x:Name="WeakMultiplierLabel" Content="Weak Multiplier:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="2"/>
+                    <Label x:Name="MinimumRandomMultiplierLabel" Content="Minimum Random Multiplier:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0" Grid.Row="3" Margin="10,10,0,0" />
+                    <Label x:Name="MaximumRandomMultiplierLable" Content="Maximum Random Multiplier:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="4"/>
+                    <Label x:Name="TypesFileNameLabel" Content="Types File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="5"/>
+                    <Label x:Name="MovesFileNameLabel" Content="Moves File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="6"/>
+                    <Label x:Name="NeuromonFileNameLabel" Content="Neuromon File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="7"/>
+                    <Label x:Name="OpponentTypeLabel" Content="Opponent Type:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="8"/>
+                    <Label x:Name="OpponentBrainFileName" Content="Opponent Brain File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="9"/>
+                    <Label x:Name="ShouldRenderLabel" Content="Render Games:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="10"/>
+                    <Label x:Name="NonDeterministicLabel" Content="Non-Deterministic:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="11"/>
 
                     <Slider x:Name="NumberOfNeuromonSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="6" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding NumberOfNeuromon}"/>
                     <TextBox x:Name="NumberOfNeuromonSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="0" IsReadOnly="True"
@@ -112,9 +112,9 @@
                 
                 <Label Grid.Row="0" x:Name="ExperimentSettingsLabel" Content="Experiment Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
 
-                <Grid Grid.Row="1" Margin="10,0,0,0" VerticalAlignment="Top" Width="424" DataContext="{Binding ExperimentSettings}">
+                <Grid Grid.Row="1" Margin="10,0,0,0" VerticalAlignment="Top" DataContext="{Binding ExperimentSettings}">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
@@ -134,21 +134,25 @@
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
-                    <Label x:Name="ExperimentNameLabel" Content="Experiment Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"  Height="26" Width="133" Grid.Column="0" Grid.Row="0"/>
-                    <Label x:Name="DescriptionLabel" Content="Description:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"  Height="26" Width="133" Grid.Column="0" Grid.Row="1"/>
-                    <Label x:Name="InputCountLabel" Content="Input Count:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"  Height="26" Width="133" Grid.Column="0" Grid.Row="2"/>
-                    <Label x:Name="OutputCountLabel" Content="Output Count:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="111" Grid.Column="0" Grid.Row="3"/>
-                    <Label x:Name="PopulationSizeLabel" Content="Population Size:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="96" Grid.Column="0" Grid.Row="4"/>
-                    <Label x:Name="LoadExistingPopulationLabel" Content="Load Existing Population:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="165" Grid.Column="0" Grid.Row="5" Margin="10,10,0,0" />
-                    <Label x:Name="ExistingPopulationFilePathLabel" Content="Existing Population File Path:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="168" Grid.Column="0" Grid.Row="6"/>
-                    <Label x:Name="OutputPopulationFileNameLabel" Content="Output Population File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="7"/>
-                    <Label x:Name="OutputChampionFileNameLabel" Content="Output Champion File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="8"/>
-                    <Label x:Name="ComplexityRegulationStrategyLabel" Content="Complexity Regulation Strategy:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="194" Grid.Column="0" Grid.Row="9" Grid.RowSpan="2"/>
-                    <Label x:Name="ComplexityThresholdLabel" Content="Complexity Threshold:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="10"/>
-                    <Label x:Name="DesiredFitnessLabel" Content="Desired Fitness:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="11"/>
-                    <Label x:Name="GameCombinationsIterationsLabel" Content="Game Combinations Iterations:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="12"/>
+                    <Label x:Name="ExperimentNameLabel" Content="Experiment Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
+                    <Label x:Name="DescriptionLabel" Content="Description:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1"/>
+                    <Label x:Name="InputCountLabel" Content="Input Count:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="2"/>
+                    <Label x:Name="OutputCountLabel" Content="Output Count:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="3"/>
+                    <Label x:Name="PopulationSizeLabel" Content="Population Size:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="4"/>
+                    <Label x:Name="LoadExistingPopulationLabel" Content="Load Existing Population:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0" Grid.Row="5" Margin="10,10,0,0" />
+                    <Label x:Name="ExistingPopulationFilePathLabel" Content="Existing Population File Path:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="6"/>
+                    <Label x:Name="OutputPopulationFileNameLabel" Content="Output Population File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="7"/>
+                    <Label x:Name="OutputChampionFileNameLabel" Content="Output Champion File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="8"/>
+                    <Label x:Name="ComplexityRegulationStrategyLabel" Content="Complexity Regulation Strategy:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="9" Grid.RowSpan="2"/>
+                    <Label x:Name="ComplexityThresholdLabel" Content="Complexity Threshold:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="10"/>
+                    <Label x:Name="DesiredFitnessLabel" Content="Desired Fitness:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="11"/>
+                    <Label x:Name="GameCombinationsIterationsLabel" Content="Game Combinations Iterations:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="12"/>
+                    <Label x:Name="StagnationDetectionTriggerValueLabel" Content="Stagnation Detection Trigger Value:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="13"/>
+                    <Label x:Name="StopTrainingOnStagnationDetectionLabel" Content="Stop Training On Stagnation Detection:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="14"/>
 
                     <TextBox x:Name="ExperimentNameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" VerticalAlignment="Top" Width="192" Grid.Column="1" Grid.Row="0" Text="{Binding ExperimentName}" IsReadOnly="True"/>
                     <TextBox x:Name="DescriptionTextBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" VerticalAlignment="Top" Width="192" Grid.Column="1" Grid.Row="1" Text="{Binding Description}" IsReadOnly="True"/>
@@ -186,6 +190,11 @@
                     <TextBox x:Name="GameCombinationsIterationsTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="12" IsReadOnly="True"
                          Text="{Binding ElementName=GameCombinationsIterationsSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
 
+                    <Slider x:Name="StagnationDetectionTriggerValueSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="13" Minimum="2" Maximum="200" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding StagnationDetectionTriggerValue}"/>
+                    <TextBox x:Name="StagnationDetectionTriggerValueTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="13" IsReadOnly="True"
+                         Text="{Binding ElementName=StagnationDetectionTriggerValueSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <CheckBox x:Name="StopTrainingOnStagnationDetectionCheckBox" Content="" HorizontalAlignment="Left" Margin="10,16,0,0" VerticalAlignment="Top" Width="18" Height="20" Grid.Column="1" Grid.Row="14" IsChecked="{Binding StopTrainingOnStagnationDetection}"/>
                 </Grid>
             </Grid>
 
@@ -217,15 +226,15 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
-                    <Label x:Name="BestFitnessMovingAverageHistoryLengthLabel" Content="Best Fitness Moving &#xD;&#xA;Average History Length:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"  Height="42" Width="192" Grid.Column="0" Grid.Row="0"/>
-                    <Label x:Name="ComplexityMovingAverageHistoryLengthLabel" Content="Complexity Moving &#xD;&#xA;Average History Length:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"  Height="42" Width="192" Grid.Column="0" Grid.Row="1"/>
-                    <Label x:Name="ElitismProportionLabel" Content="Elitism Proportion:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"  Height="26" Width="133" Grid.Column="0" Grid.Row="2"/>
-                    <Label x:Name="InterspeciesMatingProportionLabel" Content="Interspecies Mating &#xD;&#xA;Proportion:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="42" Width="165" Grid.Column="0" Grid.Row="3"/>
-                    <Label x:Name="MeanSpecieChampFitnessMovingAverageHistoryLengthLabel" Content="Mean Specie Champ Fitness &#xD;&#xA;Moving Average History Length:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="42" Width="184" Grid.Column="0" Grid.Row="4"/>
-                    <Label x:Name="OffspringAsexualProportionLabel" Content="Offspring Asexual Proportion:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="165" Grid.Column="0" Grid.Row="5" Margin="10,10,0,0" />
-                    <Label x:Name="OffspringSexualProportionLabel" Content="Offspring Sexual Proportion:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="32" Width="168" Grid.Column="0" Grid.Row="6"/>
-                    <Label x:Name="SelectionProportionLabel" Content="Selection Proportion:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="7"/>
-                    <Label x:Name="SpecieCountLabel" Content="Specie Count:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="167" Grid.Column="0" Grid.Row="8"/>
+                    <Label x:Name="BestFitnessMovingAverageHistoryLengthLabel" Content="Best Fitness Moving &#xD;&#xA;Average History Length:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
+                    <Label x:Name="ComplexityMovingAverageHistoryLengthLabel" Content="Complexity Moving &#xD;&#xA;Average History Length:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1"/>
+                    <Label x:Name="ElitismProportionLabel" Content="Elitism Proportion:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="2"/>
+                    <Label x:Name="InterspeciesMatingProportionLabel" Content="Interspecies Mating &#xD;&#xA;Proportion:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="3"/>
+                    <Label x:Name="MeanSpecieChampFitnessMovingAverageHistoryLengthLabel" Content="Mean Specie Champ Fitness &#xD;&#xA;Moving Average History Length:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="4"/>
+                    <Label x:Name="OffspringAsexualProportionLabel" Content="Offspring Asexual Proportion:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0" Grid.Row="5" Margin="10,10,0,0" />
+                    <Label x:Name="OffspringSexualProportionLabel" Content="Offspring Sexual Proportion:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="6"/>
+                    <Label x:Name="SelectionProportionLabel" Content="Selection Proportion:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="7"/>
+                    <Label x:Name="SpecieCountLabel" Content="Specie Count:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="8"/>
 
                     <Slider x:Name="BestFitnessMovingAverageHistoryLengthSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="0" Minimum="1" Maximum="200" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding BestFitnessMovingAverageHistoryLength}"/>
                     <TextBox x:Name="BestFitnessMovingAverageHistoryLengthSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="0" IsReadOnly="True"
