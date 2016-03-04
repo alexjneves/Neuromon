@@ -165,7 +165,7 @@
                     <TextBox x:Name="OutputCountSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="3" IsReadOnly="True"
                          Text="{Binding ElementName=OutputCountSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
 
-                    <Slider x:Name="PopulationSizeSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="4" Minimum="0" Maximum="500" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding PopulationSize}"/>
+                    <Slider x:Name="PopulationSizeSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="4" Minimum="10" Maximum="500" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding PopulationSize}"/>
                     <TextBox x:Name="PopulationSizeTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="4" IsReadOnly="True"
                          Text="{Binding ElementName=PopulationSizeSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
 
