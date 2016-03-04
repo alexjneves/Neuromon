@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Player.AI.Neat.Trainer.Gui"
         mc:Ignorable="d"
-        Title="Neuromon Trainer" Height="891" Width="1400">
+        Title="Neuromon Trainer" Height="950" Width="1400">
     <Window.DataContext>
         <local:TrainerViewModel/>
     </Window.DataContext>
@@ -13,9 +13,9 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="400*"/>
-                <ColumnDefinition Width="400*"/>
-                <ColumnDefinition Width="400*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -25,28 +25,33 @@
 
             <!-- ====================================== Game Settings =================================================== -->
 
-            <Grid HorizontalAlignment="Center" Height="454" Margin="10,10,0,0" VerticalAlignment="Top" Width="444" Grid.Column="0" Grid.Row="0">
-                <Label x:Name="GameSettingsLabel" Content="Game Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+            <Grid HorizontalAlignment="Center" Margin="0,10,0,10" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" x:Name="GameSettingsLabel" Content="Game Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
 
-                <Grid HorizontalAlignment="Left" Height="408" Margin="10,41,0,0" VerticalAlignment="Top" Width="424" DataContext="{Binding TrainingGameSettings}">
+                <Grid Grid.Row="1" Margin="10,0,0,0" VerticalAlignment="Top" Width="424" DataContext="{Binding TrainingGameSettings}">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250*"/>
-                        <ColumnDefinition Width="250*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
                     <Label x:Name="NumberOfNeuromonLabel" Content="Number Of Neuromon:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"  Height="26" Width="133" Grid.Column="0" Grid.Row="0"/>
@@ -99,31 +104,37 @@
 
             <!-- ====================================== Experiment Settings ============================================= -->
 
-            <Grid HorizontalAlignment="Center" Height="479" Margin="10,10,0,0" VerticalAlignment="Top" Width="444" Grid.Column="1" Grid.Row="0">
-                <Label x:Name="ExperimentSettingsLabel" Content="Experiment Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+            <Grid HorizontalAlignment="Center" Margin="0,10,0,10" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" x:Name="ExperimentSettingsLabel" Content="Experiment Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
 
-                <Grid HorizontalAlignment="Left" Height="431" Margin="10,41,0,0" VerticalAlignment="Top" Width="424" DataContext="{Binding ExperimentSettings}">
+                <Grid Grid.Row="1" Margin="10,0,0,0" VerticalAlignment="Top" Width="424" DataContext="{Binding ExperimentSettings}">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250*"/>
-                        <ColumnDefinition Width="250*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-
 
                     <Label x:Name="ExperimentNameLabel" Content="Experiment Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"  Height="26" Width="133" Grid.Column="0" Grid.Row="0"/>
                     <Label x:Name="DescriptionLabel" Content="Description:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"  Height="26" Width="133" Grid.Column="0" Grid.Row="1"/>
@@ -180,25 +191,30 @@
 
             <!-- ====================================== Evolution Algorithm Settings ==================================== -->
 
-            <Grid HorizontalAlignment="Center" Height="479" Margin="10,10,0,0" VerticalAlignment="Top" Width="444" Grid.Column="2" Grid.Row="0">
-                <Label x:Name="EvolutionAlgorithmSettingsLabel" Content="Evolution Algorithm Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+            <Grid HorizontalAlignment="Center" Margin="0,10,0,10" VerticalAlignment="Top" Grid.Column="2" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" x:Name="EvolutionAlgorithmSettingsLabel" Content="Evolution Algorithm Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
 
-                <Grid HorizontalAlignment="Left" Height="429" Margin="10,41,0,0" VerticalAlignment="Top" Width="424" DataContext="{Binding NeatEvolutionAlgorithmParameters}">
+                <Grid Grid.Row="1" Margin="10,0,0,0" VerticalAlignment="Top" Width="424" DataContext="{Binding NeatEvolutionAlgorithmParameters}" >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250*"/>
-                        <ColumnDefinition Width="250*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
                     <Label x:Name="BestFitnessMovingAverageHistoryLengthLabel" Content="Best Fitness Moving &#xD;&#xA;Average History Length:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"  Height="42" Width="192" Grid.Column="0" Grid.Row="0"/>
