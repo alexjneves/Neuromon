@@ -115,7 +115,7 @@ namespace Player.AI.Neat.Trainer.Gui
 
                 if (_trainingState == TrainingState.Training)
                 {
-                    _trainingProgressBox.WriteLine($"Generation: {generation}, Best Fitness: {fitness}");
+                    _trainingProgressBox.WriteLine($"Generation: {generation}, Best Fitness: {Math.Round(fitness, 3)}");
                 }
             };
 
