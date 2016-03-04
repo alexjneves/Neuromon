@@ -1,0 +1,17 @@
+﻿{
+  "experimentName": "Neuromon NEAT AI",
+  "description": "Developing a NEAT AI for Neuromon",
+  "inputCount": 60,
+  "outputCount": 6,
+  "populationSize": 150,
+  "loadExistingPopulation": false,
+  "existingPopulationFilePath": "",
+  "outputPopulationFilePath": "Results/NeuromonGenomePopulation.xml",
+  "outputChampionFilePath": "Results/ChampionNeatAi.xml",
+  "complexityRegulationStrategy": "Absolute",
+  "complexityThreshold": 50,
+  "desiredFitness": 530.0,
+  "gameCombinationIterations": 5,
+  "stagnationDetectionTriggerValue": 20,
+  "stopTrainingOnStagnationDetection": true
+}

@@ -41,7 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IPlayer.cs" />
-    <Compile Include="IPlayerFactory.cs" />
+    <Compile Include="IPlayerController.cs" />
+    <Compile Include="IPlayerControllerFactory.cs" />
+    <Compile Include="IPlayerState.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="PlayerState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

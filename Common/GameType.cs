@@ -9,11 +9,13 @@ namespace Common
         private readonly List<string> _effective;
         private readonly List<string> _weak;
 
+        public int Id { get; }
         public string Name { get; }
 
         [JsonConstructor]
-        public GameType(string name, List<string> effective, List<string> weak)
+        public GameType(int id, string name, List<string> effective, List<string> weak)
         {
+            Id = id;
             Name = name;
             _effective = effective;
             _weak = weak;

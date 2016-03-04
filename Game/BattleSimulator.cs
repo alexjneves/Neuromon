@@ -1,20 +1,16 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
+﻿using System.Linq;
 using Common.Turn;
 using Game.Damage;
 using Player;
-using Player.Human;
 using static Game.BattleDelegates;
 
 namespace Game
 {
-    internal sealed class BattleSimulator
+    public sealed class BattleSimulator
     {
-        private const int ThinkingSeconds = 3;
-
         private readonly IDamageCalculator _damageCalculator;
-        private readonly bool _simulateThinking;
+
+        private BattleResult _battleResult;
 
         public GameState GameState { get; private set; }
         public IPlayer Player1 { get; }
@@ -26,17 +22,16 @@ namespace Game
         public event GameStateChangedDelegate OnGameStateChanged;
         public event NeuromonDefeatedDelegate OnNeuromonDefeated;
 
-        public BattleSimulator(IPlayer player1, IPlayer player2, IDamageCalculator damageCalculator, bool simulateThinking)
+        public BattleSimulator(IPlayer player1, IPlayer player2, IDamageCalculator damageCalculator)
         {
             GameState = GameState.NotStarted;
 
             Player1 = player1;
             Player2 = player2;
             _damageCalculator = damageCalculator;
-            _simulateThinking = simulateThinking;
         }
 
-        public void Run()
+        public BattleResult Run()
         {
             while (GameState != GameState.GameOver)
             {
@@ -51,34 +46,28 @@ namespace Game
                 ChangeState(GameState.Player2Turn);
                 SimulateTurn(Player2, Player1);
             }
+
+            return _battleResult;
         }
 
-        private void SimulateTurn(IPlayer sourcePlayer, IPlayer targetPlayer)
+        private void SimulateTurn(IPlayer sourcePlayer, IPlayer opponentPlayer)
         {
-            if (_simulateThinking && !(sourcePlayer is HumanPlayer))
+            ChooseTurn(sourcePlayer, opponentPlayer.State);
+
+            if (opponentPlayer.State.AllNeuromon.All(n => n.IsDead))
             {
-                Thread.Sleep(TimeSpan.FromSeconds(ThinkingSeconds));
+                GameOver(new BattleResult(sourcePlayer.State, opponentPlayer.State));
             }
-
-            ChooseTurn(sourcePlayer, targetPlayer);
-
-            if (targetPlayer.Neuromon.All(n => n.IsDead))
+            else if (opponentPlayer.State.ActiveNeuromon.IsDead)
             {
-                GameOver(sourcePlayer, targetPlayer);
-            }
-            else if (targetPlayer.ActiveNeuromon.IsDead)
-            {
-                OnNeuromonDefeated?.Invoke(sourcePlayer, sourcePlayer.ActiveNeuromon, targetPlayer, targetPlayer.ActiveNeuromon);
+                OnNeuromonDefeated?.Invoke(sourcePlayer.State, sourcePlayer.State.ActiveNeuromon, opponentPlayer.State, opponentPlayer.State.ActiveNeuromon);
 
-                var deadNeuromon = targetPlayer.ActiveNeuromon;
-                targetPlayer.ActiveNeuromon = targetPlayer.SelectActiveNeuromon();
+                var deadNeuromon = opponentPlayer.State.ActiveNeuromon;
+                var newActiveNeuromon = opponentPlayer.Controller.SelectActiveNeuromon(opponentPlayer.State, sourcePlayer.State);
 
-                if (targetPlayer.ActiveNeuromon.IsDead)
-                {
-                    throw new Exception("Cannot choose a dead Neuromon to be the active Neuromon");
-                }
+                opponentPlayer.State.SwitchActiveNeuromon(newActiveNeuromon);
 
-                OnNeuromonChanged?.Invoke(targetPlayer, deadNeuromon, targetPlayer.ActiveNeuromon);
+                OnNeuromonChanged?.Invoke(opponentPlayer.State, deadNeuromon, opponentPlayer.State.ActiveNeuromon);
             }
         }
 
@@ -90,43 +79,44 @@ namespace Game
             OnGameStateChanged?.Invoke(previousState, GameState);
         }
 
-        private void ChooseTurn(IPlayer source, IPlayer target)
+        private void ChooseTurn(IPlayer source, IPlayerState opponentState)
         {
-            var sourceTurn = source.ChooseTurn();
+            var sourceTurn = source.Controller.ChooseTurn(source.State, opponentState);
 
             if (sourceTurn is Attack)
             {
                 var attack = sourceTurn as Attack;
-                Attack(source, target, attack);
+                Attack(source.State, opponentState, attack);
             }
             else if (sourceTurn is ChangeNeuromon)
             {
                 var changeNeuromon = sourceTurn as ChangeNeuromon;
-                ChangeNeuromon(source, changeNeuromon);
+                ChangeNeuromon(source.State, changeNeuromon);
             }
         }
 
-        private void Attack(IPlayer attackingPlayer, IPlayer targetPlayer, Attack attack)
+        private void Attack(IPlayerState attackingPlayerState, IPlayerState targetPlayerState, Attack attack)
         {
-            var damage = _damageCalculator.CalculateDamage(attack.Move, targetPlayer.ActiveNeuromon);
-            targetPlayer.ActiveNeuromon.TakeDamage(damage);
+            var damage = _damageCalculator.CalculateDamage(attack.Move, targetPlayerState.ActiveNeuromon);
+            targetPlayerState.ActiveNeuromon.TakeDamage(damage);
 
-            OnAttackMade?.Invoke(attackingPlayer.ActiveNeuromon, attack.Move, targetPlayer.ActiveNeuromon, damage);
+            OnAttackMade?.Invoke(attackingPlayerState.ActiveNeuromon, attack.Move, targetPlayerState.ActiveNeuromon, damage);
         }
 
-        private void ChangeNeuromon(IPlayer player, ChangeNeuromon changeNeuromon)
+        private void ChangeNeuromon(IPlayerState playerState, ChangeNeuromon changeNeuromon)
         {
-            var previousNeuromon = player.ActiveNeuromon;
-            player.ActiveNeuromon = changeNeuromon.Neuromon;
+            var previousNeuromon = playerState.ActiveNeuromon;
+            playerState.SwitchActiveNeuromon(changeNeuromon.Neuromon);
 
-            OnNeuromonChanged?.Invoke(player, previousNeuromon, changeNeuromon.Neuromon);
+            OnNeuromonChanged?.Invoke(playerState, previousNeuromon, changeNeuromon.Neuromon);
         }
 
-        private void GameOver(IPlayer winner, IPlayer loser)
+        private void GameOver(BattleResult battleResult)
         {
+            _battleResult = battleResult;
             ChangeState(GameState.GameOver);
 
-            OnGameOver?.Invoke(winner, loser);
+            OnGameOver?.Invoke(_battleResult);
         }
     }
 }

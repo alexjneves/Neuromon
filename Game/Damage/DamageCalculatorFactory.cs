@@ -1,6 +1,6 @@
 namespace Game.Damage
 {
-    internal sealed class DamageCalculatorFactory
+    public sealed class DamageCalculatorFactory
     {
         private readonly double _effectiveMultipler;
         private readonly double _weakMultiplier;

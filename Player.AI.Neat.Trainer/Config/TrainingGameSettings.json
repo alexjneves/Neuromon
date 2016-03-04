@@ -1,0 +1,14 @@
+﻿{
+  "numberOfNeuromon": 3,
+  "effectiveMultiplier": 2.0,
+  "weakMultiplier": 0.5,
+  "minimumRandomMultiplier": 0.85,
+  "maximumRandomMultiplier": 1.0,
+  "typesFileName": "GameData/Types.json",
+  "movesFileName": "GameData/Moves.json",
+  "neuromonFileName": "GameData/Neuromon.json",
+  "opponentType": "neat",
+  "opponentBrainFileName": "GameData/CurrentOpponentToBeat.xml",
+  "shouldRender": false,
+  "nonDeterministic": true
+}

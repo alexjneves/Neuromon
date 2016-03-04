@@ -1,0 +1,316 @@
+﻿<Window x:Class="Player.AI.Neat.Trainer.Gui.TrainerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Player.AI.Neat.Trainer.Gui"
+        mc:Ignorable="d"
+        Title="Neuromon Trainer" Height="950" Width="1400">
+    <Window.DataContext>
+        <local:TrainerViewModel/>
+    </Window.DataContext>
+    <Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <!-- ====================================== Game Settings =================================================== -->
+
+            <Grid HorizontalAlignment="Center" Margin="0,10,0,10" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" x:Name="GameSettingsLabel" Content="Game Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+
+                <Grid Grid.Row="1" Margin="10,0,0,0" VerticalAlignment="Top" Width="424" DataContext="{Binding TrainingGameSettings}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label x:Name="NumberOfNeuromonLabel" Content="Number Of Neuromon:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
+                    <Label x:Name="EffectiveMultiplierLabel" Content="Effective Multiplier:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1"/>
+                    <Label x:Name="WeakMultiplierLabel" Content="Weak Multiplier:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="2"/>
+                    <Label x:Name="MinimumRandomMultiplierLabel" Content="Minimum Random Multiplier:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0" Grid.Row="3" Margin="10,10,0,0" />
+                    <Label x:Name="MaximumRandomMultiplierLable" Content="Maximum Random Multiplier:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="4"/>
+                    <Label x:Name="TypesFileNameLabel" Content="Types File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="5"/>
+                    <Label x:Name="MovesFileNameLabel" Content="Moves File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="6"/>
+                    <Label x:Name="NeuromonFileNameLabel" Content="Neuromon File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="7"/>
+                    <Label x:Name="OpponentTypeLabel" Content="Opponent Type:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="8"/>
+                    <Label x:Name="OpponentBrainFileName" Content="Opponent Brain File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="9"/>
+                    <Label x:Name="NonDeterministicLabel" Content="Non-Deterministic:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="10"/>
+
+                    <Slider x:Name="NumberOfNeuromonSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="6" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding NumberOfNeuromon}"/>
+                    <TextBox x:Name="NumberOfNeuromonSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="0" IsReadOnly="True"
+                         Text="{Binding ElementName=NumberOfNeuromonSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="EffectiveMultiplierSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="1" Minimum="0.0" Maximum="2.0" TickFrequency="0.05" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding EffectiveMultiplier}"/>
+                    <TextBox x:Name="EffectiveMultiplierSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="1" IsReadOnly="True"
+                         Text="{Binding ElementName=EffectiveMultiplierSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="WeakMultiplierSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="2" Minimum="0.0" Maximum="2.0" TickFrequency="0.05" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding WeakMultiplier}"/>
+                    <TextBox x:Name="WeakMultiplierSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="2" IsReadOnly="True"
+                         Text="{Binding ElementName=WeakMultiplierSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="MinimumRandomMultiplierSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="3" Minimum="0.0" Maximum="1.0" TickFrequency="0.05" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding MinimumRandomMultiplier}"/>
+                    <TextBox x:Name="MinimumRandomMultiplerSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="3" IsReadOnly="True"
+                         Text="{Binding ElementName=MinimumRandomMultiplierSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="MaximumRandomMultiplierSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="4" Minimum="0.0" Maximum="1.0" TickFrequency="0.05" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding MaximumRandomMultiplier}"/>
+                    <TextBox x:Name="MaximumRandomMultiplierSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="4" IsReadOnly="True"
+                         Text="{Binding ElementName=MaximumRandomMultiplierSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <TextBox x:Name="TypesFileNameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" VerticalAlignment="Top" Width="192" Grid.Column="1" Grid.Row="5" Text="{Binding TypesFileName}" />
+                    <TextBox x:Name="MovesFileNameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" VerticalAlignment="Top" Width="192" Grid.Column="1" Grid.Row="6" Text="{Binding MovesFileName}"/>
+                    <TextBox x:Name="NeuromonFileNameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" VerticalAlignment="Top" Width="192" Grid.Column="1" Grid.Row="7" Text="{Binding NeuromonFileName}"/>
+                    <ComboBox x:Name="OpponentTypeComboBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="192" Grid.Column="1" Grid.Row="8" SelectedValuePath="Content" SelectedValue="{Binding OpponentType}">
+                        <ComboBoxItem>neat</ComboBoxItem>
+                        <ComboBoxItem>intelligent</ComboBoxItem>
+                        <ComboBoxItem>random</ComboBoxItem>
+                        <ComboBoxItem>human</ComboBoxItem>
+                    </ComboBox>
+                    <TextBox x:Name="OpponentBrainFileNameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" VerticalAlignment="Top" Width="192" Grid.Column="1" Grid.Row="9" Text="{Binding OpponentBrainFileName}"/>
+                    <CheckBox x:Name="NonDeterministicCheckBox" Content="" HorizontalAlignment="Left" Margin="10,16,0,0" VerticalAlignment="Top" Width="18" Height="20" Grid.Column="1" Grid.Row="10" IsChecked="{Binding NonDeterministic}"/>
+                </Grid>
+            </Grid>
+
+            <!-- ====================================== Experiment Settings ============================================= -->
+
+            <Grid HorizontalAlignment="Center" Margin="0,10,0,10" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" x:Name="ExperimentSettingsLabel" Content="Experiment Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+
+                <Grid Grid.Row="1" Margin="10,0,0,0" VerticalAlignment="Top" DataContext="{Binding ExperimentSettings}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label x:Name="InputCountLabel" Content="Input Count:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
+                    <Label x:Name="OutputCountLabel" Content="Output Count:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1"/>
+                    <Label x:Name="PopulationSizeLabel" Content="Population Size:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="2"/>
+                    <Label x:Name="LoadExistingPopulationLabel" Content="Load Existing Population:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0" Grid.Row="3" Margin="10,10,0,0" />
+                    <Label x:Name="ExistingPopulationFilePathLabel" Content="Existing Population File Path:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="4"/>
+                    <Label x:Name="OutputPopulationFileNameLabel" Content="Output Population File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="5"/>
+                    <Label x:Name="OutputChampionFileNameLabel" Content="Output Champion File Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="6"/>
+                    <Label x:Name="ComplexityRegulationStrategyLabel" Content="Complexity Regulation Strategy:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="7" Grid.RowSpan="2"/>
+                    <Label x:Name="ComplexityThresholdLabel" Content="Complexity Threshold:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="8"/>
+                    <Label x:Name="DesiredFitnessLabel" Content="Desired Fitness:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="9"/>
+                    <Label x:Name="GameCombinationsIterationsLabel" Content="Game Combinations Iterations:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="10"/>
+                    <Label x:Name="StagnationDetectionTriggerValueLabel" Content="Stagnation Detection Trigger Value:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="11"/>
+                    <Label x:Name="StopTrainingOnStagnationDetectionLabel" Content="Stop Training On Stagnation Detection:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="12"/>
+
+                    <Slider x:Name="InputCountSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="0" Minimum="1" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding InputCount}" IsEnabled="False"/>
+                    <TextBox x:Name="InputCountSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="0" IsReadOnly="True"
+                         Text="{Binding ElementName=InputCountSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="OutputCountSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="1" Minimum="1" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding OutputCount}" IsEnabled="False"/>
+                    <TextBox x:Name="OutputCountSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="1" IsReadOnly="True"
+                         Text="{Binding ElementName=OutputCountSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="PopulationSizeSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="2" Minimum="10" Maximum="500" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding PopulationSize}"/>
+                    <TextBox x:Name="PopulationSizeTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="2" IsReadOnly="True"
+                         Text="{Binding ElementName=PopulationSizeSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <CheckBox x:Name="LoadExistingPopulationCheckBox" Content="" HorizontalAlignment="Left" Margin="10,16,0,0" VerticalAlignment="Top" Width="18" Height="20" Grid.Column="1" Grid.Row="3" IsChecked="{Binding LoadExistingPopulation}"/>
+                    <TextBox x:Name="ExistingPopulationFilePathTextBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" VerticalAlignment="Top" Width="192" Grid.Column="1" Grid.Row="4" Text="{Binding ExistingPopulationFilePath}" />
+                    <TextBox x:Name="OutputPopulationFileNameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" VerticalAlignment="Top" Width="192" Grid.Column="1" Grid.Row="5" Text="{Binding OutputPopulationFilePath}" />
+                    <TextBox x:Name="OutputChampionFileNameTextBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" VerticalAlignment="Top" Width="192" Grid.Column="1" Grid.Row="6" Text="{Binding OutputChampionFilePath}" />
+
+                    <ComboBox x:Name="ComplexityRegulationStrategy" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="192" Grid.Column="1" Grid.Row="7" SelectedValuePath="Content" SelectedValue="{Binding ComplexityRegulationStrategy}">
+                        <ComboBoxItem>Absolute</ComboBoxItem>
+                    </ComboBox>
+
+                    <Slider x:Name="ComplexityThresholdSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="8" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding ComplexityThreshold}"/>
+                    <TextBox x:Name="ComplexityThresholdTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="8" IsReadOnly="True"
+                         Text="{Binding ElementName=ComplexityThresholdSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="DesiredFitnessSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="9" Minimum="1" Maximum="1000" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding DesiredFitness}"/>
+                    <TextBox x:Name="DesiredFitnessTextBox" HorizontalAlignment="Left" Height="23" Margin="167,5,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="9" IsReadOnly="True"
+                         Text="{Binding ElementName=DesiredFitnessSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="GameCombinationsIterationsSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="10" Minimum="1" Maximum="20" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding GameCombinationIterations}"/>
+                    <TextBox x:Name="GameCombinationsIterationsTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="10" IsReadOnly="True"
+                         Text="{Binding ElementName=GameCombinationsIterationsSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="StagnationDetectionTriggerValueSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="11" Minimum="2" Maximum="200" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding StagnationDetectionTriggerValue}"/>
+                    <TextBox x:Name="StagnationDetectionTriggerValueTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="11" IsReadOnly="True"
+                         Text="{Binding ElementName=StagnationDetectionTriggerValueSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <CheckBox x:Name="StopTrainingOnStagnationDetectionCheckBox" Content="" HorizontalAlignment="Left" Margin="10,16,0,0" VerticalAlignment="Top" Width="18" Height="20" Grid.Column="1" Grid.Row="12" IsChecked="{Binding StopTrainingOnStagnationDetection}"/>
+                </Grid>
+            </Grid>
+
+            <!-- ====================================== Evolution Algorithm Settings ==================================== -->
+
+            <Grid HorizontalAlignment="Center" Margin="0,10,0,10" VerticalAlignment="Top" Grid.Column="2" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" x:Name="EvolutionAlgorithmSettingsLabel" Content="Evolution Algorithm Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+
+                <Grid Grid.Row="1" Margin="10,0,0,0" VerticalAlignment="Top" Width="424" DataContext="{Binding NeatEvolutionAlgorithmParameters}" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label x:Name="BestFitnessMovingAverageHistoryLengthLabel" Content="Best Fitness Moving &#xD;&#xA;Average History Length:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
+                    <Label x:Name="ComplexityMovingAverageHistoryLengthLabel" Content="Complexity Moving &#xD;&#xA;Average History Length:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1"/>
+                    <Label x:Name="ElitismProportionLabel" Content="Elitism Proportion:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="2"/>
+                    <Label x:Name="InterspeciesMatingProportionLabel" Content="Interspecies Mating &#xD;&#xA;Proportion:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="3"/>
+                    <Label x:Name="MeanSpecieChampFitnessMovingAverageHistoryLengthLabel" Content="Mean Specie Champ Fitness &#xD;&#xA;Moving Average History Length:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="4"/>
+                    <Label x:Name="OffspringAsexualProportionLabel" Content="Offspring Asexual Proportion:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0" Grid.Row="5" Margin="10,10,0,0" />
+                    <Label x:Name="OffspringSexualProportionLabel" Content="Offspring Sexual Proportion:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="6"/>
+                    <Label x:Name="SelectionProportionLabel" Content="Selection Proportion:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="7"/>
+                    <Label x:Name="SpecieCountLabel" Content="Specie Count:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="8"/>
+
+                    <Slider x:Name="BestFitnessMovingAverageHistoryLengthSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="0" Minimum="1" Maximum="200" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding BestFitnessMovingAverageHistoryLength}"/>
+                    <TextBox x:Name="BestFitnessMovingAverageHistoryLengthSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="0" IsReadOnly="True"
+                         Text="{Binding ElementName=BestFitnessMovingAverageHistoryLengthSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="ComplexityMovingAverageHistoryLengthSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="1" Minimum="1" Maximum="200" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding ComplexityMovingAverageHistoryLength}"/>
+                    <TextBox x:Name="ComplexityMovingAverageHistoryLengthSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="1" IsReadOnly="True"
+                         Text="{Binding ElementName=ComplexityMovingAverageHistoryLengthSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="ElitismProportionSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="2" Minimum="0.0" Maximum="1.0" TickFrequency="0.01" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding ElitismProportion}"/>
+                    <TextBox x:Name="ElitismProportionSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="2" IsReadOnly="True"
+                         Text="{Binding ElementName=ElitismProportionSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="InterspeciesMatingProportionSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="3" Minimum="0.0" Maximum="1.0" TickFrequency="0.01" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding InterspeciesMatingProportion}"/>
+                    <TextBox x:Name="InterspeciesMatingProportionSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="3" IsReadOnly="True"
+                         Text="{Binding ElementName=InterspeciesMatingProportionSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="MeanSpecieChampFitnessMovingAverageHistoryLengthSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="4" Minimum="1" Maximum="200" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding MeanSpecieChampFitnessMovingAverageHistoryLength}"/>
+                    <TextBox x:Name="MeanSpecieChampFitnessMovingAverageHistoryLengthSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="4" IsReadOnly="True"
+                         Text="{Binding ElementName=MeanSpecieChampFitnessMovingAverageHistoryLengthSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="OffspringAsexualProportionSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="5" Minimum="0.0" Maximum="1.0" TickFrequency="0.01" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding OffspringAsexualProportion}"/>
+                    <TextBox x:Name="OffspringAsexualProportionSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="5" IsReadOnly="True"
+                         Text="{Binding ElementName=OffspringAsexualProportionSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="OffspringSexualProportionSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="6" Minimum="0.0" Maximum="1.0" TickFrequency="0.01" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding OffspringSexualProportion}"/>
+                    <TextBox x:Name="OffspringSexualProportionSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="6" IsReadOnly="True"
+                         Text="{Binding ElementName=OffspringSexualProportionSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="SelectionProportionSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="7" Minimum="0.0" Maximum="1.0" TickFrequency="0.01" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding SelectionProportion}"/>
+                    <TextBox x:Name="SelectionProportionSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="7" IsReadOnly="True"
+                         Text="{Binding ElementName=SelectionProportionSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Slider x:Name="SpecieCountSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="8" Minimum="1" Maximum="50" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding SpecieCount}"/>
+                    <TextBox x:Name="SpecieCountSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="8" IsReadOnly="True"
+                         Text="{Binding ElementName=SpecieCountSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+
+                </Grid>
+            </Grid>
+
+            <!-- ====================================== Buttons Row ===================================================== -->
+
+            <!-- Config Buttons -->
+            <Grid Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" x:Name="SaveSettingsButton" Content="Save Settings" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center" Width="100" Click="SaveSettingsButton_Click" Height="25"/>
+                <Button Grid.Column="1" x:Name="RestoreDefaultButton" Content="Restore Defaults" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="100" Click="RestoreDefaultButton_Click" Height="25"/>
+            </Grid>
+
+            <!-- Training Buttons -->
+            <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" x:Name="CreateSessionButton" Content="Create Experiment" HorizontalAlignment="Right" VerticalAlignment="Center" Width="110" Height="25" Click="CreateSessionButton_Click"/>
+                <Button Grid.Column="1" x:Name="StartTrainingButton" Content="Start Training" HorizontalAlignment="Center" VerticalAlignment="Center" Width="110" Height="25" Click="StartTrainingButton_Click"/>
+                <Button Grid.Column="2" x:Name="PauseTrainingButton" Content="Pause Training" HorizontalAlignment="Left" VerticalAlignment="Center" Width="110" Height="25" Click="PauseTrainingButton_Click"/>
+            </Grid>
+
+            <!-- Saving Buttons -->
+            <Grid Grid.Column="2" Grid.Row="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" x:Name="SavePopulationButton" Content="Save Population" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center" Width="150" Height="25" Click="SavePopulationButton_Click"/>
+                <Button Grid.Column="1" x:Name="SaveChampionGenomeButton" Content="Save Champion Genome" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Width="150" Height="25" Click="SaveChampionGenomeButton_Click"/>
+
+            </Grid>
+
+
+            <!-- ====================================== Training Progress Log =========================================== -->
+
+            <Border Grid.Row="2" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.ColumnSpan="3" Grid.Column="0" BorderThickness="1" BorderBrush="Black" Opacity="1">
+                <ScrollViewer ScrollChanged="ScrollViewer_OnScrollChanged">
+                    <TextBlock x:Name="TrainingProgressTextBlock" TextWrapping="Wrap" Margin="10,5,10,5" />
+                </ScrollViewer>
+            </Border>
+
+        </Grid>
+
+    </Grid>
+</Window>

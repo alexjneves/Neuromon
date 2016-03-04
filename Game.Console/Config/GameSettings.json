@@ -1,0 +1,21 @@
+﻿{
+  "numberOfNeuromon": 3,
+  "inputNeuronCount": 60,
+  "outputNeuronCount": 6,
+  "effectiveMultiplier": 2.0,
+  "weakMultiplier": 0.5,
+  "minimumRandomMultiplier": 0.85,
+  "maximumRandomMultiplier": 1.0,
+  "typesFileName": "GameData/Types.json",
+  "movesFileName": "GameData/Moves.json",
+  "neuromonFileName": "GameData/Neuromon.json",
+  "playerOneName": "Player 1 (Intelligent)",
+  "playerTwoName": "Player 2 (NEAT)",
+  "playerOneType": "intelligent",
+  "playerTwoType": "neat",
+  "playerOneBrain": "",
+  "playerTwoBrain": "Opponent.xml",
+  "simulateThinking": "false",
+  "shouldRender": "true",
+  "nonDeterministic": "true"
+}
