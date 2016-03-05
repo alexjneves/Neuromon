@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml;
 using SharpNeat.Core;
 using SharpNeat.EvolutionAlgorithms;
@@ -18,11 +19,15 @@ namespace Player.AI.Neat.Trainer
         private readonly FitnessStagnationDetector _fitnessStagnationDetector;
 
         private NeatEvolutionAlgorithm<NeatGenome> _evolutionAlgorithm;
+
         private uint _previousGeneration;
+        private double _overallBestFitness;
+        private string _currentChampionGenomeXml;
 
         public event StatusUpdateDelegate OnStatusUpdate;
         public event TrainingPausedDelegate OnTrainingPaused;
         public event StagnationDetectedDelegate OnStagnationDetected;
+
         public NeatTrainer(ExperimentSettings experimentSettings, NeatEvolutionAlgorithmParameters evolutionAlgorithmParameters, TrainingGameSettings gameSettings)
         {
             var neuromonPhenomeEvaluator = new NeuromonEvaluator(gameSettings, experimentSettings);
@@ -46,17 +51,20 @@ namespace Player.AI.Neat.Trainer
             }
 
             _fitnessStagnationDetector = new FitnessStagnationDetector(experimentSettings.StagnationDetectionTriggerValue);
+
             _previousGeneration = 0;
+            _overallBestFitness = 0.0;
+            _currentChampionGenomeXml = "";
         }
 
-        public void StartTraining()
+    public void StartTraining()
         {
             if (_evolutionAlgorithm == null)
             {
                 _evolutionAlgorithm = _neuromonExperiment.CreateEvolutionAlgorithm(_genomeFactory, _genomePopulation);
                 _evolutionAlgorithm.UpdateEvent += (sender, e) => OnStatusUpdate?.Invoke(_evolutionAlgorithm.CurrentGeneration, _evolutionAlgorithm.Statistics._maxFitness);
-                _evolutionAlgorithm.PausedEvent += (sender, args) => OnTrainingPaused?.Invoke();
                 _evolutionAlgorithm.UpdateEvent += (sender, args) => HandleUpdateEvent(_evolutionAlgorithm.CurrentGeneration, _evolutionAlgorithm.Statistics._maxFitness);
+                _evolutionAlgorithm.PausedEvent += (sender, args) => OnTrainingPaused?.Invoke();
             }
 
             _evolutionAlgorithm.StartContinue();   
@@ -69,30 +77,41 @@ namespace Player.AI.Neat.Trainer
 
         public void SavePopulation(string filePath)
         {
-            SaveToXml(filePath, xmlWriter => _neuromonExperiment.SavePopulation(xmlWriter, _genomePopulation));
+            var genomesXml = FormatGenomesToXml(_genomePopulation);
+            WriteToFile(filePath, genomesXml);
         }
 
         public void SaveChampionGenome(string filePath)
         {
-            SaveToXml(filePath, xmlWriter =>
-            {
-                var champion = new List<NeatGenome> { _evolutionAlgorithm?.CurrentChampGenome ?? _genomePopulation.OrderByDescending(g => g.EvaluationInfo.Fitness).First() };
-                _neuromonExperiment.SavePopulation(xmlWriter, champion);
-            });
+            WriteToFile(filePath, _currentChampionGenomeXml);
         }
 
-        private static void SaveToXml(string filePath, Action<XmlWriter> func)
+        private string FormatGenomesToXml(NeatGenome genome)
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            return FormatGenomesToXml(new List<NeatGenome> { genome });
+        }
+
+        private string FormatGenomesToXml(IList<NeatGenome> genomes)
+        {
+            var sb = new StringBuilder();
 
             var writerSettings = new XmlWriterSettings { Indent = true };
-            using (var xmlWriter = XmlWriter.Create(filePath, writerSettings))
+            using (var xmlWriter = XmlWriter.Create(sb, writerSettings))
             {
-                func(xmlWriter);
+                _neuromonExperiment.SavePopulation(xmlWriter, genomes);
+                xmlWriter.Flush();
             }
+
+            return sb.ToString();
         }
 
-        private void HandleUpdateEvent(uint generation, double currentBestFitness)
+        private static void WriteToFile(string filePath, string content)
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            File.WriteAllText(filePath, content);
+        }
+
+        private void HandleUpdateEvent(uint generation, double generationBestFitness)
         {
             // SharpNEAT will sometimes trigger an update event multiple times for the same generation.
             // We want to ignore these instances.
@@ -101,8 +120,16 @@ namespace Player.AI.Neat.Trainer
                 return;
             }
 
-            _previousGeneration = _evolutionAlgorithm.CurrentGeneration;
-            _fitnessStagnationDetector.Add(currentBestFitness);
+            if (generationBestFitness > _overallBestFitness)
+            {
+                // Cache the XML of the current champion genome
+                // This is necessary as further iterations may result in a lower fitness
+                _currentChampionGenomeXml = FormatGenomesToXml(_evolutionAlgorithm?.CurrentChampGenome);
+                _overallBestFitness = generationBestFitness;
+            }
+
+            _previousGeneration = generation;
+            _fitnessStagnationDetector.Add(generationBestFitness);
 
             if (_fitnessStagnationDetector.HasFitnessStagnated())
             {
