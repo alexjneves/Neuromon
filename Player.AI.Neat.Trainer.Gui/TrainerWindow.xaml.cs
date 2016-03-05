@@ -166,10 +166,7 @@ namespace Player.AI.Neat.Trainer.Gui
                     _trainingState = TrainingState.Training;
                 }
 
-                if (_trainingState == TrainingState.Training)
-                {
-                    _trainingProgressBox.WriteLine($"Generation: {generation}, Best Fitness: {Math.Round(fitness, 3)}");
-                }
+                 _trainingProgressBox.WriteLine($"Generation: {generation}, Best Fitness: {Math.Round(fitness, 3)}");
             };
 
             neatTrainer.OnTrainingPaused += () =>
