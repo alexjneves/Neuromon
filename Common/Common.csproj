@@ -50,6 +50,7 @@
     <Compile Include="MoveSet.cs" />
     <Compile Include="Neuromon.cs" />
     <Compile Include="NeuromonCollection.cs" />
+    <Compile Include="PlayerTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Turn\Attack.cs" />
     <Compile Include="Turn\ChangeNeuromon.cs" />

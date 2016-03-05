@@ -5,6 +5,7 @@ namespace Player.AI.Neat.Trainer.Gui
         AwaitingTraining,
         Training,
         AwaitingPause,
-        Paused
+        Paused,
+        Uninitialised
     }
 }
