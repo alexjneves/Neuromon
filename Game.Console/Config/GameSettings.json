@@ -3,7 +3,7 @@
   "inputNeuronCount": 60,
   "outputNeuronCount": 6,
   "effectiveMultiplier": 2.0,
-  "weakMultiplier": 0.5,
+  "weakMultiplier": 0.3,
   "minimumRandomMultiplier": 0.85,
   "maximumRandomMultiplier": 1.0,
   "typesFileName": "GameData/Types.json",

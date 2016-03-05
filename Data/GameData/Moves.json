@@ -3,7 +3,7 @@
     "name": "Tackle",
     "type": "normal",
     "pp": 20,
-    "damage": 10
+    "damage": 15
   },
   {
     "name": "Water Gun",
@@ -21,13 +21,13 @@
     "name": "Hydro Pump",
     "type": "water",
     "pp": 3,
-    "damage": 40
+    "damage": 30
   },
   {
     "name": "Scratch",
     "type": "normal",
     "pp": 20,
-    "damage": 10
+    "damage": 15
   },
   {
     "name": "Ember",
