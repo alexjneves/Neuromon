@@ -56,6 +56,7 @@ namespace Player.AI.Neat.Trainer.Gui
 
         private void CreateSessionButton_Click(object sender, RoutedEventArgs e)
         {
+
             if (_trainingState != TrainingState.Paused)
             {
                 _trainingProgressBox.WriteLine("Please pause the current session before creating a new one.");
@@ -132,7 +133,7 @@ namespace Player.AI.Neat.Trainer.Gui
             {
                 neatTrainer.OnStagnationDetected += () =>
                 {
-                    _trainingProgressBox.WriteLine(stagnationDetectedMessage);
+                    OnStagnationDetected(stagnationDetectedMessage);
 
                     if (_trainingState == TrainingState.Training)
                     {
@@ -143,10 +144,16 @@ namespace Player.AI.Neat.Trainer.Gui
             }
             else
             {
-                _neatTrainer.OnStagnationDetected += () => _trainingProgressBox.WriteLine(stagnationDetectedMessage);
+                _neatTrainer.OnStagnationDetected += () => OnStagnationDetected(stagnationDetectedMessage);
             }
 
             return neatTrainer;
+        }
+
+        private void OnStagnationDetected(string message)
+        {
+            System.Media.SystemSounds.Beep.Play();
+            _trainingProgressBox.WriteLine(message);
         }
 
         private void SavePopulationButton_Click(object sender, RoutedEventArgs e)
