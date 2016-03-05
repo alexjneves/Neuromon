@@ -9,7 +9,7 @@
   "outputPopulationFilePath": "Results/NeuromonGenomePopulation.xml",
   "outputChampionFilePath": "Results/ChampionNeatAi.xml",
   "complexityRegulationStrategy": "Absolute",
-  "complexityThreshold": 50,
+  "complexityThreshold": 198,
   "desiredFitness": 530.0,
   "gameCombinationIterations": 5,
   "stagnationDetectionTriggerValue": 20,

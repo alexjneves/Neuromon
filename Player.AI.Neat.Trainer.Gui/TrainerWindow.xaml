@@ -166,7 +166,7 @@
                         <ComboBoxItem>Absolute</ComboBoxItem>
                     </ComboBox>
 
-                    <Slider x:Name="ComplexityThresholdSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="8" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding ComplexityThreshold}"/>
+                    <Slider x:Name="ComplexityThresholdSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="8" Minimum="0" Maximum="500" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding ComplexityThreshold}"/>
                     <TextBox x:Name="ComplexityThresholdTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="8" IsReadOnly="True"
                          Text="{Binding ElementName=ComplexityThresholdSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
 
