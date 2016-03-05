@@ -1,4 +1,5 @@
 ﻿using System;
+using Common;
 using Player;
 using Player.AI.Intelligent;
 using Player.AI.Neat;
@@ -12,10 +13,6 @@ namespace Game
         private readonly int _numberOfNeuromon;
         private readonly int _inputCount;
         private readonly int _outputCount;
-        private const string HumanPlayer = "human";
-        private const string IntelligentAiPlayer = "intelligent";
-        private const string RandomAiPlayer = "random";
-        private const string NeatAiPlayer = "neat";
 
         private readonly IPlayerControllerFactory _humanPlayerControllerFactory;
         private readonly IPlayerControllerFactory _intelligentAiPlayerControllerFactory;
@@ -35,13 +32,13 @@ namespace Game
         {
             switch (playerType)
             {
-                case HumanPlayer:
+                case PlayerTypes.Human:
                     return _humanPlayerControllerFactory.CreatePlayer(initialState);
-                case IntelligentAiPlayer:
+                case PlayerTypes.IntelligentAi:
                     return _intelligentAiPlayerControllerFactory.CreatePlayer(initialState);
-                case RandomAiPlayer:
+                case PlayerTypes.RandomAi:
                     return _randomAiPlayerControllerFactory.CreatePlayer(initialState);
-                case NeatAiPlayer:
+                case PlayerTypes.NeatAi:
                     return new NeatAiPlayerControllerFactory(brainFileName, _numberOfNeuromon, _inputCount, _outputCount).CreatePlayer(initialState);
                 default:
                     throw new Exception($"{playerType} is an unsupported player type");
