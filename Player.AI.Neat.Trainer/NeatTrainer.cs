@@ -27,6 +27,7 @@ namespace Player.AI.Neat.Trainer
         public event StatusUpdateDelegate OnStatusUpdate;
         public event TrainingPausedDelegate OnTrainingPaused;
         public event StagnationDetectedDelegate OnStagnationDetected;
+        public event HighestFitnessAchievedDelegate OnHighestFitnessAchievedDelegate;
 
         public NeatTrainer(ExperimentSettings experimentSettings, NeatEvolutionAlgorithmParameters evolutionAlgorithmParameters, TrainingGameSettings gameSettings)
         {
@@ -57,7 +58,7 @@ namespace Player.AI.Neat.Trainer
             _currentChampionGenomeXml = "";
         }
 
-    public void StartTraining()
+        public void StartTraining()
         {
             if (_evolutionAlgorithm == null)
             {
@@ -126,6 +127,8 @@ namespace Player.AI.Neat.Trainer
                 // This is necessary as further iterations may result in a lower fitness
                 _currentChampionGenomeXml = FormatGenomesToXml(_evolutionAlgorithm?.CurrentChampGenome);
                 _overallBestFitness = generationBestFitness;
+
+                OnHighestFitnessAchievedDelegate?.Invoke(_overallBestFitness);
             }
 
             _previousGeneration = generation;

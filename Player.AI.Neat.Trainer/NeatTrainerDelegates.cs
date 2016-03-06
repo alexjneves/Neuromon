@@ -5,5 +5,6 @@
         public delegate void StatusUpdateDelegate(uint generation, double highestFitness);
         public delegate void TrainingPausedDelegate();
         public delegate void StagnationDetectedDelegate();
+        public delegate void HighestFitnessAchievedDelegate(double fitness);
     }
 }

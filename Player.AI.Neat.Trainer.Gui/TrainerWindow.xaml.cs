@@ -166,7 +166,9 @@ namespace Player.AI.Neat.Trainer.Gui
                     _trainingState = TrainingState.Training;
                 }
 
-                 _trainingProgressBox.WriteLine($"Generation: {generation}, Best Fitness: {Math.Round(fitness, 3)}");
+                CurrentGenerationValueLabel.Dispatcher.Invoke(() => CurrentGenerationValueLabel.Content = generation);
+
+                _trainingProgressBox.WriteLine($"Generation: {generation}, Best Fitness: {FormatFitness(fitness)}");
             };
 
             neatTrainer.OnTrainingPaused += () =>
@@ -196,7 +198,17 @@ namespace Player.AI.Neat.Trainer.Gui
                 _neatTrainer.OnStagnationDetected += () => OnStagnationDetected(stagnationDetectedMessage);
             }
 
+            neatTrainer.OnHighestFitnessAchievedDelegate += fitness =>
+            {
+                OverallHighestFitnessValueLabel.Dispatcher.Invoke(() => OverallHighestFitnessValueLabel.Content = FormatFitness(fitness));
+            };
+
             return neatTrainer;
+        }
+
+        private static double FormatFitness(double fitness)
+        {
+            return Math.Round(fitness, 3);
         }
 
         private void PauseTraining()
