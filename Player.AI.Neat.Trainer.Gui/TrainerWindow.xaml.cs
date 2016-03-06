@@ -100,6 +100,8 @@ namespace Player.AI.Neat.Trainer.Gui
             _trainingProgressBox.WriteLine("Starting training...");
 
             Task.Run(() => _neatTrainer.StartTraining());
+
+            _sessionStatistics.StartTimer();
         }
 
         private void PauseTrainingButton_Click(object sender, RoutedEventArgs e)
@@ -130,7 +132,7 @@ namespace Player.AI.Neat.Trainer.Gui
             if (_trainingState == TrainingState.Paused)
             {
                 _trainingProgressBox.WriteLine("Destroying previous session...");
-                _sessionStatistics.Clear();
+                _sessionStatistics.Reset();
             }
 
             _neatTrainer = null;
@@ -178,6 +180,7 @@ namespace Player.AI.Neat.Trainer.Gui
             {
                 _trainingProgressBox.WriteLine("Training paused.");
                 _trainingState = TrainingState.Paused;
+                _sessionStatistics.StopTimer();
             };
 
             var stagnationDetectedMessage =
