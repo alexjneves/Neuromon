@@ -238,6 +238,7 @@ namespace Player.AI.Neat.Trainer.Gui
         {
             System.Media.SystemSounds.Beep.Play();
             _trainingProgressBox.WriteLine(message);
+            _sessionStatistics.StagnationDetected = true;
         }
 
         private bool CanSave()
