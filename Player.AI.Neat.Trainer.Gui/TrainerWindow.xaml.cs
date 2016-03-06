@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Common;
 
 namespace Player.AI.Neat.Trainer.Gui
@@ -198,9 +199,20 @@ namespace Player.AI.Neat.Trainer.Gui
                 _neatTrainer.OnStagnationDetected += () => OnStagnationDetected(stagnationDetectedMessage);
             }
 
-            neatTrainer.OnHighestFitnessAchievedDelegate += fitness =>
+            neatTrainer.OnHighestFitnessAchieved += fitness =>
             {
                 OverallHighestFitnessValueLabel.Dispatcher.Invoke(() => OverallHighestFitnessValueLabel.Content = FormatFitness(fitness));
+            };
+
+            neatTrainer.OnDesiredFitnessAchieved += () =>
+            {
+                DesiredFitnessAchievedValueLabel.Dispatcher.Invoke(() =>
+                {
+                    DesiredFitnessAchievedValueLabel.Content = "True";
+                    DesiredFitnessAchievedValueLabel.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF4BC313"));
+                });
+
+                _trainingProgressBox.WriteLine("Desired fitness has been achieved.");
             };
 
             return neatTrainer;

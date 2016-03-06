@@ -6,5 +6,6 @@
         public delegate void TrainingPausedDelegate();
         public delegate void StagnationDetectedDelegate();
         public delegate void HighestFitnessAchievedDelegate(double fitness);
+        public delegate void DesiredFitnessAchievedDelegate();
     }
 }
