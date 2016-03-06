@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using Common;
 
 namespace Player.AI.Neat.Trainer.Gui
@@ -12,6 +13,7 @@ namespace Player.AI.Neat.Trainer.Gui
         private readonly JsonSettingsIO _jsonSettingsIo;
         private readonly TrainingProgressBox _trainingProgressBox;
         private readonly SessionStatistics _sessionStatistics;
+        private readonly DispatcherTimer _dispatcherTimer;
 
         private NeatTrainer _neatTrainer;
         private volatile TrainingState _trainingState;
@@ -25,6 +27,13 @@ namespace Player.AI.Neat.Trainer.Gui
             _jsonSettingsIo = new JsonSettingsIO();
             _trainingProgressBox = new TrainingProgressBox(TrainingProgressTextBlock);
             _sessionStatistics = new SessionStatistics(this);
+
+            _dispatcherTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMinutes(5)
+            };
+
+            _dispatcherTimer.Tick += (sender, args) => AutoSave();
 
             TrainerViewModel = new TrainerViewModel
             {
@@ -102,6 +111,7 @@ namespace Player.AI.Neat.Trainer.Gui
             Task.Run(() => _neatTrainer.StartTraining());
 
             _sessionStatistics.StartTimer();
+            _dispatcherTimer.Start();
         }
 
         private void PauseTrainingButton_Click(object sender, RoutedEventArgs e)
@@ -181,6 +191,7 @@ namespace Player.AI.Neat.Trainer.Gui
                 _trainingProgressBox.WriteLine("Training paused.");
                 _trainingState = TrainingState.Paused;
                 _sessionStatistics.StopTimer();
+                _dispatcherTimer.Stop();
             };
 
             var stagnationDetectedMessage =
@@ -260,7 +271,14 @@ namespace Player.AI.Neat.Trainer.Gui
 
             _trainingProgressBox.WriteLine(errorMessage);
             return false;
+        }
 
+        private void AutoSave()
+        {
+            _neatTrainer.SavePopulation(TrainerViewModel.ExperimentSettings.OutputPopulationFilePath);
+            _neatTrainer.SaveChampionGenome(TrainerViewModel.ExperimentSettings.OutputChampionFilePath);
+
+            _trainingProgressBox.WriteLine("Auto Save: Saved population and champion genome.");
         }
 
         // http://stackoverflow.com/questions/25761795/doing-autoscroll-with-scrollviewer-scrolltoend-only-worked-while-debugging-ev
