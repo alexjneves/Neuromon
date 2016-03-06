@@ -3,7 +3,6 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using Common;
 
 namespace Player.AI.Neat.Trainer.Gui
@@ -12,6 +11,7 @@ namespace Player.AI.Neat.Trainer.Gui
     {
         private readonly JsonSettingsIO _jsonSettingsIo;
         private readonly TrainingProgressBox _trainingProgressBox;
+        private readonly SessionStatistics _sessionStatistics;
 
         private NeatTrainer _neatTrainer;
         private volatile TrainingState _trainingState;
@@ -24,6 +24,7 @@ namespace Player.AI.Neat.Trainer.Gui
 
             _jsonSettingsIo = new JsonSettingsIO();
             _trainingProgressBox = new TrainingProgressBox(TrainingProgressTextBlock);
+            _sessionStatistics = new SessionStatistics(this);
 
             TrainerViewModel = new TrainerViewModel
             {
@@ -129,6 +130,7 @@ namespace Player.AI.Neat.Trainer.Gui
             if (_trainingState == TrainingState.Paused)
             {
                 _trainingProgressBox.WriteLine("Destroying previous session...");
+                _sessionStatistics.Clear();
             }
 
             _neatTrainer = null;
@@ -167,7 +169,7 @@ namespace Player.AI.Neat.Trainer.Gui
                     _trainingState = TrainingState.Training;
                 }
 
-                CurrentGenerationValueLabel.Dispatcher.Invoke(() => CurrentGenerationValueLabel.Content = generation);
+                _sessionStatistics.CurrentGeneration = generation;
 
                 _trainingProgressBox.WriteLine($"Generation: {generation}, Best Fitness: {FormatFitness(fitness)}");
             };
@@ -201,17 +203,12 @@ namespace Player.AI.Neat.Trainer.Gui
 
             neatTrainer.OnHighestFitnessAchieved += fitness =>
             {
-                OverallHighestFitnessValueLabel.Dispatcher.Invoke(() => OverallHighestFitnessValueLabel.Content = FormatFitness(fitness));
+                _sessionStatistics.OverallHighestFitness = FormatFitness(fitness);
             };
 
             neatTrainer.OnDesiredFitnessAchieved += () =>
             {
-                DesiredFitnessAchievedValueLabel.Dispatcher.Invoke(() =>
-                {
-                    DesiredFitnessAchievedValueLabel.Content = "True";
-                    DesiredFitnessAchievedValueLabel.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF4BC313"));
-                });
-
+                _sessionStatistics.DesiredFitnessAchieved = true;
                 _trainingProgressBox.WriteLine("Desired fitness has been achieved.");
             };
 
