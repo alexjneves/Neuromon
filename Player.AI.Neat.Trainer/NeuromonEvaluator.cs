@@ -94,11 +94,6 @@ namespace Player.AI.Neat.Trainer
             if (!StopConditionSatisfied)
             {
                 StopConditionSatisfied = averageFitness >= _desiredFitness;
-
-                if (StopConditionSatisfied)
-                {
-                    Console.WriteLine("Desired Fitness Achieved! Stopping training...");
-                }
             }
 
             return new FitnessInfo(averageFitness, averageFitness);

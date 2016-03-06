@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Xml;
 using SharpNeat.Core;
@@ -17,6 +15,7 @@ namespace Player.AI.Neat.Trainer
         private readonly IGenomeFactory<NeatGenome> _genomeFactory;
         private readonly List<NeatGenome> _genomePopulation;
         private readonly FitnessStagnationDetector _fitnessStagnationDetector;
+        private readonly double _desiredFitness;
 
         private NeatEvolutionAlgorithm<NeatGenome> _evolutionAlgorithm;
 
@@ -27,6 +26,8 @@ namespace Player.AI.Neat.Trainer
         public event StatusUpdateDelegate OnStatusUpdate;
         public event TrainingPausedDelegate OnTrainingPaused;
         public event StagnationDetectedDelegate OnStagnationDetected;
+        public event HighestFitnessAchievedDelegate OnHighestFitnessAchieved;
+        public event DesiredFitnessAchievedDelegate OnDesiredFitnessAchieved;
 
         public NeatTrainer(ExperimentSettings experimentSettings, NeatEvolutionAlgorithmParameters evolutionAlgorithmParameters, TrainingGameSettings gameSettings)
         {
@@ -52,12 +53,14 @@ namespace Player.AI.Neat.Trainer
 
             _fitnessStagnationDetector = new FitnessStagnationDetector(experimentSettings.StagnationDetectionTriggerValue);
 
+            _desiredFitness = experimentSettings.DesiredFitness;
+
             _previousGeneration = 0;
             _overallBestFitness = 0.0;
             _currentChampionGenomeXml = "";
         }
 
-    public void StartTraining()
+        public void StartTraining()
         {
             if (_evolutionAlgorithm == null)
             {
@@ -126,6 +129,13 @@ namespace Player.AI.Neat.Trainer
                 // This is necessary as further iterations may result in a lower fitness
                 _currentChampionGenomeXml = FormatGenomesToXml(_evolutionAlgorithm?.CurrentChampGenome);
                 _overallBestFitness = generationBestFitness;
+
+                OnHighestFitnessAchieved?.Invoke(_overallBestFitness);
+
+                if (_overallBestFitness >= _desiredFitness)
+                {
+                    OnDesiredFitnessAchieved?.Invoke();
+                }
             }
 
             _previousGeneration = generation;

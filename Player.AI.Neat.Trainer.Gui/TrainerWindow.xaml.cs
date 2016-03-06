@@ -11,6 +11,7 @@ namespace Player.AI.Neat.Trainer.Gui
     {
         private readonly JsonSettingsIO _jsonSettingsIo;
         private readonly TrainingProgressBox _trainingProgressBox;
+        private readonly SessionStatistics _sessionStatistics;
 
         private NeatTrainer _neatTrainer;
         private volatile TrainingState _trainingState;
@@ -23,6 +24,7 @@ namespace Player.AI.Neat.Trainer.Gui
 
             _jsonSettingsIo = new JsonSettingsIO();
             _trainingProgressBox = new TrainingProgressBox(TrainingProgressTextBlock);
+            _sessionStatistics = new SessionStatistics(this);
 
             TrainerViewModel = new TrainerViewModel
             {
@@ -98,6 +100,8 @@ namespace Player.AI.Neat.Trainer.Gui
             _trainingProgressBox.WriteLine("Starting training...");
 
             Task.Run(() => _neatTrainer.StartTraining());
+
+            _sessionStatistics.StartTimer();
         }
 
         private void PauseTrainingButton_Click(object sender, RoutedEventArgs e)
@@ -128,6 +132,7 @@ namespace Player.AI.Neat.Trainer.Gui
             if (_trainingState == TrainingState.Paused)
             {
                 _trainingProgressBox.WriteLine("Destroying previous session...");
+                _sessionStatistics.Reset();
             }
 
             _neatTrainer = null;
@@ -166,13 +171,16 @@ namespace Player.AI.Neat.Trainer.Gui
                     _trainingState = TrainingState.Training;
                 }
 
-                 _trainingProgressBox.WriteLine($"Generation: {generation}, Best Fitness: {Math.Round(fitness, 3)}");
+                _sessionStatistics.CurrentGeneration = generation;
+
+                _trainingProgressBox.WriteLine($"Generation: {generation}, Best Fitness: {FormatFitness(fitness)}");
             };
 
             neatTrainer.OnTrainingPaused += () =>
             {
                 _trainingProgressBox.WriteLine("Training paused.");
                 _trainingState = TrainingState.Paused;
+                _sessionStatistics.StopTimer();
             };
 
             var stagnationDetectedMessage =
@@ -196,7 +204,23 @@ namespace Player.AI.Neat.Trainer.Gui
                 _neatTrainer.OnStagnationDetected += () => OnStagnationDetected(stagnationDetectedMessage);
             }
 
+            neatTrainer.OnHighestFitnessAchieved += fitness =>
+            {
+                _sessionStatistics.OverallHighestFitness = FormatFitness(fitness);
+            };
+
+            neatTrainer.OnDesiredFitnessAchieved += () =>
+            {
+                _sessionStatistics.DesiredFitnessAchieved = true;
+                _trainingProgressBox.WriteLine("Desired fitness has been achieved.");
+            };
+
             return neatTrainer;
+        }
+
+        private static double FormatFitness(double fitness)
+        {
+            return Math.Round(fitness, 3);
         }
 
         private void PauseTraining()
@@ -217,6 +241,7 @@ namespace Player.AI.Neat.Trainer.Gui
         {
             System.Media.SystemSounds.Beep.Play();
             _trainingProgressBox.WriteLine(message);
+            _sessionStatistics.StagnationDetected = true;
         }
 
         private bool CanSave()
