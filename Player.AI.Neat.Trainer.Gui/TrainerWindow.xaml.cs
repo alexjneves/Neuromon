@@ -33,7 +33,7 @@ namespace Player.AI.Neat.Trainer.Gui
                 Interval = TimeSpan.FromMinutes(5)
             };
 
-            _dispatcherTimer.Tick += (sender, args) => AutoSave();
+            _dispatcherTimer.Tick += (sender, args) => TriggerAutoSave();
 
             TrainerViewModel = new TrainerViewModel
             {
@@ -70,6 +70,12 @@ namespace Player.AI.Neat.Trainer.Gui
 
         private void CreateSessionButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_trainingState == TrainingState.AutoSaving)
+            {
+                _trainingProgressBox.WriteLine("Please wait for auto save to complete.");
+                return;
+            }
+
             if (!(_trainingState == TrainingState.Paused || _trainingState == TrainingState.Uninitialised))
             {
                 _trainingProgressBox.WriteLine("Please pause the current session before creating a new one.");
@@ -93,6 +99,12 @@ namespace Player.AI.Neat.Trainer.Gui
 
         private void StartTrainingButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_trainingState == TrainingState.AutoSaving)
+            {
+                _trainingProgressBox.WriteLine("Please wait for auto save to complete.");
+                return;
+            }
+
             if (_trainingState == TrainingState.Uninitialised)
             {
                 _trainingProgressBox.WriteLine("Must create a session before starting one.");
@@ -105,17 +117,21 @@ namespace Player.AI.Neat.Trainer.Gui
                 return;
             }
 
-            _trainingState = TrainingState.AwaitingTraining;
             _trainingProgressBox.WriteLine("Starting training...");
 
-            Task.Run(() => _neatTrainer.StartTraining());
-
-            _sessionStatistics.StartTimer();
-            _dispatcherTimer.Start();
+            StartTraining();
         }
 
         private void PauseTrainingButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_trainingState != TrainingState.Training)
+            {
+                _trainingProgressBox.WriteLine("Not currently training.");
+                return;
+            }
+
+            _trainingProgressBox.WriteLine("Pausing training...");
+
             PauseTraining();
         }
 
@@ -162,6 +178,15 @@ namespace Player.AI.Neat.Trainer.Gui
                 }
             }
 
+            if (TrainerViewModel.ExperimentSettings.LoadExistingPopulation)
+            {
+                if (!File.Exists(TrainerViewModel.ExperimentSettings.ExistingPopulationFilePath))
+                {
+                    _trainingProgressBox.WriteLine($"Existing population file not found: {TrainerViewModel.ExperimentSettings.ExistingPopulationFilePath}");
+                    valid = false;
+                }
+            }
+
             if (!valid)
             {
                 System.Media.SystemSounds.Beep.Play();
@@ -188,10 +213,18 @@ namespace Player.AI.Neat.Trainer.Gui
 
             neatTrainer.OnTrainingPaused += () =>
             {
-                _trainingProgressBox.WriteLine("Training paused.");
-                _trainingState = TrainingState.Paused;
                 _sessionStatistics.StopTimer();
                 _dispatcherTimer.Stop();
+
+                if (_trainingState == TrainingState.AutoSaving)
+                {
+                    PerformAutoSave();
+                }
+                else
+                {
+                    _trainingState = TrainingState.Paused;
+                    _trainingProgressBox.WriteLine("Training paused.");
+                }
             };
 
             var stagnationDetectedMessage =
@@ -205,7 +238,7 @@ namespace Player.AI.Neat.Trainer.Gui
 
                     if (_trainingState == TrainingState.Training)
                     {
-                        _trainingProgressBox.WriteLine("Auto stop enabled, training will now be paused.");
+                        _trainingProgressBox.WriteLine("Auto stop enabled, training will now be paused...");
                         PauseTraining();
                     }
                 };
@@ -234,16 +267,19 @@ namespace Player.AI.Neat.Trainer.Gui
             return Math.Round(fitness, 3);
         }
 
+        private void StartTraining()
+        {
+            _trainingState = TrainingState.AwaitingTraining;
+
+            Task.Run(() => _neatTrainer.StartTraining());
+
+            _sessionStatistics.StartTimer();
+            _dispatcherTimer.Start();
+        }
+
         private void PauseTraining()
         {
-            if (_trainingState != TrainingState.Training)
-            {
-                _trainingProgressBox.WriteLine("Not yet training.");
-                return;
-            }
-
             _trainingState = TrainingState.AwaitingPause;
-            _trainingProgressBox.WriteLine("Pausing training...");
 
             _neatTrainer.StopTraining();
         }
@@ -268,17 +304,37 @@ namespace Player.AI.Neat.Trainer.Gui
             {
                 errorMessage = "There is no session to save.";
             }
+            else if (_trainingState == TrainingState.AutoSaving)
+            {
+                errorMessage = "Currently auto saving.";
+            }
 
             _trainingProgressBox.WriteLine(errorMessage);
             return false;
         }
 
-        private void AutoSave()
+        private void TriggerAutoSave()
+        {
+            if (_trainingState != TrainingState.Training)
+            {
+                return;
+            }
+
+            _trainingState = TrainingState.AutoSaving;
+            _trainingProgressBox.WriteLine("Auto Save: Pausing training...");
+
+            _neatTrainer.StopTraining();
+        }
+
+        private void PerformAutoSave()
         {
             _neatTrainer.SavePopulation(TrainerViewModel.ExperimentSettings.OutputPopulationFilePath);
             _neatTrainer.SaveChampionGenome(TrainerViewModel.ExperimentSettings.OutputChampionFilePath);
 
             _trainingProgressBox.WriteLine("Auto Save: Saved population and champion genome.");
+            _trainingProgressBox.WriteLine("Auto Save: Resuming training...");
+
+            StartTraining();
         }
 
         // http://stackoverflow.com/questions/25761795/doing-autoscroll-with-scrollviewer-scrolltoend-only-worked-while-debugging-ev
