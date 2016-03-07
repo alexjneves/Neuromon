@@ -245,7 +245,7 @@ namespace Player.AI.Neat.Trainer.Gui
             }
             else
             {
-                _neatTrainer.OnStagnationDetected += () => OnStagnationDetected(stagnationDetectedMessage);
+                neatTrainer.OnStagnationDetected += () => OnStagnationDetected(stagnationDetectedMessage);
             }
 
             neatTrainer.OnHighestFitnessAchieved += fitness =>
