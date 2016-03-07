@@ -5,6 +5,8 @@ namespace Player.AI.Neat.Trainer.Gui
 {
     internal sealed class TrainingProgressBox
     {
+        private const int MaximumNumberOfLines = 10000;
+
         private readonly TextBlock _textBlock;
 
         public TrainingProgressBox(TextBlock textBlock)
@@ -24,6 +26,11 @@ namespace Player.AI.Neat.Trainer.Gui
         {
             _textBlock.InvokeOnUiThread(lines =>
             {
+                if (_textBlock.Inlines.Count >= MaximumNumberOfLines)
+                {
+                    lines.Clear();
+                }
+
                 lines.Add($"{content}{Environment.NewLine}");
             });
         }
