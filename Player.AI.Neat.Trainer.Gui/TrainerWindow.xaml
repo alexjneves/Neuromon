@@ -11,6 +11,7 @@
     </Window.DataContext>
     <Grid>
 
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -305,7 +306,7 @@
             <!-- ====================================== Training Progress Log =========================================== -->
 
             <Border Grid.Row="2" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Grid.Column="0" BorderThickness="1" BorderBrush="Black" Opacity="1">
-                <ScrollViewer ScrollChanged="ScrollViewer_OnScrollChanged">
+                <ScrollViewer ScrollChanged="ScrollViewer_OnScrollChanged" >
                     <TextBlock x:Name="TrainingProgressTextBlock" TextWrapping="Wrap" Margin="10,5,10,5" />
                 </ScrollViewer>
             </Border>
@@ -350,6 +351,6 @@
             </Grid>
 
         </Grid>
-
+        </ScrollViewer>
     </Grid>
 </Window>
