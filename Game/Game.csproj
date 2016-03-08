@@ -63,7 +63,7 @@
     <Compile Include="GameState.cs" />
     <Compile Include="Damage\IDamageCalculator.cs" />
     <Compile Include="Damage\NonDeterministicDamageCalculator.cs" />
-    <Compile Include="PlayerControllerFactory.cs" />
+    <Compile Include="PlayerControllerFactoryFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer.cs" />
   </ItemGroup>

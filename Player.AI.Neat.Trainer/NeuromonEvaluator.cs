@@ -19,7 +19,7 @@ namespace Player.AI.Neat.Trainer
         private readonly double _desiredFitness;
         private readonly int _gameCombinationIterations;
 
-        private readonly PlayerControllerFactory _opponentPlayerControllerFactory;
+        private readonly IPlayerControllerFactory _opponentPlayerControllerFactory;
         private readonly IDamageCalculator _damageCalculator;
 
         private readonly IList<Tuple<NeuromonCollection, NeuromonCollection>> _gameNeuromonCollectionCombinations;
@@ -35,10 +35,12 @@ namespace Player.AI.Neat.Trainer
             _desiredFitness = experimentSettings.DesiredFitness;
             _gameCombinationIterations = experimentSettings.GameCombinationIterations;
 
-            _opponentPlayerControllerFactory = new PlayerControllerFactory( 
+            _opponentPlayerControllerFactory = PlayerControllerFactoryFactory.Create(
+                 _trainingGameSettings.OpponentType,
                 _trainingGameSettings.NumberOfNeuromon,
                 experimentSettings.InputCount,
-                experimentSettings.OutputCount
+                experimentSettings.OutputCount,
+                _trainingGameSettings.OpponentBrainFileName
             );
 
             _damageCalculator = new DamageCalculatorFactory(
@@ -102,7 +104,7 @@ namespace Player.AI.Neat.Trainer
         private BattleSimulator CreateGame(IBlackBox brain, NeuromonCollection traineeNeuromon, NeuromonCollection opponentNeuromon)
         {
             var opponentState = new PlayerState(OpponentName, opponentNeuromon);
-            var opponentController = _opponentPlayerControllerFactory.Create(_trainingGameSettings.OpponentType, opponentState, _trainingGameSettings.OpponentBrainFileName);
+            var opponentController = _opponentPlayerControllerFactory.CreatePlayer(opponentState);
             var opponent = new Player(opponentState, opponentController);
 
             var neatPlayerControllerFactory = new NeatAiPlayerControllerFactory(brain, _trainingGameSettings.NumberOfNeuromon);
