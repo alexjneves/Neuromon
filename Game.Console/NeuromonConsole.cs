@@ -21,20 +21,30 @@ namespace Game.Console
                 gameSettings.NeuromonFileName
             );
 
-            var playerControllerFactory = new PlayerControllerFactory(
+            var playerOneControllerFactory = PlayerControllerFactoryFactory.Create(
+                gameSettings.PlayerOneType,
                 gameSettings.NumberOfNeuromon,
                 gameSettings.InputNeuronCount,
-                gameSettings.OutputNeuronCount
+                gameSettings.OutputNeuronCount,
+                gameSettings.PlayerOneBrain
+            );
+
+            var playerTwoControllerFactory = PlayerControllerFactoryFactory.Create(
+                gameSettings.PlayerTwoType,
+                gameSettings.NumberOfNeuromon,
+                gameSettings.InputNeuronCount,
+                gameSettings.OutputNeuronCount,
+                gameSettings.PlayerTwoBrain
             );
 
             var randomNeuromonGenerator = new NeuromonCollectionGenerator(gameDatabase.Neuromon, gameSettings.NumberOfNeuromon);
 
             var playerOneState = new PlayerState(gameSettings.PlayerOneName, randomNeuromonGenerator.GenerateNeuromonCollection());
-            var playerOneController = playerControllerFactory.Create(gameSettings.PlayerOneType, playerOneState, gameSettings.PlayerOneBrain);
+            var playerOneController = playerOneControllerFactory.CreatePlayer(playerOneState);
             var playerOne = new Player.Player(playerOneState, playerOneController);
 
             var playerTwoState = new PlayerState(gameSettings.PlayerTwoName, randomNeuromonGenerator.GenerateNeuromonCollection());
-            var playerTwoController = playerControllerFactory.Create(gameSettings.PlayerTwoType, playerTwoState, gameSettings.PlayerTwoBrain);
+            var playerTwoController = playerTwoControllerFactory.CreatePlayer(playerTwoState);
             var playerTwo = new Player.Player(playerTwoState, playerTwoController);
 
             var damageCalculatorFactory = new DamageCalculatorFactory(
