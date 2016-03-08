@@ -34,6 +34,8 @@ namespace Player.AI.Neat.Trainer
 
         public void WriteChampion(string filePath)
         {
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 _championGenomeMemoryStream.WriteTo(fileStream);

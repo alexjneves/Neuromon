@@ -304,15 +304,15 @@
 
             <!-- ====================================== Training Progress Log =========================================== -->
 
-            <Border Grid.Row="2" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Grid.Column="0" BorderThickness="1" BorderBrush="Black" Opacity="1">
-                <ScrollViewer ScrollChanged="ScrollViewer_OnScrollChanged">
+            <Border Grid.Row="2" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Grid.Column="0" BorderThickness="1" BorderBrush="Black" Opacity="1">
+                <ScrollViewer ScrollChanged="ScrollViewer_OnScrollChanged" >
                     <TextBlock x:Name="TrainingProgressTextBlock" TextWrapping="Wrap" Margin="10,5,10,5" />
                 </ScrollViewer>
             </Border>
 
             <!-- ====================================== Current Session Status Grid =========================================== -->
 
-            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Grid.Row="2" Margin="10,0,0,0">
+            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Grid.Row="2" Margin="10,0,0,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -350,6 +350,5 @@
             </Grid>
 
         </Grid>
-
     </Grid>
 </Window>

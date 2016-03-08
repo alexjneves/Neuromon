@@ -5,7 +5,7 @@ namespace Player.AI.Neat.Trainer.Gui
 {
     internal sealed class TrainingProgressBox
     {
-        private const int MaximumNumberOfLines = 10000;
+        private const int MaximumNumberOfLines = 100;
 
         private readonly TextBlock _textBlock;
 
