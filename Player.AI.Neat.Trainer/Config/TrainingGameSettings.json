@@ -7,7 +7,7 @@
   "typesFileName": "GameData/Types.json",
   "movesFileName": "GameData/Moves.json",
   "neuromonFileName": "GameData/Neuromon.json",
-  "opponentType": "neat",
+  "opponentType": "intelligent",
   "opponentBrainFileName": "GameData/CurrentOpponentToBeat.xml",
   "shouldRender": false,
   "nonDeterministic": true

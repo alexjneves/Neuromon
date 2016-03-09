@@ -17,6 +17,7 @@ namespace Player.AI.Neat.Trainer.Gui
 
         private NeatTrainer _neatTrainer;
         private volatile TrainingState _trainingState;
+        private bool _settingsMinimised;
 
         public TrainerViewModel TrainerViewModel { get; private set; }
 
@@ -45,6 +46,7 @@ namespace Player.AI.Neat.Trainer.Gui
             DataContext = TrainerViewModel;
 
             _trainingState = TrainingState.Uninitialised;
+            _settingsMinimised = false;
         }
 
         private void SaveSettingsButton_Click(object sender, RoutedEventArgs e)
@@ -66,6 +68,15 @@ namespace Player.AI.Neat.Trainer.Gui
             DataContext = TrainerViewModel;
 
             _trainingProgressBox.WriteLine("Default settings have been restored.");
+        }
+
+        private void MinimiseSettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            _settingsMinimised = !_settingsMinimised;
+
+            SettingsRow.Height = _settingsMinimised ? new GridLength(0) : GridLength.Auto;
+
+            MinMaxSettingsButton.Content = _settingsMinimised ? "Maximise Settings" : "Minimise Settings";
         }
 
         private void CreateSessionButton_Click(object sender, RoutedEventArgs e)
