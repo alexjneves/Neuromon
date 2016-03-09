@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player.AI.Neat.Trainer.Gui"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Console", "Game.Console\Game.Console.csproj", "{CBCC73BC-2A52-4669-B4E7-7560057D6CFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player.AI.Neat.Trainer.Console", "Player.AI.Neat.Trainer.Console\Player.AI.Neat.Trainer.Console.csproj", "{66DC3AB7-EB47-4638-BEE7-5751AACDE259}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{CBCC73BC-2A52-4669-B4E7-7560057D6CFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBCC73BC-2A52-4669-B4E7-7560057D6CFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBCC73BC-2A52-4669-B4E7-7560057D6CFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66DC3AB7-EB47-4638-BEE7-5751AACDE259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66DC3AB7-EB47-4638-BEE7-5751AACDE259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66DC3AB7-EB47-4638-BEE7-5751AACDE259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66DC3AB7-EB47-4638-BEE7-5751AACDE259}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
