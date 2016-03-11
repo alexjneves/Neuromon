@@ -7,6 +7,10 @@ namespace Player.AI.Neat.Trainer.Gui
     {
         private const int MaximumNumberOfLines = 100;
 
+        private const string SpaceSeparator = "    ";
+        private const string StatusSeparator = "\t\t\t";
+        private const string Column = "|    ";
+
         private readonly TextBlock _textBlock;
 
         public TrainingProgressBox(TextBlock textBlock)
@@ -20,6 +24,15 @@ namespace Player.AI.Neat.Trainer.Gui
             {
                 lines.Clear();
             });
+        }
+
+        public void WriteStatusUpdate(uint generation, double highestFitness, double averageFitness)
+        {
+            WriteLine(
+                $"Generation:{SpaceSeparator}{generation,-6:n0}{StatusSeparator}" +
+                $"{Column}Best Fitness:{SpaceSeparator}{highestFitness:000.000}{StatusSeparator}" +
+                $"{Column}Average Fitness:{SpaceSeparator}{averageFitness:000.000}"
+            );
         }
 
         public void WriteLine(string content)

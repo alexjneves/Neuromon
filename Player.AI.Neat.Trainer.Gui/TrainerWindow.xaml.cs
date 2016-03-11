@@ -210,7 +210,7 @@ namespace Player.AI.Neat.Trainer.Gui
         {
             var neatTrainer = new NeatTrainer(TrainerViewModel.ExperimentSettings, TrainerViewModel.NeatEvolutionAlgorithmParameters, TrainerViewModel.TrainingGameSettings);
 
-            neatTrainer.OnStatusUpdate += (generation, fitness) =>
+            neatTrainer.OnStatusUpdate += (generation, highestFitness, averageFitness) =>
             {
                 if (_trainingState == TrainingState.AwaitingTraining)
                 {
@@ -219,7 +219,7 @@ namespace Player.AI.Neat.Trainer.Gui
 
                 _sessionStatistics.CurrentGeneration = generation;
 
-                _trainingProgressBox.WriteLine($"Generation: {generation}, Best Fitness: {FormatFitness(fitness)}");
+                _trainingProgressBox.WriteStatusUpdate(generation, highestFitness, averageFitness);
             };
 
             neatTrainer.OnTrainingPaused += () =>
@@ -261,7 +261,7 @@ namespace Player.AI.Neat.Trainer.Gui
 
             neatTrainer.OnHighestFitnessAchieved += fitness =>
             {
-                _sessionStatistics.OverallHighestFitness = FormatFitness(fitness);
+                _sessionStatistics.OverallHighestFitness = fitness;
             };
 
             neatTrainer.OnDesiredFitnessAchieved += () =>
@@ -271,11 +271,6 @@ namespace Player.AI.Neat.Trainer.Gui
             };
 
             return neatTrainer;
-        }
-
-        private static double FormatFitness(double fitness)
-        {
-            return Math.Round(fitness, 3);
         }
 
         private void StartTraining()

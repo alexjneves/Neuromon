@@ -55,7 +55,7 @@ namespace Player.AI.Neat.Trainer.Gui
             {
                 _overallHighestFitness.InvokeOnUiThread(label =>
                 {
-                    label.Content = value;
+                    label.Content = $"{value:0.000}";
                 });
             }
         }

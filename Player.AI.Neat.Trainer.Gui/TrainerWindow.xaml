@@ -306,8 +306,8 @@
             <!-- ====================================== Training Progress Log =========================================== -->
 
             <Border Grid.Row="2" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Grid.Column="0" BorderThickness="1" BorderBrush="Black" Opacity="1">
-                <ScrollViewer ScrollChanged="ScrollViewer_OnScrollChanged" >
-                    <TextBlock x:Name="TrainingProgressTextBlock" TextWrapping="Wrap" Margin="10,5,10,5" />
+                <ScrollViewer ScrollChanged="ScrollViewer_OnScrollChanged" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
+                    <TextBlock x:Name="TrainingProgressTextBlock" Margin="10,5,10,5" />
                 </ScrollViewer>
             </Border>
 
