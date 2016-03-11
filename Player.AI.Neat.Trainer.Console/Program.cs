@@ -33,11 +33,11 @@ namespace Player.AI.Neat.Trainer.Console
 
             var neatTrainer = new NeatTrainer(experimentSettings, evolutionAlgorithmParameters, trainingGameSettings);
 
-            neatTrainer.OnStatusUpdate += (generation, fitness) =>
+            neatTrainer.OnStatusUpdate += (generation, highestFitness, averageFitness) =>
             {
                 if (!_quit)
                 {
-                    System.Console.WriteLine($"Generation: {generation}, Best Fitness: {fitness}");
+                    System.Console.WriteLine($"Generation: {generation}, Best Fitness: {highestFitness:000.000}, Average Fitness: {averageFitness:000.000}");
                     _trainingStopped = false;
                 }
             };

@@ -62,8 +62,13 @@ namespace Player.AI.Neat.Trainer
             if (_evolutionAlgorithm == null)
             {
                 _evolutionAlgorithm = _neuromonExperiment.CreateEvolutionAlgorithm(_genomeFactory, _genomePopulation);
-                _evolutionAlgorithm.UpdateEvent += (sender, e) => OnStatusUpdate?.Invoke(_evolutionAlgorithm.CurrentGeneration, _evolutionAlgorithm.Statistics._maxFitness);
-                _evolutionAlgorithm.UpdateEvent += (sender, args) => HandleUpdateEvent(_evolutionAlgorithm.CurrentGeneration, _evolutionAlgorithm.Statistics._maxFitness);
+
+                _evolutionAlgorithm.UpdateEvent += (sender, args) => HandleUpdateEvent(
+                    _evolutionAlgorithm.CurrentGeneration, 
+                    _evolutionAlgorithm.Statistics._maxFitness,
+                    _evolutionAlgorithm.Statistics._meanFitness
+                );
+
                 _evolutionAlgorithm.PausedEvent += (sender, args) => OnTrainingPaused?.Invoke();
             }
 
@@ -85,7 +90,7 @@ namespace Player.AI.Neat.Trainer
             _genomeIo.WriteChampion(filePath);
         }
 
-        private void HandleUpdateEvent(uint generation, double generationBestFitness)
+        private void HandleUpdateEvent(uint generation, double generationBestFitness, double averageFitness)
         {
             // SharpNEAT will sometimes trigger an update event multiple times for the same generation.
             // We want to ignore these instances.
@@ -93,6 +98,8 @@ namespace Player.AI.Neat.Trainer
             {
                 return;
             }
+
+            OnStatusUpdate?.Invoke(generation, generationBestFitness, averageFitness);
 
             if (generationBestFitness > _overallBestFitness)
             {

@@ -13,6 +13,7 @@ namespace Player.AI.Neat.Trainer.Gui
 
         private readonly Label _currentGeneration;
         private readonly Label _overallHighestFitness;
+        private readonly Label _currentAverageFitness;
         private readonly Label _stagnationDetected;
         private readonly Label _desiredFitnessAchieved;
         private readonly Label _elapsedTime;
@@ -24,6 +25,7 @@ namespace Player.AI.Neat.Trainer.Gui
         {
             _currentGeneration = trainerWindow.CurrentGenerationValueLabel;
             _overallHighestFitness = trainerWindow.OverallHighestFitnessValueLabel;
+            _currentAverageFitness = trainerWindow.CurrentAverageFitnessValueLabel;
             _stagnationDetected = trainerWindow.StagnationDetectedValueLabel;
             _desiredFitnessAchieved = trainerWindow.DesiredFitnessAchievedValueLabel;
             _elapsedTime = trainerWindow.ElapsedTimeValueLabel;
@@ -44,7 +46,7 @@ namespace Player.AI.Neat.Trainer.Gui
             {
                 _currentGeneration.InvokeOnUiThread(label =>
                 {
-                    label.Content = value;
+                    label.Content = $"{value:n0}";
                 });
             }
         }
@@ -55,7 +57,18 @@ namespace Player.AI.Neat.Trainer.Gui
             {
                 _overallHighestFitness.InvokeOnUiThread(label =>
                 {
-                    label.Content = value;
+                    label.Content = $"{value:0.000}";
+                });
+            }
+        }
+
+        public double CurrentAverageFitness
+        {
+            set
+            {
+                _currentAverageFitness.InvokeOnUiThread(label =>
+                {
+                    label.Content = $"{value:0.000}";
                 });
             }
         }
@@ -114,6 +127,7 @@ namespace Player.AI.Neat.Trainer.Gui
 
             CurrentGeneration = 0;
             OverallHighestFitness = 0.0;
+            CurrentAverageFitness = 0.0;
             StagnationDetected = false;
             DesiredFitnessAchieved = false;
             ElapsedTime = FormatTime(TimeSpan.Zero);
@@ -121,7 +135,7 @@ namespace Player.AI.Neat.Trainer.Gui
 
         private static string FormatTime(TimeSpan timespan)
         {
-            return $"{timespan.Hours:00}:{timespan.Minutes:00}:{timespan.Seconds:00}";
+            return $"{timespan.Days:00}:{timespan.Hours:00}:{timespan.Minutes:00}:{timespan.Seconds:00}";
         }
     }
 }
