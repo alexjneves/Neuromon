@@ -333,19 +333,22 @@
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
                     <Label x:Name="CurrentGenerationLabel" Content="Current Generation:" Margin="10,0,0,0" Grid.Column="0" Grid.Row="0"/>
                     <Label x:Name="OverallHighestFitnessLabel" Content="Overall Highest Fitness:" Margin="10,0,0,0" Grid.Column="0" Grid.Row="1"/>
-                    <Label x:Name="StagnationDetectedLabel" Content="Stagnation Detected:" Margin="10,0,0,0" Grid.Column="0" Grid.Row="2"/>
-                    <Label x:Name="DesiredFitnessAchievedLabel" Content="Desired Fitness Achieved:" Margin="10,0,0,0" Grid.Column="0" Grid.Row="3"/>
-                    <Label x:Name="ElapsedTimeLabel" Content="Elapsed Time:" Margin="10,0,0,0" Grid.Column="0" Grid.Row="4"/>
+                    <Label x:Name="CurrentAverageFitnessLabel" Content="Current Average Fitness:" Margin="10,0,0,0" Grid.Column="0" Grid.Row="2"/>
+                    <Label x:Name="StagnationDetectedLabel" Content="Stagnation Detected:" Margin="10,0,0,0" Grid.Column="0" Grid.Row="3"/>
+                    <Label x:Name="DesiredFitnessAchievedLabel" Content="Desired Fitness Achieved:" Margin="10,0,0,0" Grid.Column="0" Grid.Row="4"/>
+                    <Label x:Name="ElapsedTimeLabel" Content="Elapsed Time:" Margin="10,0,0,0" Grid.Column="0" Grid.Row="5"/>
                     
                     <Label x:Name="CurrentGenerationValueLabel" Content="0" Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" Foreground="#FF8B8B8B" />
-                    <Label x:Name="OverallHighestFitnessValueLabel" Content="0.0" Margin="10,0,0,0" Grid.Column="1" Grid.Row="1" Foreground="#FF8B8B8B"/>
-                    <Label x:Name="StagnationDetectedValueLabel" Content="False" Margin="10,0,0,0" Grid.Column="1" Grid.Row="2" Foreground="#FF4BC313"/>
-                    <Label x:Name="DesiredFitnessAchievedValueLabel" Content="False" Margin="10,0,0,0" Grid.Column="1" Grid.Row="3" Foreground="#FFC31C0C"/>
-                    <Label x:Name="ElapsedTimeValueLabel" Content="00:00:00:00" Margin="10,0,0,0" Grid.Column="1" Grid.Row="4" Foreground="#FF8B8B8B"/>
+                    <Label x:Name="OverallHighestFitnessValueLabel" Content="0.000" Margin="10,0,0,0" Grid.Column="1" Grid.Row="1" Foreground="#FF8B8B8B"/>
+                    <Label x:Name="CurrentAverageFitnessValueLabel" Content="0.000" Margin="10,0,0,0" Grid.Column="1" Grid.Row="2" Foreground="#FF8B8B8B"/>
+                    <Label x:Name="StagnationDetectedValueLabel" Content="False" Margin="10,0,0,0" Grid.Column="1" Grid.Row="3" Foreground="#FF4BC313"/>
+                    <Label x:Name="DesiredFitnessAchievedValueLabel" Content="False" Margin="10,0,0,0" Grid.Column="1" Grid.Row="4" Foreground="#FFC31C0C"/>
+                    <Label x:Name="ElapsedTimeValueLabel" Content="00:00:00:00" Margin="10,0,0,0" Grid.Column="1" Grid.Row="5" Foreground="#FF8B8B8B"/>
 
                 </Grid>
             </Grid>

@@ -218,6 +218,7 @@ namespace Player.AI.Neat.Trainer.Gui
                 }
 
                 _sessionStatistics.CurrentGeneration = generation;
+                _sessionStatistics.CurrentAverageFitness = averageFitness;
 
                 _trainingProgressBox.WriteStatusUpdate(generation, highestFitness, averageFitness);
             };
