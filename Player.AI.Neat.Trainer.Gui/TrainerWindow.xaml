@@ -345,7 +345,7 @@
                     <Label x:Name="OverallHighestFitnessValueLabel" Content="0.0" Margin="10,0,0,0" Grid.Column="1" Grid.Row="1" Foreground="#FF8B8B8B"/>
                     <Label x:Name="StagnationDetectedValueLabel" Content="False" Margin="10,0,0,0" Grid.Column="1" Grid.Row="2" Foreground="#FF4BC313"/>
                     <Label x:Name="DesiredFitnessAchievedValueLabel" Content="False" Margin="10,0,0,0" Grid.Column="1" Grid.Row="3" Foreground="#FFC31C0C"/>
-                    <Label x:Name="ElapsedTimeValueLabel" Content="00:00:00" Margin="10,0,0,0" Grid.Column="1" Grid.Row="4" Foreground="#FF8B8B8B"/>
+                    <Label x:Name="ElapsedTimeValueLabel" Content="00:00:00:00" Margin="10,0,0,0" Grid.Column="1" Grid.Row="4" Foreground="#FF8B8B8B"/>
 
                 </Grid>
             </Grid>

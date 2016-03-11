@@ -121,7 +121,7 @@ namespace Player.AI.Neat.Trainer.Gui
 
         private static string FormatTime(TimeSpan timespan)
         {
-            return $"{timespan.Hours:00}:{timespan.Minutes:00}:{timespan.Seconds:00}";
+            return $"{timespan.Days:00}:{timespan.Hours:00}:{timespan.Minutes:00}:{timespan.Seconds:00}";
         }
     }
 }
