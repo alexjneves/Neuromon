@@ -6,8 +6,7 @@
       "fire"
     ],
     "weak": [
-      "grass",
-      "water"
+      "grass"
     ]
   },
   {
@@ -17,8 +16,7 @@
       "water"
     ],
     "weak": [
-      "fire",
-      "grass"
+      "fire"
     ]
   },
   {
@@ -28,8 +26,7 @@
       "grass"
     ],
     "weak": [
-      "water",
-      "fire"
+      "water"
     ]
   },
   {
