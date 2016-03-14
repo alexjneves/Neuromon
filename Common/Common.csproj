@@ -53,8 +53,9 @@
     <Compile Include="PlayerTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Turn\Attack.cs" />
-    <Compile Include="Turn\ChangeNeuromon.cs" />
+    <Compile Include="Turn\SwitchActiveNeuromon.cs" />
     <Compile Include="Turn\ITurn.cs" />
+    <Compile Include="Turn\TurnType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

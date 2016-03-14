@@ -88,10 +88,10 @@ namespace Game
                 var attack = sourceTurn as Attack;
                 Attack(source.State, opponentState, attack);
             }
-            else if (sourceTurn is ChangeNeuromon)
+            else if (sourceTurn is SwitchActiveNeuromon)
             {
-                var changeNeuromon = sourceTurn as ChangeNeuromon;
-                ChangeNeuromon(source.State, changeNeuromon);
+                var switchActiveNeuromon = sourceTurn as SwitchActiveNeuromon;
+                SwitchActiveNeuromon(source.State, switchActiveNeuromon);
             }
         }
 
@@ -103,12 +103,12 @@ namespace Game
             OnAttackMade?.Invoke(attackingPlayerState.ActiveNeuromon, attack.Move, targetPlayerState.ActiveNeuromon, damage);
         }
 
-        private void ChangeNeuromon(IPlayerState playerState, ChangeNeuromon changeNeuromon)
+        private void SwitchActiveNeuromon(IPlayerState playerState, SwitchActiveNeuromon switchActiveNeuromon)
         {
             var previousNeuromon = playerState.ActiveNeuromon;
-            playerState.SwitchActiveNeuromon(changeNeuromon.Neuromon);
+            playerState.SwitchActiveNeuromon(switchActiveNeuromon.Neuromon);
 
-            OnNeuromonChanged?.Invoke(playerState, previousNeuromon, changeNeuromon.Neuromon);
+            OnNeuromonChanged?.Invoke(playerState, previousNeuromon, switchActiveNeuromon.Neuromon);
         }
 
         private void GameOver(BattleResult battleResult)

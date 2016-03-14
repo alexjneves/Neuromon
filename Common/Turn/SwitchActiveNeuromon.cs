@@ -1,10 +1,10 @@
 namespace Common.Turn
 {
-    public sealed class ChangeNeuromon : ITurn
+    public sealed class SwitchActiveNeuromon : ITurn
     {
         public Neuromon Neuromon { get; }
 
-        public ChangeNeuromon(Neuromon neuromon)
+        public SwitchActiveNeuromon(Neuromon neuromon)
         {
             Neuromon = neuromon;
         }

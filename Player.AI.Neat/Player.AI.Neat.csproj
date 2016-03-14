@@ -48,7 +48,6 @@
     <Compile Include="NeatAiPlayerControllerFactory.cs" />
     <Compile Include="NeatAiTurnChoice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TurnType.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
