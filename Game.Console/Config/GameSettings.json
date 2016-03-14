@@ -15,7 +15,7 @@
   "playerTwoType": "neat",
   "playerOneBrain": "",
   "playerTwoBrain": "Opponent.xml",
-  "simulateThinking": "false",
-  "shouldRender": "true",
-  "nonDeterministic": "true"
+  "simulateThinking": false,
+  "shouldRender": true,
+  "nonDeterministic": true
 }
