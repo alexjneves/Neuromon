@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Common;
+using Common.Turn;
 
 namespace Player.AI.Neat
 {

@@ -1,6 +1,6 @@
-namespace Player.AI.Neat
+﻿namespace Common.Turn
 {
-    internal enum TurnType
+    public enum TurnType
     {
         Attack,
         SwitchActiveNeuromon

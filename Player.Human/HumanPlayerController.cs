@@ -41,7 +41,7 @@ namespace Player.Human
             }
             else if (turnType == ChangeNeuromonTurnType && canSwitchNeuromon)
             {
-                selectedTurn = new ChangeNeuromon(SelectActiveNeuromon(playerState, opponentState));
+                selectedTurn = new SwitchActiveNeuromon(SelectActiveNeuromon(playerState, opponentState));
             }
 
             return selectedTurn;

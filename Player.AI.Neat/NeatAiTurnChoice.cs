@@ -1,3 +1,5 @@
+using Common.Turn;
+
 namespace Player.AI.Neat
 {
     internal sealed class NeatAiTurnChoice

@@ -96,7 +96,7 @@ namespace Player.AI.Neat
 
                 if (chosenActiveNeuromon != default(Neuromon) && !chosenActiveNeuromon.IsDead)
                 {
-                    turn = new ChangeNeuromon(chosenActiveNeuromon);
+                    turn = new SwitchActiveNeuromon(chosenActiveNeuromon);
                     return true;
                 }
             }
@@ -106,7 +106,7 @@ namespace Player.AI.Neat
 
         public Neuromon SelectActiveNeuromon(IPlayerState playerState, IPlayerState opponentState)
         {
-            var turn = ChooseTurn(playerState, opponentState) as ChangeNeuromon;
+            var turn = ChooseTurn(playerState, opponentState) as SwitchActiveNeuromon;
 
             if (turn == null)
             {

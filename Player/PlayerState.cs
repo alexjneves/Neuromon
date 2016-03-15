@@ -10,10 +10,7 @@ namespace Player
         public NeuromonCollection AllNeuromon { get; }
         public Neuromon ActiveNeuromon { get; private set; }
 
-        public NeuromonCollection InactiveNeuromon
-        {
-            get { return new NeuromonCollection(AllNeuromon.Where(n => n != ActiveNeuromon)); }
-        }
+        public NeuromonCollection InactiveNeuromon => new NeuromonCollection(AllNeuromon.Where(n => n != ActiveNeuromon));
 
         public PlayerState(string name, NeuromonCollection allNeuromon)
         {
