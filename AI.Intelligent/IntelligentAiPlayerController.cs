@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using Common;
 using Common.Turn;
 
@@ -50,7 +51,7 @@ namespace Player.AI.Intelligent
                 case TurnType.Attack:
                     return ChooseAttack(playerState);
                 case TurnType.SwitchActiveNeuromon:
-                    return new SwitchActiveNeuromon(ChooseNeuromon(playerState));
+                    return new SwitchActiveNeuromon(ChooseNeuromon(playerState, opponentState));
                 default:
                     throw new Exception($"Unsupported turn type: {turnType}");
             }
@@ -69,17 +70,41 @@ namespace Player.AI.Intelligent
             return new Attack(move);
         }
 
-        private Neuromon ChooseNeuromon(IPlayerState playerState)
+        private static Neuromon ChooseNeuromon(IPlayerState playerState, IPlayerState opponentState)
         {
             var aliveNeuromon = playerState.InactiveNeuromon.Where(n => !n.IsDead).ToList();
 
-            var neuromonIndex = _rand.Next(0, aliveNeuromon.Count);
-            return aliveNeuromon[neuromonIndex];
+            if (aliveNeuromon.Count == 1)
+            {
+                return aliveNeuromon.Single();
+            }
+
+            var rankedOrderedChoices = aliveNeuromon.ToDictionary(
+                neuromon => neuromon, 
+                neuromon => RankNeuromonChoice(neuromon, opponentState.ActiveNeuromon)
+            ).OrderByDescending(choice => choice.Value);
+
+            return rankedOrderedChoices.First().Key;
         }
+
+        private static int RankNeuromonChoice(Neuromon neuromon, Neuromon opponentNeuromon)
+        {
+            if (neuromon.Type.IsEffectiveAgainst(opponentNeuromon.Type))
+            {
+                return 2;
+            }
+
+            if (!opponentNeuromon.Type.IsEffectiveAgainst(neuromon.Type))
+            {
+                return 1;
+            }
+
+            return 0;
+        } 
 
         public Neuromon SelectActiveNeuromon(IPlayerState playerState, IPlayerState opponentState)
         {
-            return ChooseNeuromon(playerState);
+            return ChooseNeuromon(playerState, opponentState);
         }
 
         private static RouletteWheel<Move> CreateMoveRouletteWheel(Neuromon neuromon)
