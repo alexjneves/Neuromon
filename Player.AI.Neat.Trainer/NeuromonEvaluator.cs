@@ -69,13 +69,11 @@ namespace Player.AI.Neat.Trainer
 
         public FitnessInfo Evaluate(IBlackBox phenome)
         {
-            var accumulatedFitness = 0.0;
-
-            var numberOfGames = _gameNeuromonCollectionCombinations.Count * _gameCombinationIterations;
+            var accumulatedFitnessTotal = 0.0;
 
             foreach (var neuromonCollectionCombination in _gameNeuromonCollectionCombinations)
             {
-                // TODO: Should each possible game be played multiple times to counteract non-deterministic luck?
+                var localFitnessTotal = 0.0;
 
                 for (var i = 0; i < _gameCombinationIterations; ++i)
                 {
@@ -86,11 +84,14 @@ namespace Player.AI.Neat.Trainer
                     );
 
                     var result = game.Run();
-                    accumulatedFitness += _scoreCalculator.Calculate(TraineeName, result);
+                    localFitnessTotal += _scoreCalculator.Calculate(TraineeName, result);
                 }
+
+                var localFitnessAverage = localFitnessTotal / _gameCombinationIterations;
+                accumulatedFitnessTotal += localFitnessAverage;
             }
 
-            var averageFitness = accumulatedFitness / numberOfGames;
+            var averageFitness = accumulatedFitnessTotal / _gameNeuromonCollectionCombinations.Count;
 
             EvaluationCount++;
 
