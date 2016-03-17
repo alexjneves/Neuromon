@@ -89,8 +89,7 @@ namespace Player.AI.Neat
                     return true;
                 }
             }
-
-            if (turnChoice.TurnType == TurnType.SwitchActiveNeuromon)
+            else if (turnChoice.TurnType == TurnType.SwitchActiveNeuromon)
             {
                 var chosenActiveNeuromon = playerState.InactiveNeuromon.ElementAtOrDefault(turnChoice.Index);
 

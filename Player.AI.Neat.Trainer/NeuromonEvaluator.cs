@@ -21,8 +21,8 @@ namespace Player.AI.Neat.Trainer
 
         private readonly IPlayerControllerFactory _opponentPlayerControllerFactory;
         private readonly IDamageCalculator _damageCalculator;
-
         private readonly IList<Tuple<NeuromonCollection, NeuromonCollection>> _gameNeuromonCollectionCombinations;
+        private readonly ScoreCalculator _scoreCalculator;
 
         private Renderer _renderer;
 
@@ -60,6 +60,7 @@ namespace Player.AI.Neat.Trainer
                 _trainingGameSettings.NumberOfNeuromon
             ).CreateGameNeuromonCollectionCombinations();
 
+            _scoreCalculator = new ScoreCalculator();
             _renderer = null;
 
             EvaluationCount = 0;
@@ -85,7 +86,7 @@ namespace Player.AI.Neat.Trainer
                     );
 
                     var result = game.Run();
-                    accumulatedFitness += CalculateFitness(result);
+                    accumulatedFitness += _scoreCalculator.Calculate(TraineeName, result);
                 }
             }
 
@@ -122,32 +123,6 @@ namespace Player.AI.Neat.Trainer
             }
 
             return battleSimulator;
-        }
-
-        // Maximum Fitness = Win + N * (50 + H) + N * 50
-        private static double CalculateFitness(BattleResult result)
-        {
-            var fitness = 0.0;
-
-            var players = new[] { result.Winner, result.Loser };
-            var trainee = players.First(p => p.Name == TraineeName);
-            var opponent = players.First(p => p.Name == OpponentName);
-
-            if (result.Winner.Name == TraineeName)
-            {
-                fitness += 200.0;
-            }
-
-            // Gain 50 fitness for each Neuromon that is still alive
-            // Gain fitness equal to the health of the alive Neuromon
-            fitness += trainee.AllNeuromon.Where(n => !n.IsDead).Sum(neuromon => 50.0 + neuromon.Health);
-
-            // Gain 50 fitness for each opponent Neuromon which is dead
-            // Lose fitness equal to the health of the alive Neuromon
-            fitness += opponent.AllNeuromon.Where(n => n.IsDead).Sum(neuromon => 50.0);
-            fitness -= opponent.AllNeuromon.Where(n => !n.IsDead).Sum(neuromon => neuromon.Health);
-
-            return fitness >= 0 ? fitness : 0.0;
         }
 
         public void Reset()

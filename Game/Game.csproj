@@ -66,6 +66,7 @@
     <Compile Include="PlayerControllerFactoryFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer.cs" />
+    <Compile Include="ScoreCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

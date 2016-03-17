@@ -5,6 +5,7 @@ using System.Threading;
 using Common;
 using Player;
 using Player.Human;
+using Player = Player.Player;
 
 namespace Game
 {
@@ -82,14 +83,21 @@ namespace Game
 
         private void RenderGameOver(BattleResult battleResult)
         {
-            RenderPlayerState(_battleSimulator.Player1.State);
-            RenderPlayerState(_battleSimulator.Player2.State);
+            var playerOne = _battleSimulator.Player1.State;
+            var playerTwo = _battleSimulator.Player2.State;
 
+            RenderPlayerState(playerOne);
+            RenderPlayerState(playerTwo);
+
+            var scoreCalculator = new ScoreCalculator();
             var sb = new StringBuilder();
 
             sb.AppendLine(TurnMadeBorder);
             sb.AppendLine($"{battleResult.Loser.Name} has no remaining Neuromon...");
             sb.AppendLine($"{battleResult.Winner.Name} beat {battleResult.Loser.Name}!");
+            sb.AppendLine();
+            sb.AppendLine($"{playerOne.Name}'s score: {scoreCalculator.Calculate(playerOne.Name, battleResult)}");
+            sb.AppendLine($"{playerTwo.Name}'s score: {scoreCalculator.Calculate(playerTwo.Name, battleResult)}");
             sb.AppendLine(TurnMadeBorder);
 
             RenderTextWithColour(sb.ToString(), ConsoleColor.DarkGreen);
