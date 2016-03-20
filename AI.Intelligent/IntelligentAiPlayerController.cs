@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using Common;
 using Common.Turn;
 
@@ -9,8 +8,12 @@ namespace Player.AI.Intelligent
 {
     internal sealed class IntelligentAiPlayerController : IPlayerController
     {
-        private const double AttackProbability = 0.8;
-        private const double SwitchActiveNeuromonProbability = 0.2;
+        private const int EffectiveRank = 2;
+        private const int NeutralRank = 1;
+        private const int WeakRank = 0;
+
+        private const double AttackProbability = 0.2;
+        private const double SwitchActiveNeuromonProbability = 0.8;
 
         private readonly Random _rand;
         private readonly Dictionary<Neuromon, RouletteWheel<Move>> _neuromonRouletteWheels;
@@ -39,9 +42,17 @@ namespace Player.AI.Intelligent
 
             var turnType = TurnType.Attack;
 
-            var allMovesAreCurrentlyValid = _supportedTurnTypes.All(t => validTurns.Contains(t));
+            var allTurnsAreCurrentlyValid = _supportedTurnTypes.All(t => validTurns.Contains(t));
 
-            if (allMovesAreCurrentlyValid)
+            var activeNeuromonRank = RankNeuromonChoice(playerState.ActiveNeuromon, opponentState.ActiveNeuromon);
+            var inactiveNeuromonRanks = RankNeuromon(playerState.InactiveNeuromon.Where(n => !n.IsDead), opponentState.ActiveNeuromon);
+
+            var betterActiveNeuromon =
+                inactiveNeuromonRanks.Where(choice => choice.Value > activeNeuromonRank)
+                    .OrderByDescending(choice => choice.Value)
+                    .ToList();
+
+            if (allTurnsAreCurrentlyValid && betterActiveNeuromon.Any())
             {
                 turnType = _turnTypeRouletteWheel.Spin();
             }
@@ -51,7 +62,7 @@ namespace Player.AI.Intelligent
                 case TurnType.Attack:
                     return ChooseAttack(playerState);
                 case TurnType.SwitchActiveNeuromon:
-                    return new SwitchActiveNeuromon(ChooseNeuromon(playerState, opponentState));
+                    return new SwitchActiveNeuromon(betterActiveNeuromon.First().Key);
                 default:
                     throw new Exception($"Unsupported turn type: {turnType}");
             }
@@ -79,27 +90,33 @@ namespace Player.AI.Intelligent
                 return aliveNeuromon.Single();
             }
 
-            var rankedOrderedChoices = aliveNeuromon.ToDictionary(
-                neuromon => neuromon, 
-                neuromon => RankNeuromonChoice(neuromon, opponentState.ActiveNeuromon)
-            ).OrderByDescending(choice => choice.Value);
+            var rankedOrderedChoices = RankNeuromon(aliveNeuromon, opponentState.ActiveNeuromon)
+                .OrderByDescending(choice => choice.Value);
 
             return rankedOrderedChoices.First().Key;
+        }
+
+        private static Dictionary<Neuromon, int> RankNeuromon(IEnumerable<Neuromon> neuromon, Neuromon opponentNeuromon)
+        {
+            return neuromon.ToDictionary(
+                n => n,
+                n => RankNeuromonChoice(n, opponentNeuromon)
+            );
         }
 
         private static int RankNeuromonChoice(Neuromon neuromon, Neuromon opponentNeuromon)
         {
             if (neuromon.Type.IsEffectiveAgainst(opponentNeuromon.Type))
             {
-                return 2;
+                return EffectiveRank;
             }
 
             if (!opponentNeuromon.Type.IsEffectiveAgainst(neuromon.Type))
             {
-                return 1;
+                return NeutralRank;
             }
 
-            return 0;
+            return WeakRank;
         } 
 
         public Neuromon SelectActiveNeuromon(IPlayerState playerState, IPlayerState opponentState)
