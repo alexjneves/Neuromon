@@ -12,17 +12,15 @@ namespace Player.AI.Intelligent
         private const int NeutralRank = 1;
         private const int WeakRank = 0;
 
-        private const double AttackProbability = 0.2;
-        private const double SwitchActiveNeuromonProbability = 0.8;
+        private const double AttackProbability = 0.3;
+        private const double SwitchActiveNeuromonProbability = 0.7;
 
-        private readonly Random _rand;
         private readonly Dictionary<Neuromon, RouletteWheel<Move>> _neuromonRouletteWheels;
         private readonly RouletteWheel<TurnType> _turnTypeRouletteWheel;
         private readonly TurnType[] _supportedTurnTypes;
 
         public IntelligentAiPlayerController(IPlayerState initialState)
         {
-            _rand = new Random();
             _neuromonRouletteWheels = new Dictionary<Neuromon, RouletteWheel<Move>>();
 
             foreach (var neuromon in initialState.AllNeuromon)
