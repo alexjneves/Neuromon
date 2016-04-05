@@ -77,11 +77,11 @@
                     <TextBox x:Name="WeakMultiplierSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="2" IsReadOnly="True"
                          Text="{Binding ElementName=WeakMultiplierSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
 
-                    <Slider x:Name="MinimumRandomMultiplierSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="3" Minimum="0.0" Maximum="1.0" TickFrequency="0.05" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding MinimumRandomMultiplier}"/>
+                    <Slider x:Name="MinimumRandomMultiplierSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="3" Minimum="0.0" Maximum="2.0" TickFrequency="0.05" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding MinimumRandomMultiplier}"/>
                     <TextBox x:Name="MinimumRandomMultiplerSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="3" IsReadOnly="True"
                          Text="{Binding ElementName=MinimumRandomMultiplierSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
 
-                    <Slider x:Name="MaximumRandomMultiplierSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="4" Minimum="0.0" Maximum="1.0" TickFrequency="0.05" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding MaximumRandomMultiplier}"/>
+                    <Slider x:Name="MaximumRandomMultiplierSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="4" Minimum="0.0" Maximum="2.0" TickFrequency="0.05" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding MaximumRandomMultiplier}"/>
                     <TextBox x:Name="MaximumRandomMultiplierSliderTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="4" IsReadOnly="True"
                          Text="{Binding ElementName=MaximumRandomMultiplierSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
 
