@@ -12,7 +12,7 @@ namespace Game
     {
         public static IPlayerControllerFactory Create(string playerType, int numberOfNeuromon, int inputCount, int outputCount, string brainFileName)
         {
-            switch (playerType)
+            switch (playerType.ToLower())
             {
                 case PlayerTypes.Human:
                     return new HumanPlayerControllerFactory();
