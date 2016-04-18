@@ -7,8 +7,8 @@
     <ProjectGuid>{B5D7571F-63D0-4046-A76C-99E9CA8A7E60}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Player.AI.Neat.Trainer.Gui</RootNamespace>
-    <AssemblyName>Player.AI.Neat.Trainer.Gui</AssemblyName>
+    <RootNamespace>Trainer.GUI</RootNamespace>
+    <AssemblyName>Trainer.GUI</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -117,9 +117,9 @@
       <Project>{9eaf5299-5d05-49ea-b127-b7e312684810}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Player.AI.Neat.Trainer\Player.AI.Neat.Trainer.csproj">
-      <Project>{6BB6F16C-4D61-40EF-9A0A-6A0844791AB1}</Project>
-      <Name>Player.AI.Neat.Trainer</Name>
+    <ProjectReference Include="..\Trainer\Trainer.csproj">
+      <Project>{6bb6f16c-4d61-40ef-9a0a-6a0844791ab1}</Project>
+      <Name>Trainer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

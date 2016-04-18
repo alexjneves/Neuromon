@@ -16,7 +16,8 @@ namespace Player.AI.Neat.Trainer
     * 10 * 30 = 30
     * For each of those, Player 2 may have each of the possible Neuromon collections, therefore 30 * 30 = 900 combinations
     */
-    internal sealed class GameNeuromonCombinationsGenerator
+
+    public sealed class GameNeuromonCombinationsGenerator
     {
         private readonly IList<Neuromon> _allNeuromon;
         private readonly int _numberToChoose;

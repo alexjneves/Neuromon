@@ -7,8 +7,8 @@
     <ProjectGuid>{66DC3AB7-EB47-4638-BEE7-5751AACDE259}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Player.AI.Neat.Trainer.Console</RootNamespace>
-    <AssemblyName>Player.AI.Neat.Trainer.Console</AssemblyName>
+    <RootNamespace>Trainer.Console</RootNamespace>
+    <AssemblyName>Trainer.Console</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -58,9 +58,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Player.AI.Neat.Trainer\Player.AI.Neat.Trainer.csproj">
-      <Project>{6BB6F16C-4D61-40EF-9A0A-6A0844791AB1}</Project>
-      <Name>Player.AI.Neat.Trainer</Name>
+    <ProjectReference Include="..\Trainer\Trainer.csproj">
+      <Project>{6bb6f16c-4d61-40ef-9a0a-6a0844791ab1}</Project>
+      <Name>Trainer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

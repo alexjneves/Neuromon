@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game.csproj", "{2790C0AC-18D7-4B13-8C84-3FA10B857976}"
 EndProject
@@ -19,13 +19,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player.Human", "Player.Huma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player.AI.Neat", "Player.AI.Neat\Player.AI.Neat.csproj", "{1D21D65A-0213-4D63-8CE4-5354B46176D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player.AI.Neat.Trainer", "Player.AI.Neat.Trainer\Player.AI.Neat.Trainer.csproj", "{6BB6F16C-4D61-40EF-9A0A-6A0844791AB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trainer", "Trainer\Trainer.csproj", "{6BB6F16C-4D61-40EF-9A0A-6A0844791AB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player.AI.Neat.Trainer.Gui", "Player.AI.Neat.Trainer.Gui\Player.AI.Neat.Trainer.Gui.csproj", "{B5D7571F-63D0-4046-A76C-99E9CA8A7E60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trainer.GUI", "Trainer.GUI\Trainer.GUI.csproj", "{B5D7571F-63D0-4046-A76C-99E9CA8A7E60}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Console", "Game.Console\Game.Console.csproj", "{CBCC73BC-2A52-4669-B4E7-7560057D6CFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player.AI.Neat.Trainer.Console", "Player.AI.Neat.Trainer.Console\Player.AI.Neat.Trainer.Console.csproj", "{66DC3AB7-EB47-4638-BEE7-5751AACDE259}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trainer.Console", "Trainer.Console\Trainer.Console.csproj", "{66DC3AB7-EB47-4638-BEE7-5751AACDE259}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
