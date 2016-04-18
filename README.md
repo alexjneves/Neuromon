@@ -21,7 +21,7 @@ Neuromon has four player implementations:
 - **Intelligent**: An AI which knows effective game strategy, however occasionally makes mistakes
 - **NEAT**: An AI developed through neuro-evolution. This type of player required a 'brain' file, which is an `xml` file representing the neural network
 
-At current, there exists a console application of Neuromon in `Game.Console`. It has various configuration settings which are set in `GameSettings.json.
+At current, there exists a console application of Neuromon in `Game.Console`. It has various configuration settings which are set in `GameSettings.json`.
 
 ##### Game Settings
 These settings alter various aspects of the game:
@@ -31,9 +31,9 @@ These settings alter various aspects of the game:
 - **Weak Multiplier**: The multiplier applied when a move's type is weak against the target Neuromon's type
 - **Minimum Random Multiplier**: The minimum random multiplier that is applied when calculating damage
 - **Maximum Random Multiplier**: The maximum random multiplier that is applied when calculating damage
-- **Types File Name**: The relative path to the types .json file
-- **Moves File Name**: The relative path to the moves .json file
-- **Neuromon File Name**: The relative path to the Neuromon .json file 
+- **Types File Name**: The relative path to the types `JSON` file
+- **Moves File Name**: The relative path to the moves `JSON` file
+- **Neuromon File Name**: The relative path to the Neuromon `JSON` file 
 - **Player One Name**: The name of player one
 - **Player Two Name**: The name of player two
 - **Player One Type**: The type of player one
