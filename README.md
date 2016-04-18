@@ -67,3 +67,6 @@ These contain various settings related to the training process itself, and are s
 
 #### Evolutionary Algorithm Parameters
 These settings map onto internal data structures used by `SharpNEAT`. Various parameters exist which alter the behaviour of the genetic algorithm used to alter the chromosomes.
+
+### Build Instructions
+The project is developed using .NET 4.5.2. To build, open in Visual Studio 2015. Ensure NuGet restore is enabled so dependencies are downloaded.
