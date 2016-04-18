@@ -39,7 +39,7 @@ These settings alter various aspects of the game:
 - **Player One Type**: The type of player one
 - **Player Two Type**: The type of player two
 - **Player One Brain**: The 'brain' of player one (only required when player type is NEAT)
-- **Player One Brain**: The 'brain' of player one (only required when player type is NEAT)
+- **Player Two Brain**: The 'brain' of player two (only required when player type is NEAT)
 - **Simulate Thinking**: Introduces an artificial pause when an AI makes a decision
 - **Should Render**: Enable to see game output
 - **Non Deterministic**: Toggles the non-determinism of the game on and off
