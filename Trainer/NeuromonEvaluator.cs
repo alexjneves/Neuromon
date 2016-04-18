@@ -18,7 +18,7 @@ namespace Trainer
 
         private readonly TrainingGameSettings _trainingGameSettings;
         private readonly double _desiredFitness;
-        private readonly int _gameCombinationIterations;
+        private readonly int _initialGameStateIterations;
 
         private readonly IPlayerControllerFactory _opponentPlayerControllerFactory;
         private readonly IDamageCalculator _damageCalculator;
@@ -34,7 +34,7 @@ namespace Trainer
         {
             _trainingGameSettings = trainingGameSettings;
             _desiredFitness = experimentSettings.DesiredFitness;
-            _gameCombinationIterations = experimentSettings.GameCombinationIterations;
+            _initialGameStateIterations = experimentSettings.InitialGameStateIterations;
 
             _opponentPlayerControllerFactory = PlayerControllerFactoryFactory.Create(
                  _trainingGameSettings.OpponentType,
@@ -76,7 +76,7 @@ namespace Trainer
             {
                 var localFitnessTotal = 0.0;
 
-                for (var i = 0; i < _gameCombinationIterations; ++i)
+                for (var i = 0; i < _initialGameStateIterations; ++i)
                 {
                     var game = CreateGame(
                         phenome,
@@ -88,7 +88,7 @@ namespace Trainer
                     localFitnessTotal += _scoreCalculator.Calculate(TraineeName, result);
                 }
 
-                var localFitnessAverage = localFitnessTotal / _gameCombinationIterations;
+                var localFitnessAverage = localFitnessTotal / _initialGameStateIterations;
                 accumulatedFitnessTotal += localFitnessAverage;
             }
 

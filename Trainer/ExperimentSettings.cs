@@ -14,7 +14,7 @@ namespace Trainer
         public string ComplexityRegulationStrategy { get; set; }
         public int ComplexityThreshold { get; set; }
         public double DesiredFitness { get; set; }
-        public int GameCombinationIterations { get; set; }
+        public int InitialGameStateIterations { get; set; }
         public int StagnationDetectionTriggerValue { get; set; }
         public bool StopTrainingOnStagnationDetection { get; set; }
     }
