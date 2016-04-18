@@ -3,7 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using SharpNeat.EvolutionAlgorithms;
 
-namespace Player.AI.Neat.Trainer.Console
+namespace Trainer.Console
 {
     internal sealed class Program
     {
@@ -129,12 +129,11 @@ namespace Player.AI.Neat.Trainer.Console
             neatTrainer.SavePopulation(experimentSettings.OutputPopulationFilePath);
             neatTrainer.SaveChampionGenome(experimentSettings.OutputChampionFilePath);
 
-            System.Console.WriteLine("Saved.");
+            System.Console.WriteLine($"Saved population to {Path.GetFullPath(experimentSettings.OutputPopulationFilePath)}");
+            System.Console.WriteLine($"Saved champion to to {Path.GetFullPath(experimentSettings.OutputChampionFilePath)}");
 
             System.Console.WriteLine();
             System.Console.WriteLine($"Highest fitness achieved: {_highestFitness}");
-
-            System.Console.ReadLine();
         }
     }
 }

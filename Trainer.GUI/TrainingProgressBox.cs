@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Controls;
 
-namespace Player.AI.Neat.Trainer.Gui
+namespace Trainer.GUI
 {
     internal sealed class TrainingProgressBox
     {

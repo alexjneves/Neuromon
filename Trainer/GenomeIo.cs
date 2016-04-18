@@ -5,7 +5,7 @@ using System.Xml;
 using SharpNeat.Domains;
 using SharpNeat.Genomes.Neat;
 
-namespace Player.AI.Neat.Trainer
+namespace Trainer
 {
     internal sealed class GenomeIo
     {

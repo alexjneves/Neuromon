@@ -3,9 +3,9 @@ using System.Linq;
 using SharpNeat.Core;
 using SharpNeat.EvolutionAlgorithms;
 using SharpNeat.Genomes.Neat;
-using static Player.AI.Neat.Trainer.NeatTrainerDelegates;
+using static Trainer.NeatTrainerDelegates;
 
-namespace Player.AI.Neat.Trainer
+namespace Trainer
 {
     public sealed class NeatTrainer
     {

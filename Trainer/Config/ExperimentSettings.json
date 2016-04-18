@@ -6,12 +6,12 @@
   "populationSize": 150,
   "loadExistingPopulation": false,
   "existingPopulationFilePath": "",
-  "outputPopulationFilePath": "Results/NeuromonGenomePopulation.xml",
+  "outputPopulationFilePath": "Results/NeuromonChromosomePopulation.xml",
   "outputChampionFilePath": "Results/ChampionNeatAi.xml",
   "complexityRegulationStrategy": "Absolute",
   "complexityThreshold": 198,
-  "desiredFitness": 530.0,
-  "gameCombinationIterations": 5,
+  "desiredFitness": 600.0,
+  "gameCombinationIterations": 10,
   "stagnationDetectionTriggerValue": 20,
-  "stopTrainingOnStagnationDetection": true
+  "stopTrainingOnStagnationDetection": false
 }

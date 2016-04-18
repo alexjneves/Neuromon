@@ -3,12 +3,12 @@
   "effectiveMultiplier": 2.0,
   "weakMultiplier": 0.3,
   "minimumRandomMultiplier": 0.85,
-  "maximumRandomMultiplier": 1.0,
+  "maximumRandomMultiplier": 1.15,
   "typesFileName": "GameData/Types.json",
   "movesFileName": "GameData/Moves.json",
   "neuromonFileName": "GameData/Neuromon.json",
   "opponentType": "intelligent",
-  "opponentBrainFileName": "GameData/CurrentOpponentToBeat.xml",
+  "opponentBrainFileName": "",
   "shouldRender": false,
   "nonDeterministic": true
 }

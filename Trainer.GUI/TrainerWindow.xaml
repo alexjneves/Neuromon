@@ -1,13 +1,13 @@
-﻿<Window x:Class="Player.AI.Neat.Trainer.Gui.TrainerWindow"
+﻿<Window x:Class="Trainer.GUI.TrainerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Player.AI.Neat.Trainer.Gui"
+        xmlns:gui="clr-namespace:Trainer.GUI"
         mc:Ignorable="d"
         Title="Neuromon Trainer" Height="950" Width="1400">
     <Window.DataContext>
-        <local:TrainerViewModel/>
+        <gui:TrainerViewModel/>
     </Window.DataContext>
     <Grid>
 
@@ -174,7 +174,7 @@
                     <TextBox x:Name="DesiredFitnessTextBox" HorizontalAlignment="Left" Height="23" Margin="167,5,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="9" IsReadOnly="True"
                          Text="{Binding ElementName=DesiredFitnessSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
 
-                    <Slider x:Name="GameCombinationsIterationsSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="10" Minimum="1" Maximum="20" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding GameCombinationIterations}"/>
+                    <Slider x:Name="GameCombinationsIterationsSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="10" Minimum="1" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding GameCombinationIterations}"/>
                     <TextBox x:Name="GameCombinationsIterationsTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="10" IsReadOnly="True"
                          Text="{Binding ElementName=GameCombinationsIterationsSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
 

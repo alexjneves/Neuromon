@@ -1,6 +1,6 @@
 using SharpNeat.EvolutionAlgorithms;
 
-namespace Player.AI.Neat.Trainer.Gui
+namespace Trainer.GUI
 {
     public class TrainerViewModel
     {

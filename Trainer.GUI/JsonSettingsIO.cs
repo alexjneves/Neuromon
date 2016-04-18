@@ -2,7 +2,7 @@ using System.IO;
 using Newtonsoft.Json;
 using SharpNeat.EvolutionAlgorithms;
 
-namespace Player.AI.Neat.Trainer.Gui
+namespace Trainer.GUI
 {
     internal sealed class JsonSettingsIO
     {

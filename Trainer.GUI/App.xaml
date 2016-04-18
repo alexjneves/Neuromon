@@ -1,7 +1,6 @@
-﻿<Application x:Class="Player.AI.Neat.Trainer.Gui.App"
+﻿<Application x:Class="Trainer.GUI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Player.AI.Neat.Trainer.Gui"
              StartupUri="TrainerWindow.xaml">
     <Application.Resources>
          

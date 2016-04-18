@@ -12,7 +12,7 @@ using SharpNeat.Genomes.Neat;
 using SharpNeat.Phenomes;
 using SharpNeat.SpeciationStrategies;
 
-namespace Player.AI.Neat.Trainer
+namespace Trainer
 {
     internal sealed class NeuromonExperiment : INeatExperiment
     {

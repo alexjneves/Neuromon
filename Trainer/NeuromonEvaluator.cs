@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Common;
 using Data;
 using Game;
 using Game.Damage;
+using Player;
+using Player.AI.Neat;
 using SharpNeat.Core;
 using SharpNeat.Phenomes;
 
-namespace Player.AI.Neat.Trainer
+namespace Trainer
 {
     internal sealed class NeuromonEvaluator : IPhenomeEvaluator<IBlackBox>
     {
@@ -107,15 +108,14 @@ namespace Player.AI.Neat.Trainer
         {
             var opponentState = new PlayerState(OpponentName, opponentNeuromon);
             var opponentController = _opponentPlayerControllerFactory.CreatePlayer(opponentState);
-            var opponent = new Player(opponentState, opponentController);
+            var opponent = new Player.Player(opponentState, opponentController);
 
             var neatPlayerControllerFactory = new NeatAiPlayerControllerFactory(brain, _trainingGameSettings.NumberOfNeuromon);
 
             var traineeState = new PlayerState(TraineeName, traineeNeuromon);
             var traineeController = neatPlayerControllerFactory.CreatePlayer(traineeState);
-            var trainee = new Player(traineeState, traineeController);
+            var trainee = new Player.Player(traineeState, traineeController);
 
-            // TODO: Should the trainee player first or second?
             var battleSimulator = new BattleSimulator(opponent, trainee, _damageCalculator);
 
             if (_trainingGameSettings.ShouldRender)

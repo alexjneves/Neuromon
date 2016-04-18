@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace Player.AI.Neat.Trainer
+namespace Trainer
 {
     internal sealed class FitnessStagnationDetector
     {

@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 
-namespace Player.AI.Neat.Trainer
+namespace Trainer
 {
     /**
-    * TODO: Is the search space going to be too large?
-    * TODO: What is the efficiency of this class?
     * Combinations of all possible neuromon collections for two players, e.g.
-    * 5 possible Neuromon in the Database: A, B, C, D, E
+    * 3 possible Neuromon in the Database: A, B, C
     * Each player has 3 Neuromon
-    * Player 1 may have 5 Choose 3 Neuromon = 10
+    * Player 1 may have 3 Choose 3 Neuromon = 1
     * First Neuromon matters as that will be the Active, therefore each combination has 3 potential orders
-    * 10 * 30 = 30
-    * For each of those, Player 2 may have each of the possible Neuromon collections, therefore 30 * 30 = 900 combinations
+    * 1 * 3 = 3
+    * For each of those, Player 2 may have each of the possible Neuromon collections, therefore 3 * 3 = 9 combinations
     */
 
     public sealed class GameNeuromonCombinationsGenerator

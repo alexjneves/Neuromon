@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using Common;
 
-namespace Player.AI.Neat.Trainer.Gui
+namespace Trainer.GUI
 {
     public partial class TrainerWindow : Window
     {
@@ -161,7 +161,7 @@ namespace Player.AI.Neat.Trainer.Gui
 
             _neatTrainer.SaveChampionGenome(TrainerViewModel.ExperimentSettings.OutputChampionFilePath);
 
-            _trainingProgressBox.WriteLine($"Current champion genome has been saved to {TrainerViewModel.ExperimentSettings.OutputChampionFilePath}");
+            _trainingProgressBox.WriteLine($"Current champion chromosome has been saved to {TrainerViewModel.ExperimentSettings.OutputChampionFilePath}");
         }
 
         private void ResetState()

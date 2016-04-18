@@ -1,4 +1,4 @@
-namespace Player.AI.Neat.Trainer
+namespace Trainer
 {
     public sealed class ExperimentSettings
     {

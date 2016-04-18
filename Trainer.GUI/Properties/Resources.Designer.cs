@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Player.AI.Neat.Trainer.Gui.Properties
+namespace Trainer.GUI.Properties
 {
 
 

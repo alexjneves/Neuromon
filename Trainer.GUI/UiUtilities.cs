@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Threading;
 
-namespace Player.AI.Neat.Trainer.Gui
+namespace Trainer.GUI
 {
     internal static class UiUtilities
     {

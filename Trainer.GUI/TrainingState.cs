@@ -1,4 +1,4 @@
-namespace Player.AI.Neat.Trainer.Gui
+namespace Trainer.GUI
 {
     internal enum TrainingState
     {

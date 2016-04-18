@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Player.AI.Neat.Trainer
+namespace Trainer
 {
     internal sealed class CircularBuffer<T> : IEnumerable<T>
     {

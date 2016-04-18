@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace Player.AI.Neat.Trainer.Gui
+namespace Trainer.GUI
 {
     internal sealed class SessionStatistics
     {
