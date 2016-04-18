@@ -298,8 +298,8 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" x:Name="SavePopulationButton"     Content="Save Population"      HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center" Width="150" Height="25" Click="SavePopulationButton_Click"/>
-                <Button Grid.Column="1" x:Name="SaveChampionGenomeButton" Content="Save Champion Genome" HorizontalAlignment="Left"  Margin="20,0,0,0" VerticalAlignment="Center" Width="150" Height="25" Click="SaveChampionGenomeButton_Click"/>
+                <Button Grid.Column="0" x:Name="SavePopulationButton"     Content="Save Population"      HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center" Width="170" Height="25" Click="SavePopulationButton_Click"/>
+                <Button Grid.Column="1" x:Name="SaveChampionGenomeButton" Content="Save Champion Chromosome" HorizontalAlignment="Left"  Margin="20,0,0,0" VerticalAlignment="Center" Width="170" Height="25" Click="SaveChampionGenomeButton_Click"/>
             </Grid>
 
 
