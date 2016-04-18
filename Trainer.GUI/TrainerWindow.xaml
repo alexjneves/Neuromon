@@ -141,7 +141,7 @@
                     <Label x:Name="ComplexityRegulationStrategyLabel" Content="Complexity Regulation Strategy:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="7" Grid.RowSpan="2"/>
                     <Label x:Name="ComplexityThresholdLabel" Content="Complexity Threshold:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="8"/>
                     <Label x:Name="DesiredFitnessLabel" Content="Desired Fitness:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="9"/>
-                    <Label x:Name="GameCombinationsIterationsLabel" Content="Game Combinations Iterations:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="10"/>
+                    <Label x:Name="GameCombinationsIterationsLabel" Content="Initial Game State Iterations:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="10"/>
                     <Label x:Name="StagnationDetectionTriggerValueLabel" Content="Stagnation Detection Trigger Value:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="11"/>
                     <Label x:Name="StopTrainingOnStagnationDetectionLabel" Content="Stop Training On Stagnation Detection:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="12"/>
 
@@ -174,7 +174,7 @@
                     <TextBox x:Name="DesiredFitnessTextBox" HorizontalAlignment="Left" Height="23" Margin="167,5,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="9" IsReadOnly="True"
                          Text="{Binding ElementName=DesiredFitnessSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
 
-                    <Slider x:Name="GameCombinationsIterationsSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="10" Minimum="1" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding GameCombinationIterations}"/>
+                    <Slider x:Name="GameCombinationsIterationsSlider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="152" Grid.Column="1" Grid.Row="10" Minimum="1" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Value="{Binding InitialGameStateIterations}"/>
                     <TextBox x:Name="GameCombinationsIterationsTextBox" HorizontalAlignment="Left" Height="23" Margin="167,10,0,0" VerticalAlignment="Top" Width="35" Grid.Column="1" Grid.Row="10" IsReadOnly="True"
                          Text="{Binding ElementName=GameCombinationsIterationsSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
 
